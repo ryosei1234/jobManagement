@@ -48,10 +48,10 @@ public class ExamReportRepository {
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public UserEntity selectAll() throws DataAccessException {
+	public ExamReportEntity selectAll(String userId, String userRole) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
-		UserEntity userEntity = mappingSelectResult(resultList);
-		return userEntity;
+		ExamReportEntity examreportEntity = mappingSelectResult(resultList);
+		return examreportEntity;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class ExamReportRepository {
 	 * @param resultList Userテーブルから取得したデータ
 	 * @return UserEntity
 	 */
-	private UserEntity mappingSelectResult(List<Map<String, Object>> resultList) {
+	private UserEntity mappingSelectUserResult(List<Map<String, Object>> resultList) {
 		UserEntity entity = new UserEntity();
 
 		for (Map<String, Object> map : resultList) {
@@ -74,6 +74,23 @@ public class ExamReportRepository {
 		return entity;
 	}
 
+
+	private ExamReportEntity mappingSelectResult(List<Map<String, Object>> resultList) {
+		ExamReportEntity entity = new ExamReportEntity();
+
+		for (Map<String, Object> map : resultList) {
+			ExamReportData data = new ExamReportData();
+			data.setUser_id((String) map.get("user_id"));
+			data.setUser_name((String) map.get("user_name"));
+			data.setUser_darkmode((boolean) map.get("darkmode"));
+			data.setUser_role((String) map.get("role"));
+
+			entity.getExamlist().add(data);
+		}
+		return entity;
+	}
+
+
 	/**
 	 * UserテーブルからユーザIDをキーにデータを1件を取得.
 	 * @param user_id 検索するユーザID
@@ -82,7 +99,7 @@ public class ExamReportRepository {
 	 */
 	public UserData selectOne(String user_id) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ONE, user_id);
-		UserEntity entity = mappingSelectResult(resultList);
+		UserEntity entity = mappingSelectUserResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
 		UserData data = entity.getUserlist().get(0);
 		return data;

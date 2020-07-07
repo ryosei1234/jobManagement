@@ -18,13 +18,17 @@ public class ExamReportService {
 
 	public ExamReportEntity selectAll(String userId) throws DataAccessException {
 
-		String role = examRepository.selectRole(userId);
+		examRepository.selectOne(userId);
 
-		return examRepository.selectAll(userId,role);
+		ExamReportData data = new ExamReportData();
+		 String userRole = data.getUser_role();
+
+		return examRepository.selectAll(userId,userRole);
 	}
 
 	public boolean insertOne(ExamReportData examdata) throws DataAccessException {
-		int lowNumber = examRepository.insertOne(examdata);
+		//int lowNumber = examRepository.insertOne(examdata);
+		return false;
 	}
 
 }
