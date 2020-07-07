@@ -18,13 +18,21 @@ public class ExamReportController {
 
 	@Autowired
 	ExamReportService examreportService;
+
+	/**
+	 *
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
 	@PostMapping("/exam/examlist")
 	public String getExamList(Principal principal, Model model) {
 
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 
-		return null;
+		ExamReportEntity examreportEntity = examreportService.selectAll(principal.getName());
+		model.addAttribute("examreportEntity",examreportEntity);
 
-
+		return "exam/examlist";
 	}
 }
