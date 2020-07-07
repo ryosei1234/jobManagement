@@ -36,17 +36,13 @@
 <body>
 	<div class="container">
 		<h1>
-			<a class="navbar-brand title-font" th:href="@{/}">WebPortal.com</a>
+			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
 		</h1>
 
 		<hr>
 
 		<h2>ログイン</h2>
 		<div class="input-form">
-			<!-- view error message -->
-			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
-				th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-				class="text-danger">ログインエラーメッセージ</p>
 
 			<form method="post" th:action="@{/login}">
 				<label for="user_id">ユーザID(メールアドレス)</label> <input type="text"
@@ -54,13 +50,17 @@
 					placeholder="xxxxxxx@xxx.xxx"> <label for="password">パスワード</label>
 				<input type="password" class="form-control input-box"
 					name="password" placeholder="xxxxxxxx">
+
+				<!-- view error message -->
+				<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+					th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+					class="text-danger">ログインエラーメッセージ</p>
+
 				<button type="submit" class="btn btn-primary">ログイン</button>
 			</form>
 		</div>
 
-		<hr>
-
-		<a th:href="@{'/signup'}">新規ユーザ登録はこちら</a>
+		<a th:href="@{'/signup'}">ユーザIDやパスワードを忘れた方はこちら</a>
 
 	</div>
 
