@@ -88,11 +88,6 @@ public class ExamReportRepository {
 		return data;
 	}
 
-	public UserEntity selectOne2(String user_id) {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ONE,user_id);
-		UserEntity userEntity = mappingSelectResult(resultList);
-		return userEntity;
-	}
 
 	/**
 	 * (管理用)Userテーブルのデータを1件更新する(パスワード更新有).
