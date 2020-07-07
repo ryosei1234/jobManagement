@@ -28,9 +28,6 @@ public class UserRepository {
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, darkmode, role) VALUES(?, ?, ?, false, ?)";
 
-	private static final String SQL_INSERT_GONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, darkmode, role) VALUES(?, ?, ?, false, ?)";
-
-
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE m_user SET user_name = ?, role = ? WHERE user_id = ?";
 
@@ -135,21 +132,6 @@ public class UserRepository {
 						passwordEncoder.encode(data.getPassword()),
 						data.getUser_name(),
 						data.getRole());
-
-		return rowNumber;
-	}
-	/**
-	 * (一般用）新規ユーザ情報を１件登録する
-	 * @param data
-	 * @return rowNumber
-	 * @throws DataAccessException
-	 */
-	public int insertGOne(UserData data) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_INSERT_GONE,
-						data.getUser_id(),
-						passwordEncoder.encode(data.getPassword()),
-						data.getUser_name(),
-						"ROLE_GENERAL");
 
 		return rowNumber;
 	}

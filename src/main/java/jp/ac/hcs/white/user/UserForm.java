@@ -24,6 +24,4 @@ public class UserForm {
 	//ユーザ名
 	@NotBlank(message="{require_check}")
 	private String user_name;
-
-
 }

@@ -80,14 +80,4 @@ public class UserService {
 		int rowNumber = userRepository.deleteOne(user_id);
 		return rowNumber;
 	}
-/**
- * (一般用新規ユーザを１件登録する
- * @param data
- * @return userginsert
- */
-	public boolean insertGOne(UserData data) {
-	    int rowNumber = userRepository.insertGOne(data);
-	    boolean userginsert = (rowNumber > 0) ? true : false;
-		return userginsert;
-	}
 }

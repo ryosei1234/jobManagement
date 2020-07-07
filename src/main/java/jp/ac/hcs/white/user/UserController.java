@@ -188,38 +188,6 @@ public class UserController {
 		return "user/userList";
 
 	}
-/**
- * (一般用新規ユーザを一件登録する
- * @param userform
- * @param model
- * @return /login
- */
-	@GetMapping("/signup")
-	public String Ginsert(@ModelAttribute UserForm userform,Model model){
-		return "user/signup";
-	}
-
-	@PostMapping("/signup")
-	public String insertGOne(@ModelAttribute @Validated UserForm form,
-			BindingResult bindingResult,
-			Model model) {
-
-		// 入力チェックに引っかかった場合、前の画面に戻る
-		if (bindingResult.hasErrors()) {
-			return Ginsert(form,model);
-		}
-		// ダークモードと権限は初期設定
-		UserData data = new UserData();
-		data.setUser_id(form.getUser_id());
-		data.setPassword(form.getPassword());
-		data.setUser_name(form.getUser_name());
-		boolean result = false;
-		result = userService.insertGOne(data);
-
-
-		return "/login";
-
-	}
 
 
 }
