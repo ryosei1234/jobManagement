@@ -34,9 +34,6 @@
 	href="../static/css/ress.css">
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
-
-<script th:src="@{/js/gourmet.js}"></script>
-
 </head>
 
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
@@ -85,7 +82,7 @@
 
 			<div class="col-sm-6">
 				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box" sec:authorize="hasRole('STUDENT','STAFF')">
+				<div class="content-box" sec:authorize="hasRole('STUDENT')">
 					<h2>証明書発行一覧</h2>
 					<form method="get" th:action="@{/user/userList}">
 						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>

@@ -34,9 +34,6 @@
 	href="../static/css/ress.css">
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
-
-<script th:src="@{/js/task.js}"></script>
-
 </head>
 
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
@@ -67,42 +64,47 @@
 	</nav>
 
 	<!-- コンテンツ -->
-	<h2>受験報告一覧画面</h2>
-	<td class="text-nowrap"><a class="btn btn-success"
-		th:href="@{'/user/userInsert'}">作成</a></td>
+	<div class="container text-left">
+		<div class="content-box">
 
-	<td class="text-nowrap"><a class="btn btn-success"
-		th:href="@{'/user/userInsert'}">詳細</a></td>
+			<h2>受験報告一覧画面</h2>
 
-	<form method="post" th:action="@{/zip}">
-		<div class="input-group">
-			<input type="number" class="form-control" name="zipcode"
-				placeholder="ここに入力"> <span class="input-group-btn">
-				<button type="submit" class="btn btn-success">検索</button>
-			</span>
+			<td class="text-nowrap"><a class="btn btn-success"
+				th:href="@{'/user/userInsert'}">作成</a></td>
+			<td class="text-nowrap"><a class="btn btn-success"
+				th:href="@{'/user/userInsert'}">詳細</a></td>
+
+			<form method="post" th:action="@{/zip}">
+				<div class="input-group">
+					<input type="text" class="form-control" name="zipcode"
+						placeholder="ここに入力"> <span
+						class="input-group-btn">
+						<button type="submit" class="btn btn-success">検索</button>
+					</span>
+				</div>
+			</form>
+
+
+			<table class="table table-hover table-striped table-responsive">
+				<tr>
+					<th class="text-nowrap">No</th>
+					<th class="text-nowrap">日付</th>
+					<th class="text-nowrap">企業名</th>
+					<th class="text-nowrap">報告状況</th>
+				</tr>
+				<tr th:each="user : ${userEntity.userlist}" th:object="${user}">
+					<td class="text-nowrap" th:text="*{no}"></td>
+					<td class="text-nowrap" th:text="*{date}"></td>
+					<td class="text-nowrap" th:text="*{company_name}"></td>
+					<td class="text-nowrap" th:text="*{reort}"></td>
+				</tr>
+			</table>
+
+			<td class="text-nowrap"><a class="btn btn-success"
+				th:href="@{'/user/userInsert'}">出力</a></td>
+
 		</div>
-	</form>
-
-	<h2>ユーザ一覧</h2>
-	<table class="table table-hover table-striped table-responsive" >
-		<tr>
-			<th class="text-nowrap">No</th>
-			<th class="text-nowrap">日付</th>
-			<th class="text-nowrap">企業名</th>
-			<th class="text-nowrap">報告状態</th>
-		</tr>
-		
-		<tr th:each="user : ${userEntity.userlist}" th:object="${user}">
-			<td class="text-nowrap" th:text="*{user_id}"></td>
-			<td class="text-nowrap" th:text="*{user_name}"></td>
-			<td class="text-nowrap" th:text="*{darkmode}"></td>
-			<td class="text-nowrap" th:text="*{role}"></td>
-		</tr>
-	</table>
-
-	<form method="post" th:action="@{/task/csv}">
-		<button type="submit" class="btn btn-info">CSV出力</button>
-	</form>
+	</div>
 
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
