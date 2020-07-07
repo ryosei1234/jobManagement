@@ -22,11 +22,17 @@ CREATE TABLE IF NOT EXISTS m_user (
 
 
 
-/* 受験報告テーブル
-CREATE TABLE IF NOT EXISTS task (
-  id INT PRIMARY KEY,
-  user_id VARCHAR(50),
-  comment VARCHAR(200),
-  limitday DATE
+/*受験報告テーブル*/
+CREATE TABLE IF NOT EXISTS examreport (
+  examreport_id VARCHAR(10) PRIMARY KEY,
+  department CHAR(1),
+  company_name_top CHAR(3),
+  report_day DATE,
+  recruitment_number VARCHAR(10),
+  company_name VARCHAR(50),
+  exam_application_place VARCHAR(50),
+  exam_date_time DATE,
+  examination_location VARCHAR(50),
+  remarks VARCHAR(600),
+  Exam_report_status VARCHAR(10)
 );
-*/
