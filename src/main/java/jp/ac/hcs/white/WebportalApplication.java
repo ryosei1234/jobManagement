@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JobManagementWhiteApplication {
+public class WebportalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JobManagementWhiteApplication.class, args);
-		System.out.println("aaa");
-			}
+		SpringApplication.run(WebportalApplication.class, args);
+	}
 
 }

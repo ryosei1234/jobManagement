@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>WebPortal Login</title>
+<meta id="viewport" name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="manifest" th:href="@{/css/manifest.json}"
+	crossorigin="use-credentials">
+
+<meta name="application-name" content="WebPortal">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WebPortal">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="icon" th:href="@{/css/WP.png}" sizes="192x192"
+	href="../static/css/WP.png">
+<link rel="shortcut icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="58x58">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/ress.css}"
+	href="../static/css/ress.css">
+<link rel="stylesheet" th:href="@{/css/home.css}"
+	href="../static/css/home.css">
+
+</head>
+
+<body>
+	<div class="container">
+		<h1>
+			<a class="navbar-brand title-font" th:href="@{/}">WebPortal.com</a>
+		</h1>
+
+		<hr>
+
+		<h2>ログイン</h2>
+		<div class="input-form">
+			<!-- view error message -->
+			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+				th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+				class="text-danger">ログインエラーメッセージ</p>
+
+			<form method="post" th:action="@{/login}">
+				<label for="user_id">ユーザID(メールアドレス)</label> <input type="text"
+					class="form-control input-box" name="user_id"
+					placeholder="xxxxxxx@xxx.xxx"> <label for="password">パスワード</label>
+				<input type="password" class="form-control input-box"
+					name="password" placeholder="xxxxxxxx">
+				<button type="submit" class="btn btn-primary">ログイン</button>
+			</form>
+		</div>
+
+		<hr>
+
+		<a th:href="@{'/signup'}">新規ユーザ登録はこちら</a>
+
+	</div>
+
+	<!-- common js -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+</html>
