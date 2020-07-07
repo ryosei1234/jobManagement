@@ -13,11 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExamReportService {
 
 	@Autowired
-	ExamReportRepository examreportRepository;
+	ExamReportRepository examRepository;
 
 
 	public ExamReportEntity selectAll(String userId) throws DataAccessException {
 
-		return examreportRepository.selectAll(userId);
+		String role = examRepository.selectRole(userId);
+
+		return examRepository.selectAll(userId,role);
 	}
+
+	public boolean insertOne(ExamReportData examdata) throws DataAccessException {
+		int lowNumber = examRepository.insertOne(examdata);
+	}
+
 }

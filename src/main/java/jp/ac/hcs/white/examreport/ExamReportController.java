@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ExamReportController {
 
 	@Autowired
-	ExamReportService examreportService;
+	ExamReportService examService;
 
 	/**
 	 *
@@ -26,12 +26,11 @@ public class ExamReportController {
 	 * @return 受験報告一覧画面
 	 */
 	@PostMapping("/exam/examlist")
-	public String getExamList(Principal principal, Model model) {
-
+	public String getExamList(Principal principal, Model model ) {
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 
-		ExamReportEntity examreportEntity = examreportService.selectAll(principal.getName());
-		model.addAttribute("examreportEntity",examreportEntity);
+		ExamReportEntity examEntity = examService.selectAll(principal.getName());
+		model.addAttribute("examEntity",examEntity);
 
 		return "exam/examlist";
 	}
