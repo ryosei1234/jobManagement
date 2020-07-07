@@ -35,7 +35,7 @@ public class UserData {
 	 * - OFF : false
 	 * ユーザ作成時はfalse固定
 	 */
-	private boolean darkmode;
+	private boolean user_darkmode;
 
 	/**
 	 * 権限

@@ -79,7 +79,7 @@ public class UserController {
 			// データ表示準備(パスワードは暗号化済の為、表示しない)
 			form.setUser_id(data.getUser_id());
 			form.setUser_name(data.getUser_name());
-			form.setDarkmode(data.isDarkmode());
+			form.setDarkmode(data.isUser_darkmode());
 			form.setRole(data.getRole());
 			model.addAttribute("userFormForUpdate", form);
 		}
