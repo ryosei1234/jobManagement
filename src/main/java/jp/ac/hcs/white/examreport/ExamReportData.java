@@ -23,5 +23,5 @@ public class ExamReportData {
 	  private Date exam_date_time;
 	  private String examination_location;
 	  private String remarks;
-	  private String exam_report_status ;
+	  private String exam_report_status;
 }

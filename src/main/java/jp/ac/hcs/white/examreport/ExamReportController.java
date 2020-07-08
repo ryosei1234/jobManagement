@@ -1,11 +1,13 @@
 package jp.ac.hcs.white.examreport;
 
 import java.security.Principal;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,5 +35,37 @@ public class ExamReportController {
 		model.addAttribute("examEntity",examEntity);
 
 		return "exam/examlist";
+	}
+
+	@PostMapping("/exam/insert")
+	public String postExamInsert(@RequestParam("examreport_id") String examreport_id, @RequestParam("department") String department,
+			@RequestParam("company_name_top") String company_name_top, @RequestParam("report_day") Date report_day,
+			@RequestParam("recruitment_number") int recruitment_number, @RequestParam("company_name") String company_name,
+			@RequestParam("exam_application_place") String exam_application_place,@RequestParam("exam_date_time") String exam_date_time,
+			@RequestParam("examination_location") String examination_location, @RequestParam("remarks") String remarks,
+			@RequestParam("exam_report_status") String exam_report_status, Principal principal,Model model) {
+
+			ExamReportData data = new ExamReportData();
+			data.setExamreport_id(examreport_id);
+			data.setDepartment(department);
+			data.setCompany_name_top(company_name_top);
+			data.setReport_day(report_day);
+			data.setRecruitment_number(recruitment_number);
+			data.setCompany_name(company_name);
+			data.setExam_application_place(exam_application_place);
+			data.setExamination_location(examination_location);
+			data.setRemarks(remarks);
+			data.setExam_report_status(exam_report_status);
+
+			boolean result = examService.insertOne(data);
+
+			if (result) {
+				log.info("[" + principal.getName() + "]受験報告登録成功");
+			} else {
+				log.warn("[" + principal.getName() + "]受験報告登録失敗");
+			}
+
+			return getExamList(principal, model);
+
 	}
 }

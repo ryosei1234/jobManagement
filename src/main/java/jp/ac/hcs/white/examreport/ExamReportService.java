@@ -20,15 +20,19 @@ public class ExamReportService {
 
 		examRepository.selectOne(userId);
 
-		ExamReportData data = new ExamReportData();
-		 String userRole = data.getUser_role();
+		//ExamReportData data = new ExamReportData();
 
-		return examRepository.selectAll(userId,userRole);
+		return examRepository.selectAll();
 	}
+
 
 	public boolean insertOne(ExamReportData examdata) throws DataAccessException {
-		//int lowNumber = examRepository.insertOne(examdata);
-		return false;
+		int rowNumber = examRepository.insertOne(examdata);
+		boolean result = (rowNumber> 0) ? true : false;
+		return result;
 	}
+
+
+	//public boolean deleteOne(ExamReportData )
 
 }
