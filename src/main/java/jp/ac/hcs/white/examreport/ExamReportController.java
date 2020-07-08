@@ -64,7 +64,6 @@ public class ExamReportController {
 			} else {
 				log.warn("[" + principal.getName() + "]受験報告登録失敗");
 			}
-
 			return getExamList(principal, model);
 
 	}
