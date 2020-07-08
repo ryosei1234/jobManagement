@@ -125,14 +125,10 @@ public class UserController {
 
 		boolean result = false;
 
-		if (form.getPassword() == null || form.getPassword().equals("")) {
-			// パスワード更新無
-			result = userService.updateOne(data);
-		} else {
-			// パスワード更新有
-			data.setPassword(form.getPassword());
+	// パスワード更新有
+		data.setPassword(form.getPassword());
 			result = userService.updateOneWithPassword(data);
-		}
+
 
 		if (result) {
 			log.info("[" + principal.getName() + "]ユーザ更新成功");

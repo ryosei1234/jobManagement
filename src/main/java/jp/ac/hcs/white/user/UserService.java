@@ -43,17 +43,6 @@ public class UserService {
 		return result;
 	}
 
-
-	/**
-	 * (管理用)ユーザ情報を1件更新する(パスワード更新無).
-	 * @param userData 更新するユーザ情報(パスワードは設定しない)
-	 * @return 処理結果(成功:true, 失敗:false)
-	 */
-	public boolean updateOne(UserData userData) {
-		int rowNumber = userRepository.updateOne(userData);
-		boolean result = (rowNumber > 0) ? true : false;
-		return result;
-	}
 	/**
 	 * (管理用)Userテーブルのデータを1件追加する
 	 * @param user_id
@@ -77,5 +66,10 @@ public class UserService {
 		userData.setCreated_user_id(created_user_id);
 		int userinsert = userRepository.insertOne(userData);
 		return userinsert;
+	}
+
+	public int deleteOne(String user_id) {
+		int rowNumber = userRepository.deleteOne(user_id);
+		return rowNumber;
 	}
 }
