@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>WebPortal UserDetail</title>
+<meta id="viewport" name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="manifest" th:href="@{/css/manifest.json}"
+	crossorigin="use-credentials">
+
+<meta name="application-name" content="WebPortal">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WebPortal">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="icon" th:href="@{/css/WP.png}" sizes="192x192"
+	href="../static/css/WP.png">
+<link rel="shortcut icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="58x58">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/ress.css}"
+	href="../static/css/ress.css">
+<link rel="stylesheet" th:href="@{/css/home.css}"
+	href="../static/css/home.css">
+
+<style>
+.view-mail {
+	font-size: 1.5rem;
+}
+</style>
+
+</head>
+
+<body th:classappend="${session.isDarkmode} ? 'mode-dark'">
+	<!-- common header bg-danger managed-link -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+		<h1>
+			<a class="navbar-brand title-font" th:href="@{/user/userList}">就活ポータル.com</a>
+		</h1>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarToggler" aria-controls="navbarToggler"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarToggler">
+			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/change}"> <img class="config-img"
+						th:src="@{/css/config.png}" src="../static/css/config.png">
+				</a></li>
+				<li>
+					<form class="my-2 my-lg-0" method="post" th:action="@{/logout}">
+						<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- contents -->
+	<div class="container">
+		<div class="content-box">
+			<h2>受験報告詳細画面</h2>
+			<label for="user_id">受験報告ID</label>
+					<p class="view-mail" th:text="*{no}"></p>
+					<input type="hidden" name="no" th:value="*{no}">
+
+			<div class="input-form">
+				<form method="post" th:action="@{/user/userDetail}"
+					th:object="${userFormForUpdate}">
+
+					<label for="password">クラス番号</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+						<input type="password" class="form-control" name="password"
+							placeholder="xxxxxxxx" th:field="*{password}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}">password error</span>
+						<p>※未入力の場合、前のパスワードを維持します</p>
+					</div>
+
+					<label for="user_name">氏名</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="user_name">求人番号</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="user_name">試験の申込経路</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="checkbox" name="riyu" value="1">学校斡旋 
+						<input type="checkbox" name="riyu" value="1">ネット
+						<input type="checkbox" name="riyu" value="1">斡旋サイト
+						<input type="checkbox" name="riyu" value="1">企業HP
+						<input type="checkbox" name="riyu" value="1">新聞・雑誌
+						<input type="checkbox" name="riyu" value="1">ジョブカフェ等
+						<input type="checkbox" name="riyu" value="1">
+						<script>
+						if ()
+						</script>
+						
+						<span class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="user_name">日時</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="user_name">受験場所</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="user_name">試験内容</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
+
+					<label for="role">権限設定</label>
+					<div class="form-group input-box">
+						<div th:each="item : ${radioRole}">
+							<input type="radio" name="radioRole" th:text="${item.key}"
+								th:value="${item.value}" th:field="*{role}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+							th:errors="*{role}">role error</span>
+					</div>
+					<button class="btn btn-primary" type="submit" name="update">更新</button>
+					<button class="btn btn-primary" type="submit" name="delete">削除</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- common js -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+</html>
