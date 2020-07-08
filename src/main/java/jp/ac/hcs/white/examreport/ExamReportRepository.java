@@ -1,5 +1,6 @@
 package jp.ac.hcs.white.examreport;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import jp.ac.hcs.white.user.UserData;
-import jp.ac.hcs.white.user.UserEntity;
-
 /**
  * ユーザ情報のデータを管理する.
  * - Userテーブル
@@ -20,17 +18,17 @@ import jp.ac.hcs.white.user.UserEntity;
 public class ExamReportRepository {
 
 	/** SQL 全件取得（ユーザID昇順） */
-	private static final String SQL_SELECT_ALL = "SELECT * FROM m_user order by user_id";
+	private static final String SQL_SELECT_ALL = "SELECT * FROM ExamReportData order by examreport_id";
 
 	/** SQL 1件取得 */
-	private static final String SQL_SELECT_ONE = "SELECT * FROM m_user WHERE user_id = ?";
+	private static final String SQL_SELECT_ONE = "SELECT * FROM ExamReportData WHERE examreport_id = ?";
 
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_darkmode, user_role) VALUES(?, ?, ?, false, ?)";
+	private static final String SQL_INSERT_ONE = "INSERT INTO ExamReportData(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,exam_application_place,exam_date_time,examination_location,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE m_user SET user_name = ?, user_role = ? WHERE user_id = ?";
+	private static final String SQL_UPDATE_ONE = "UPDATE ExamReportData SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,exam_application_place=?,exam_date_time=?,examination_location=?,remarks=?,exam_report_status=?";
 
 
 	@Autowired
@@ -44,9 +42,9 @@ public class ExamReportRepository {
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public ExamReportEntity selectAll(String userId, String userRole) throws DataAccessException {
+	public ExamReportEntity selectAll(String ExamReportData) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
-		ExamReportEntity examreportEntity = mappingSelectResult(resultList);
+		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
 		return examreportEntity;
 	}
 
@@ -55,32 +53,24 @@ public class ExamReportRepository {
 	 * @param resultList Userテーブルから取得したデータ
 	 * @return UserEntity
 	 */
-	private UserEntity mappingSelectUserResult(List<Map<String, Object>> resultList) {
-		UserEntity entity = new UserEntity();
-
-		for (Map<String, Object> map : resultList) {
-			UserData data = new UserData();
-			data.setUser_id((String) map.get("user_id"));
-			data.setUser_name((String) map.get("user_name"));
-			data.setUser_darkmode((boolean) map.get("darkmode"));
-			data.setRole((String) map.get("role"));
-
-			entity.getUserlist().add(data);
-		}
-		return entity;
-	}
-
-
-	private ExamReportEntity mappingSelectResult(List<Map<String, Object>> resultList) {
+	private ExamReportEntity mappingSelectExamResult(List<Map<String, Object>> resultList) {
 		ExamReportEntity entity = new ExamReportEntity();
 
 		for (Map<String, Object> map : resultList) {
 			ExamReportData data = new ExamReportData();
-			data.setUser_id((String) map.get("user_id"));
-			data.setUser_name((String) map.get("user_name"));
-			data.setUser_darkmode((boolean) map.get("darkmode"));
-			data.setUser_role((String) map.get("role"));
-
+			data.setExamreport_id((String) map.get("examreport_id"));
+			data.setDepartment((String) map.get("department"));
+			data.setCompany_name_top((String) map.get("company_name_top"));
+			data.setReport_day((Date) map.get("report_day"));
+			data.setRecruitment_number((int) map.get("recruitment_number"));
+			data.setExamreport_id((String) map.get("examreport_id"));
+			data.setDepartment((String) map.get("department"));
+			data.setCompany_name((String) map.get("company_name"));
+			data.setExam_application_place((String) map.get("exam_application_place"));
+			data.setExam_date_time((Date) map.get("exam_date_time"));
+			data.setExamination_location((String) map.get("examination_location"));
+			data.setRemarks((String) map.get("remarks"));
+			data.setExam_report_status((String) map.get("exam_report_status"));
 			entity.getExamlist().add(data);
 		}
 		return entity;
@@ -93,11 +83,11 @@ public class ExamReportRepository {
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public UserData selectOne(String user_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ONE, user_id);
-		UserEntity entity = mappingSelectUserResult(resultList);
+	public ExamReportData selectOne(String examreport_id) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ONE, examreport_id);
+		ExamReportEntity entity = mappingSelectExamResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
-		UserData data = entity.getUserlist().get(0);
+		ExamReportData data = entity.getExamlist().get(0);
 		return data;
 	}
 
@@ -107,11 +97,18 @@ public class ExamReportRepository {
 	 * @return 更新データ数
 	 * @throws DataAccessException
 	 */
-	public int updateOne(UserData userData) throws DataAccessException {
+	public int updateOne(ExamReportData ExamReportData) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
-				userData.getUser_name(),
-				userData.getRole(),
-				userData.getUser_id());
+				ExamReportData.getDepartment(),
+				ExamReportData.getCompany_name_top(),
+				ExamReportData.getReport_day(),
+				ExamReportData.getRecruitment_number(),
+				ExamReportData.getCompany_name(),
+				ExamReportData.getExam_application_place(),
+				ExamReportData.getExam_date_time(),
+				ExamReportData.getExamination_location(),
+				ExamReportData.getRemarks()
+				);
 		return rowNumber;
 	}
 
@@ -121,12 +118,19 @@ public class ExamReportRepository {
 	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
-	public int insertOne(UserData data) throws DataAccessException {
+	public int insertOne(ExamReportData data) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
-						data.getUser_id(),
-						passwordEncoder.encode(data.getPassword()),
-						data.getUser_name(),
-						data.getRole());
+						data.getExamreport_id(),
+						data.getDepartment(),
+						data.getCompany_name_top(),
+						data.getReport_day(),
+						data.getRecruitment_number(),
+						data.getCompany_name(),
+						data.getExam_application_place(),
+						data.getExam_date_time(),
+						data.getExamination_location(),
+						data.getRemarks(),
+						data.getExam_report_status());
 
 		return rowNumber;
 	}

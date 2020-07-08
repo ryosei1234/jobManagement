@@ -1,5 +1,7 @@
 package jp.ac.hcs.white.examreport;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,38 +13,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExamReportData {
 
-	/**
-	 * ユーザID（メールアドレス）
-	 * 主キー、必須入力、メールアドレス形式
-	 */
-	private String user_id;
-
-	/**
-	 * パスワード
-	 * 必須入力、長さ4から100桁まで、半角英数字のみ
-	 */
-	private String password;
-
-	/**
-	 * ユーザ名
-	 * 必須入力
-	 */
-	private String user_name;
-
-	/**
-	 * ダークモードフラグ
-	 * - ON  : true
-	 * - OFF : false
-	 * ユーザ作成時はfalse固定
-	 */
-	private boolean user_darkmode;
-
-	/**
-	 * 権限
-	 * - 管理 : "ROLE_ADMIN"
-	 * - 一般 : "ROLE_GENERAL"
-	 * 必須入力
-	 */
-	private String user_role;
-
+	  private String examreport_id ;
+	  private String department ;
+	  private String company_name_top ;
+	  private Date report_day ;
+	  private int recruitment_number ;
+	  private String company_name ;
+	  private String exam_application_place ;
+	  private Date exam_date_time;
+	  private String examination_location;
+	  private String remarks;
+	  private String exam_report_status ;
 }
