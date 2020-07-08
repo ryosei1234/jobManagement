@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 <meta charset="UTF-8">
 <title>WebPortal Main</title>
-
 <!-- モバイル設定 -->
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -16,7 +14,6 @@
 <meta name="apple-mobile-web-app-title" content="WebPortal">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <!-- アイコン設定 -->
 <link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
 	href="../static/img/XXX.png">
@@ -24,7 +21,6 @@
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
-
 <!-- スタイル設定 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -35,13 +31,11 @@
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
 </head>
-
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-
 	<!-- 共通ヘッダ -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
-			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
+			<a class="navbar-brand title-font" th:href="@{/}">WebPortal.com</a>
 		</h1>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarToggler" aria-controls="navbarToggler"
@@ -62,47 +56,31 @@
 			</ul>
 		</div>
 	</nav>
-
 	<!-- コンテンツ -->
 	<div class="container">
-		<div class="row">
-
-			<div class="col-sm-6">
-				<div class="content-box">
-					<h2>受験報告一覧</h2>
-					<form method="post" th:action="@{/examreport/examlist}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">受験報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box" sec:authorize="hasRole('STUDENT')">
-					<h2>証明書発行一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>
-					</form>
-				</div>
-			</div>
-
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
-					<h2>ユーザ新規登録</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">ユーザ新規登録画面へ</button>
-					</form>
-				</div>
-			</div>
-
+		<div class="content-box">
+			<h2>タスク管理</h2>
+			<hr>
+			<form method="post"  th:action="@{/signup}" id="form_user" th:object="${userForm}" >
+					<p>ユーザID(メールアドレス)</p>
+					<div class="form-group input-box" th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
+					<input type="text" class="form-control" name="user_id" placeholder="xxxxxxx@xxx.xxx" th:field="*{user_id}">
+					<span class="text-danger" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id error</span></div>
+					<p>パスワード</p>
+					<div class="form-group input-box" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+					<input type="password" class="form-control" name="password" placeholder="xxxxxxxxxx" th:field="*{password}">
+					<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span></div>
+					<p>ユーザ名</p>
+					<div class="form-group input-box" th:classappend="${#fields.hasErrors('user_name')}? 'has-error'">
+					<input type="text" class="form-control" name="user_name" placeholder="情報 太郎" th:field="*{user_name}">
+					<span class="text-danger" th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">user_name error</span></div>
+					</div>
+				<span class="input-group-btn">
+					<input type="submit"  id="action" class="btn btn-warning" value="登録">
+				</span>
+			</form>
 		</div>
 	</div>
-
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
