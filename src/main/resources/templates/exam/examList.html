@@ -92,13 +92,13 @@
 					<th class="text-nowrap">企業名</th>
 					<th class="text-nowrap">報告状況</th>
 				</tr>
-				<tr th:each="user : ${userEntity.userlist}" th:object="${user}">
-					<td class="text-nowrap" th:text="*{no}"></td>
-					<td class="text-nowrap" th:text="*{date}"></td>
+				<tr th:each="exam : ${examEntity.examlist}" th:object="${exam}">
+					<td class="text-nowrap" th:text="*{examreport_id}"></td>
+					<td class="text-nowrap" th:text="*{exam_date_time}"></td>
 					<td class="text-nowrap" th:text="*{company_name}"></td>
-					<td class="text-nowrap" th:text="*{reort}"></td>
+					<td class="text-nowrap" th:text="*{exam_report_status}"></td>
 					<td class="text-nowrap"><a class="btn btn-success"
-						th:href="@{'/exam/examDetail/' + *{user_id}}">詳細</a></td>
+						th:href="@{'/exam/examDetail/' + *{examreport_id}}">詳細</a></td>
 				</tr>
 			</table>
 
