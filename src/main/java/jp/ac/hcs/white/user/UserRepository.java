@@ -60,11 +60,11 @@ public class UserRepository {
 			UserData data = new UserData();
 			data.setUser_id((String) map.get("user_id"));
 			data.setUser_name((String) map.get("user_name"));
-			data.setUser_class((String)map.get("user_class"));
-			data.setUser_darkmode((boolean) map.get("darkmode"));
+			//data.setUser_class((String)map.get("user_class"));
+			data.setUser_darkmode((boolean) map.get("user_darkmode"));
 			data.setRole((String) map.get("user_role"));
-			data.setUser_student_no((int)map.get("user_student_no"));
-			data.setUser_status((String)map.get("user_status"));
+			//data.setUser_student_no((int)map.get("user_student_no"));
+			//data.setUser_status((String)map.get("user_status"));
 			entity.getUserlist().add(data);
 		}
 		return entity;
