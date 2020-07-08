@@ -32,8 +32,9 @@ public class UserController {
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioRole() {
 		Map<String, String> radio = new LinkedHashMap<>();
-		radio.put("管理", "ROLE_ADMIN");
-		radio.put("一般", "ROLE_GENERAL");
+		radio.put("学生", "ROLE_STUDENT");
+		radio.put("担任", "ROLE_TEACHER");
+		radio.put("事務","ROLE_STAFF" );
 		return radio;
 	}
 
@@ -116,6 +117,11 @@ public class UserController {
 		data.setUser_id(form.getUser_id());
 		data.setUser_name(form.getUser_name());
 		data.setRole(form.getRole());
+		data.setUser_class(form.getUser_class());
+		data.setUser_student_no(form.getUser_student_no());
+		data.setUser_status(form.getUser_status());
+		data.setUpdate_at(form.getUpdate_at());
+		data.setUpdate_user_id(form.getUpdate_user_id());
 
 		boolean result = false;
 
@@ -152,7 +158,11 @@ public class UserController {
 	@PostMapping("/user/userInsert")
 	public String insertOne(Principal principal,Model model, @RequestParam(value="user_id",required = false) String user_id ,
 			@RequestParam(value="password", required = false) String password , @RequestParam(value="user_name",required = false) String user_name ,
-			@RequestParam(value="role",required = false) String role,@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult) {
+			@RequestParam(value="role",required = false) String role,@RequestParam(value="user_class",required = false) String user_class,
+			@RequestParam(value="user_student_no",required = false) int user_student_no,@RequestParam(value="user_status",required = false) String user_status,
+			@RequestParam(value="user_name",required = false) String created_at,@RequestParam(value="created_user_id",required = false) String created_user_id,
+			@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult)
+			{
 		if(bindingResult.hasErrors()) {
 			return insert(userformin,model);
 		}
@@ -160,35 +170,11 @@ public class UserController {
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 		log.info(password);
 
-		int insert = userService.insertOne(user_id,password , user_name , role);
+		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no, user_status, created_at, created_user_id);
 		UserEntity userEntity = userService.selectAll();
 		model.addAttribute("userform",userformin);
 		model.addAttribute("userEntity",userEntity);
 		return "user/userList";
 	}
-
-
-/**
- * 1件分のユーザ情報でデータベースを削除する.
- * @param user_id
- * @param principal
- * @param model
- * @return user/userList
- */
-
-	@PostMapping(value="/user/userDetail", params="delete")
-	public String postUserDetailDeleat(@RequestParam("user_id")String user_id,
-			Principal principal,
-			Model model) {
-
-		int delete = userService.deleteOne(user_id);
-
-		UserEntity userEntity = userService.selectAll();
-		model.addAttribute("userEntity",userEntity);
-		return "user/userList";
-
-	}
-
-
 }
 

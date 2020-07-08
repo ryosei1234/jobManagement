@@ -45,4 +45,39 @@ public class UserData {
 	 */
 	private String role;
 
+	/**
+	 *
+	 */
+	private String user_class;
+
+	/**
+	 *
+	 */
+	private int user_student_no;
+
+	/**
+	 *
+	 */
+	private String user_status;
+
+	/**
+	 *
+	 */
+	private String created_at;
+
+	/**
+	 *
+	 */
+	private String created_user_id;
+
+	/**
+	 *
+	 */
+	private String update_at;
+
+	/**
+	 *
+	 */
+	private String update_user_id;
+
 }

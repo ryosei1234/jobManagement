@@ -62,22 +62,20 @@ public class UserService {
 	 * @param role
 	 * @return userinsert
 	 */
-	public int insertOne(String user_id,String password, String user_name, String role) {
+	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no, String user_status,
+						String created_at, String created_user_id) {
+
 		UserData userData = new UserData();
 		userData.setUser_id(user_id);
 		userData.setPassword(password);
 		userData.setUser_name(user_name);
 		userData.setRole(role);
+		userData.setUser_class(user_class);
+		userData.setUser_student_no(user_student_no);
+		userData.setUser_status(user_status);
+		userData.setCreated_at(created_at);
+		userData.setCreated_user_id(created_user_id);
 		int userinsert = userRepository.insertOne(userData);
 		return userinsert;
-	}
-	/**
-	 * (管理用)Userテーブルのデータを1件削除する
-	 * @param user_id
-	 * @return rowNumber
-	 */
-	public int deleteOne(String user_id) {
-		int rowNumber = userRepository.deleteOne(user_id);
-		return rowNumber;
 	}
 }
