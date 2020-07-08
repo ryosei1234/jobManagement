@@ -108,17 +108,14 @@
 					<label for="user_name">試験の申込経路</label>
 					<div class="form-group input-box"
 						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
-						<input type="checkbox" name="riyu" value="1">学校斡旋 
+						<input type="checkbox" name="riyu" value="1">学校斡旋
 						<input type="checkbox" name="riyu" value="1">ネット
 						<input type="checkbox" name="riyu" value="1">斡旋サイト
 						<input type="checkbox" name="riyu" value="1">企業HP
 						<input type="checkbox" name="riyu" value="1">新聞・雑誌
 						<input type="checkbox" name="riyu" value="1">ジョブカフェ等
-						<input type="checkbox" name="riyu" value="1">
-						<script>
-						if ()
-						</script>
-						
+						<input type="checkbox" name="riyu" value="1">その他
+
 						<span class="text-danger" th:if="${#fields.hasErrors('user_name')}"
 							th:errors="*{user_name}">user_name error</span>
 					</div>
@@ -136,7 +133,7 @@
 					<div class="form-group input-box"
 						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
 						<input type="text" class="form-control" name="user_name"
-							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							placeholder="受験場所" th:field="*{user_name}"> <span
 							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
 							th:errors="*{user_name}">user_name error</span>
 					</div>

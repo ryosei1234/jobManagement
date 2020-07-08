@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 <meta charset="UTF-8">
 <title>WebPortal Main</title>
-
 <!-- モバイル設定 -->
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -16,7 +14,6 @@
 <meta name="apple-mobile-web-app-title" content="WebPortal">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <!-- アイコン設定 -->
 <link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
 	href="../static/img/XXX.png">
@@ -24,7 +21,6 @@
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
-
 <!-- スタイル設定 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -35,9 +31,7 @@
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
 </head>
-
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-
 	<!-- 共通ヘッダ -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
@@ -62,47 +56,73 @@
 			</ul>
 		</div>
 	</nav>
-
 	<!-- コンテンツ -->
 	<div class="container">
-		<div class="row">
-
-			<div class="col-sm-6">
-				<div class="content-box">
-					<h2>受験報告一覧</h2>
-					<form method="post" th:action="@{/exam/examlist}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">受験報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
+		<div class="content-box">
+			<h2>受験報告新規登録作成</h2>
+			<hr>
+			<form method="post" th:action="@{/exam/examInsert}" id="form_user"
+				th:object="${userForm}">
+				<p>	企業名 先頭カナ3文字</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('recruitment')}?'has-error'">
+					<input type="number" class="form-control" name="recruitment"
+						placeholder="xxx" th:field="*{recruitment}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('recruitment')}"
+						th:errors="*{recruitment}">recruitment error</span>
 				</div>
-			</div>
 
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
-					<h2>証明書発行一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>
-					</form>
+				<p>求人番号</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('recruitment')}?'has-error'">
+					<input type="number" class="form-control" name="recruitment"
+						placeholder="xxx" th:field="*{recruitment}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('recruitment')}"
+						th:errors="*{recruitment}">recruitment error</span>
 				</div>
-			</div>
-
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
-					<h2>ユーザ一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">ユーザ一覧画面へ</button>
-					</form>
+				<p>企業名</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('company')}?'has-error'">
+					<input type="text" class="form-control" name="company"
+						placeholder="株式会社xxx" th:field="*{company}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('company')}"
+						th:errors="*{company}">company error</span>
 				</div>
-			</div>
-
+				<p>試験の申し込み経路</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('route')}?'has-error'">
+					<input type="checkbox" name="riyu" value="1">学校斡旋 <input
+						type="checkbox" name="riyu" value="1">ネット <input
+						type="checkbox" name="riyu" value="1">斡旋サイト <input
+						type="checkbox" name="riyu" value="1">企業HP <input
+						type="checkbox" name="riyu" value="1">新聞・雑誌 <input
+						type="checkbox" name="riyu" value="1">ジョブカフェ等 <input
+						type="checkbox" name="riyu" value="1">その他 <span
+						class="text-danger" th:if="${#fields.hasErrors('route')}"
+						th:errors="*{route}">route error</span>
+				</div>
+				<p>日時</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
+					<input type="datetime-local" class="form-control" name="date_time"
+						th:field="*{date_time}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
+						th:errors="*{user_id}">user_id error</span>
+				</div>
+				<p>受験場所</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
+					<input type="text" class="form-control" name="user_id"
+						placeholder="xxxxxxx@xxx.xxx" th:field="*{user_id}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
+						th:errors="*{user_id}">user_id error</span>
+				</div>
 		</div>
+		<span class="input-group-btn"> <input type="submit" id="action"
+			class="btn btn-warning" value="登録">
+		</span>
+		</form>
 	</div>
-
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
