@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.ac.hcs.white.user.UserData;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,6 +30,9 @@ public class ExamReportController {
 	 */
 	@PostMapping("/exam/examlist")
 	public String getExamList(Principal principal, Model model) {
+		UserData userdata = new UserData();
+		//TODO	selectone使う
+		System.out.println(userdata.getRole());
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 
 		ExamReportEntity examEntity = examService.selectAll(principal.getName());

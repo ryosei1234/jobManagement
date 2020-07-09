@@ -104,7 +104,8 @@ public class UserController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) {
-
+		 System.out.println(form.getUser_student_no());
+		 System.out.println();
 		// 入力チェックに引っかかった場合、前の画面に戻る
 		if (bindingResult.hasErrors()) {
 			return getUserDetail(form, form.getUser_id(), principal, model);
@@ -118,10 +119,8 @@ public class UserController {
 		data.setUser_name(form.getUser_name());
 		data.setRole(form.getRole());
 		data.setUser_class(form.getUser_class());
-		data.setUser_student_no(form.getUser_student_no());
-		data.setUser_status(form.getUser_status());
-		data.setUpdate_at(form.getUpdate_at());
-		data.setUpdate_user_id(form.getUpdate_user_id());
+		data.setUser_student_no(Integer.parseInt(form.getUser_student_no()));
+		data.setUpdate_user_id(principal.getName());
 
 		boolean result = false;
 

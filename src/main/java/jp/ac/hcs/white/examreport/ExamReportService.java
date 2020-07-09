@@ -18,11 +18,11 @@ public class ExamReportService {
 
 	public ExamReportEntity selectAll(String userId) throws DataAccessException {
 
-		examRepository.selectAll();
+		examRepository.selectAll(userId);
 
 		//ExamReportData data = new ExamReportData();
 
-		return examRepository.selectAll();
+		return examRepository.selectAll(userId);
 	}
 
 

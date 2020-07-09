@@ -37,30 +37,7 @@ public class UserFormForUpdate {
 		//出席番号
 	@NotNull
 	@NotBlank(message="{require_check}")
-	private int user_student_no;
+	private String user_student_no;
 
-		//ユーザ状態
-	@NotNull
-	@NotBlank(message="{require_check}")
-	private String user_status;
 
-	//受験報告作成日時
-	@NotNull
-	@NotBlank(message="{require_check}")
-	private String created_at;
-
-	//作成者のユーザid
-	@NotNull
-	@NotBlank(message="{require_check}")
-	private String created_user_id;
-
-	//受験報告更新日時
-	@NotNull
-	@NotBlank(message="{require_check}")
-	private String update_at;
-
-	//更新者のユーザid
-	@NotNull
-	@NotBlank(message="{require_check}")
-	private String update_user_id;
 }
