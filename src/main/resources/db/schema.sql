@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS m_user (
     user_name VARCHAR(60) NOT NULL,
     user_role VARCHAR(7) NOT NULL,
     user_class CHAR(4),
-    user_student_no CHAR(2),
+    user_student_no INT,
     user_darkmode BOOLEAN NOT NULL,
     user_status VARCHAR(7) NOT NULL,
     created_at TIMESTAMP NOT NULL,
