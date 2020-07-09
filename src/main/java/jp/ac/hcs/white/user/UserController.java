@@ -34,7 +34,7 @@ public class UserController {
 		Map<String, String> radio = new LinkedHashMap<>();
 		radio.put("学生", "ROLE_STUDENT");
 		radio.put("担任", "ROLE_TEACHER");
-		radio.put("事務","ROLE_STAFF" );
+		radio.put("事務", "ROLE_STAFF" );
 		return radio;
 	}
 
@@ -148,6 +148,11 @@ public class UserController {
 	 */
 	@GetMapping("/user/userInsert")
 	public String insert(@ModelAttribute UserFormIn userformin,Model model){
+
+		// ラジオボタンの準備
+				radioRole = initRadioRole();
+				model.addAttribute("radioRole", radioRole);
+
 		return "user/userInsert";
 	}
 
