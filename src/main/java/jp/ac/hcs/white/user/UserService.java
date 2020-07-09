@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * ユーザ情報を操作する.
  */
+@Slf4j
 @Transactional
 @Service
 public class UserService {
@@ -51,8 +54,7 @@ public class UserService {
 	 * @param role
 	 * @return userinsert
 	 */
-	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no, String user_status,
-						String created_at, String created_user_id) {
+	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no) {
 
 		UserData userData = new UserData();
 		userData.setUser_id(user_id);
@@ -61,9 +63,8 @@ public class UserService {
 		userData.setRole(role);
 		userData.setUser_class(user_class);
 		userData.setUser_student_no(user_student_no);
-		userData.setUser_status(user_status);
-		userData.setCreated_at(created_at);
-		userData.setCreated_user_id(created_user_id);
+
+		log.info("[" + userData.getUser_id() + "]ユーザ追加:" + userData.getPassword() + userData.getUser_name() + userData.getRole() + userData.getUser_student_no());
 		int userinsert = userRepository.insertOne(userData);
 		return userinsert;
 	}

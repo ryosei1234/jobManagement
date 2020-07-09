@@ -48,7 +48,7 @@ public class UserController {
 
 		UserEntity userEntity = userService.selectAll();
 		model.addAttribute("userEntity", userEntity);
-
+		System.out.println("一覧");
 		return "user/userList";
 	}
 
@@ -160,18 +160,20 @@ public class UserController {
 	public String insertOne(Principal principal,Model model, @RequestParam(value="user_id",required = false) String user_id ,
 			@RequestParam(value="password", required = false) String password , @RequestParam(value="user_name",required = false) String user_name ,
 			@RequestParam(value="role",required = false) String role,@RequestParam(value="user_class",required = false) String user_class,
-			@RequestParam(value="user_student_no",required = false) int user_student_no,@RequestParam(value="user_status",required = false) String user_status,
-			@RequestParam(value="user_name",required = false) String created_at,@RequestParam(value="created_user_id",required = false) String created_user_id,
+			@RequestParam(value="user_student_no",required = false) int user_student_no,
 			@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult)
 			{
+		System.out.println("ひん;;");
+		System.out.println(user_id + password + user_name + role + user_class + user_student_no);
 		if(bindingResult.hasErrors()) {
+			System.out.println("エラーだよ");
 			return insert(userformin,model);
 		}
-
+		System.out.println("おけまる");
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 		log.info(password);
 
-		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no, user_status, created_at, created_user_id);
+		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no);
 		UserEntity userEntity = userService.selectAll();
 		model.addAttribute("userform",userformin);
 		model.addAttribute("userEntity",userEntity);
