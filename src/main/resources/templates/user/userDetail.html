@@ -107,6 +107,25 @@
 						<span class="text-danger" th:if="${#fields.hasErrors('role')}"
 							th:errors="*{role}">role error</span>
 					</div>
+
+					<p>クラス</p>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_class')}? 'has-error'">
+						<input type="text" class="form-control" name="user_class"
+							placeholder="SxAx" th:field="*{user_class}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_class')}"
+							th:errors="*{user_class}">user_class error</span>
+					</div>
+					<p>番号</p>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_student_no')}? 'has-error'">
+						<input type="number" class="form-control" name="user_student_no"
+							placeholder="xx" th:field="*{user_student_no}"> <span
+							class="text-danger"
+							th:if="${#fields.hasErrors('user_student_no')}"
+							th:errors="*{user_student_no}">user_student_no error</span>
+					</div>
+
 					<button class="btn btn-primary" type="submit" name="update">更新</button>
 					<button class="btn btn-primary" type="submit" name="delete">削除</button>
 				</form>
