@@ -15,10 +15,10 @@ public class ExamReportData {
 
 	  private String examreport_id ;
 	  private String department ;
-	  private String company_name_top ;
+	  private String company_name_top;
 	  private Date report_day ;
-	  private int recruitment_number ;
-	  private String company_name ;
+	  private int recruitment_number;
+	  private String company_name;
 	  private String exam_application_place ;
 	  private Date exam_date_time;
 	  private String examination_location;

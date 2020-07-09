@@ -54,7 +54,7 @@ public class UserService {
 	 * @param role
 	 * @return userinsert
 	 */
-	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no) {
+	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no ,String update_id) {
 
 		UserData userData = new UserData();
 		userData.setUser_id(user_id);
@@ -65,7 +65,7 @@ public class UserService {
 		userData.setUser_student_no(user_student_no);
 
 		log.info("[" + userData.getUser_id() + "]ユーザ追加:" + userData.getPassword() + userData.getUser_name() + userData.getRole() + userData.getUser_student_no());
-		int userinsert = userRepository.insertOne(userData);
+		int userinsert = userRepository.insertOne(userData,update_id);
 		return userinsert;
 	}
 

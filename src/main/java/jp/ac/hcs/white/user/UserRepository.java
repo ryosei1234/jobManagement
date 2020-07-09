@@ -23,7 +23,8 @@ public class UserRepository {
 	private static final String SQL_SELECT_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name,  user_role, user_class,user_student_no,user_darkmode, user_status) VALUES(?, ?, ?,?,?,?, false, ?)";
+	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id) "
+									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID',sysdate ,? ,sysdate, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新有 */
 	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ? WHERE user_id = ?";
@@ -101,15 +102,16 @@ public class UserRepository {
 	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
-	public int insertOne(UserData data) throws DataAccessException {
+	public int insertOne(UserData data,String user_id) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
 						data.getUser_id(),
 						passwordEncoder.encode(data.getPassword()),
 						data.getUser_name(),
+						data.getRole(),
 						data.getUser_class(),
 						data.getUser_student_no(),
-						data.getRole(),
-						"作成中");
+						user_id,
+						user_id);
 
 
 		return rowNumber;

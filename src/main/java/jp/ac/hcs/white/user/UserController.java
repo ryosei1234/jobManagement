@@ -165,15 +165,12 @@ public class UserController {
 			{
 		System.out.println("ひん;;");
 		System.out.println(user_id + password + user_name + role + user_class + user_student_no);
-		if(bindingResult.hasErrors()) {
-			System.out.println("エラーだよ");
-			return insert(userformin,model);
-		}
+
 		System.out.println("おけまる");
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 		log.info(password);
 
-		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no);
+		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no, principal.getName());
 		UserEntity userEntity = userService.selectAll();
 		model.addAttribute("userform",userformin);
 		model.addAttribute("userEntity",userEntity);

@@ -18,7 +18,7 @@ public class ExamReportService {
 
 	public ExamReportEntity selectAll(String userId) throws DataAccessException {
 
-		examRepository.selectOne(userId);
+		examRepository.selectAll();
 
 		//ExamReportData data = new ExamReportData();
 

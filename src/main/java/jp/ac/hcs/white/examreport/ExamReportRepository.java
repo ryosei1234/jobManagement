@@ -62,7 +62,7 @@ public class ExamReportRepository {
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name_top((String) map.get("company_name_top"));
 			data.setReport_day((Date) map.get("report_day"));
-			data.setRecruitment_number((int) map.get("recruitment_number"));
+			data.setRecruitment_number((Integer) map.get("recruitment_number"));
 			data.setExamreport_id((String) map.get("examreport_id"));
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name((String) map.get("company_name"));
@@ -90,6 +90,7 @@ public class ExamReportRepository {
 		ExamReportData data = entity.getExamlist().get(0);
 		return data;
 	}
+
 
 	/**
 	 * (管理用)Userテーブルのデータを1件更新する(パスワード更新無).
