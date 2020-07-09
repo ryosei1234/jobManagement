@@ -18,17 +18,17 @@ import org.springframework.stereotype.Repository;
 public class ExamReportRepository {
 
 	/** SQL 全件取得（ユーザID昇順） */
-	private static final String SQL_SELECT_ALL = "SELECT * FROM ExamReportData order by examreport_id";
+	private static final String SQL_SELECT_ALL = "SELECT * FROM examreport order by examreport_id";
 
 	/** SQL 1件取得 */
-	private static final String SQL_SELECT_ONE = "SELECT * FROM ExamReportData WHERE examreport_id = ?";
+	private static final String SQL_SELECT_ONE = "SELECT * FROM examreport WHERE examreport_id = ?";
 
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO ExamReportData(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,exam_application_place,exam_date_time,examination_location,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
+	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,exam_application_place,exam_date_time,examination_location,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE ExamReportData SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,exam_application_place=?,exam_date_time=?,examination_location=?,remarks=?,exam_report_status=?";
+	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,exam_application_place=?,exam_date_time=?,examination_location=?,remarks=?,exam_report_status=?";
 
 
 	@Autowired
