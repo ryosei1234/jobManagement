@@ -70,13 +70,13 @@
 			<h2>受験報告一覧画面</h2>
 
 			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/user/userInsert'}">作成</a></td>
+				th:href="@{'/exam/examInsert'}">作成</a></td>
 			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/user/userInsert'}">詳細</a></td>
+				th:href="@{'/exam/examDetail'}">詳細</a></td>
 
-			<form method="post" th:action="@{/zip}">
+			<form method="post" th:action="@{/exam/examlist}">
 				<div class="input-group">
-					<input type="text" class="form-control" name="zipcode"
+					<input type="text" class="form-control" name=""
 						placeholder="ここに入力"> <span
 						class="input-group-btn">
 						<button type="submit" class="btn btn-success">検索</button>
