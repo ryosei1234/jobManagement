@@ -70,4 +70,5 @@ public class UserFormIn {
 	@NotNull
 	@NotBlank(message="{require_check}")
 	private String update_user_id;
+
 }
