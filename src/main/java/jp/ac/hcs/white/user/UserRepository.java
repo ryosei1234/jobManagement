@@ -27,7 +27,7 @@ public class UserRepository {
 									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID',sysdate ,? ,sysdate, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新有 */
-	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ? WHERE user_id = ?";
+	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? WHERE user_id = ?";
 
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
