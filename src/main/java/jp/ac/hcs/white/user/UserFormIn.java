@@ -43,7 +43,6 @@ public class UserFormIn {
 
 	//出席番号
 	@NotNull
-	@NotBlank(message="{require_check}")
 	private int user_student_no;
 
 	//ユーザ状態
@@ -70,5 +69,4 @@ public class UserFormIn {
 	@NotNull
 	@NotBlank(message="{require_check}")
 	private String update_user_id;
-
 }
