@@ -35,7 +35,7 @@
 	<!-- 共通ヘッダ -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
-			<a class="navbar-brand title-font" th:href="@{/}">WebPortal.com</a>
+			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
 		</h1>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarToggler" aria-controls="navbarToggler"
@@ -61,22 +61,60 @@
 		<div class="content-box">
 			<h2>タスク管理</h2>
 			<hr>
-			<form method="post"  th:action="@{/signup}" id="form_user" th:object="${userForm}" >
-					<p>ユーザID(メールアドレス)</p>
-					<div class="form-group input-box" th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
-					<input type="text" class="form-control" name="user_id" placeholder="xxxxxxx@xxx.xxx" th:field="*{user_id}">
-					<span class="text-danger" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id error</span></div>
-					<p>パスワード</p>
-					<div class="form-group input-box" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
-					<input type="password" class="form-control" name="password" placeholder="xxxxxxxxxx" th:field="*{password}">
-					<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span></div>
-					<p>ユーザ名</p>
-					<div class="form-group input-box" th:classappend="${#fields.hasErrors('user_name')}? 'has-error'">
-					<input type="text" class="form-control" name="user_name" placeholder="情報 太郎" th:field="*{user_name}">
-					<span class="text-danger" th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">user_name error</span></div>
+			<form method="post" th:action="@{/user/userInsert}" id="form_user"
+				th:object="${userFormIn}">
+				<p>ユーザID(メールアドレス)</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_id')} ? 'has-error'">
+					<input type="text" class="form-control" name="user_id"
+						placeholder="xxx@xxx.xxx" th:field="*{user_id}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
+						th:errors="*{user_id}">user_id error</span>
+				</div>
+				<p>パスワード</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+					<input type="password" class="form-control" name="password"
+						placeholder="xxxxxxxxxx" th:field="*{password}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('password')}"
+						th:errors="*{password}">password error</span>
+				</div>
+				<p>ユーザ名</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_name')}? 'has-error'">
+					<input type="text" class="form-control" name="user_name"
+						placeholder="情報 太郎" th:field="*{user_name}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+						th:errors="*{user_name}">user_name error</span>
+				</div>
+				<label for="role">権限設定</label>
+					<div class="form-group input-box">
+						<div th:each="item : ${radioRole}">
+							<input type="radio" name="radioRole" th:text="${item.key}"
+								th:value="${item.value}" th:field="*{role}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+							th:errors="*{role}">role error</span>
 					</div>
-				<span class="input-group-btn">
-					<input type="submit"  id="action" class="btn btn-warning" value="登録">
+				<p>クラス</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_class')}? 'has-error'">
+					<input type="text" class="form-control" name="user_class"
+						placeholder="SxAx" th:field="*{user_class}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_class')}"
+						th:errors="*{user_class}">user_class error</span>
+				</div>
+				<p>番号</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_student_no')}? 'has-error'">
+					<input type="number" class="form-control" name="user_student_no"
+						placeholder="xx" th:field="*{user_student_no}"> <span
+						class="text-danger"
+						th:if="${#fields.hasErrors('user_student_no')}"
+						th:errors="*{user_student_no}">user_student_no error</span>
+				</div>
+				<span class="input-group-btn"> <input type="submit"
+					id="action" class="btn btn-warning" value="登録">
 				</span>
 			</form>
 		</div>
