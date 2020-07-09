@@ -172,5 +172,31 @@ public class UserController {
 		model.addAttribute("userEntity",userEntity);
 		return "user/userList";
 	}
+
+	/**
+	 * 一件分のユーザを削除する
+	 * @param user_id 削除するユーザID（メールアドレス)
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return ユーザ一覧画面
+	 */
+	@PostMapping(value = "user/userDetail", params = "delete")
+	public String postUserDetailDelete(@RequestParam("user_id") String user_id,
+			Principal principal,
+			Model model) {
+		log.info("[" + principal.getName() + "]ユーザ削除:" + user_id);
+
+		boolean result = userService.deleteOne(user_id);
+
+		if (result) {
+			log.info("[" + principal.getName() + "]ユーザ削除成功");
+		} else {
+			log.warn("[" + principal.getName() + "]ユーザ削除失敗");
+		}
+
+
+		return getUserList(model);
+
+	}
 }
 

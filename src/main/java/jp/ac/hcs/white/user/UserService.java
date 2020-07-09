@@ -68,8 +68,14 @@ public class UserService {
 		return userinsert;
 	}
 
-	public int deleteOne(String user_id) {
+	/**
+	 * (管理用)ユーザ情報を1件削除する.
+	 * @param userData 削除するユーザID(メールアドレス)
+	 * @return 処理結果(成功:true, 失敗:false)
+	 */
+	public boolean deleteOne(String user_id) {
 		int rowNumber = userRepository.deleteOne(user_id);
-		return rowNumber;
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
 	}
 }
