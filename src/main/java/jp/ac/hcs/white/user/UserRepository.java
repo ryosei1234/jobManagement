@@ -108,7 +108,9 @@ public class UserRepository {
 						data.getUser_name(),
 						data.getUser_class(),
 						data.getUser_student_no(),
-						data.getRole());
+						data.getRole(),
+						"作成中");
+
 
 		return rowNumber;
 	}
