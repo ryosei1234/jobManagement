@@ -1,0 +1,62 @@
+/*
+ 共通のCSS設定を記載.
+ 1ページにしか使わない設定は、各html内で直接styleタグで指定する.
+ */
+
+body {
+	text-align: center;
+}
+
+h1 {
+	font-family: 'arial black';
+}
+
+.container {
+	margin-top: 10px;
+}
+
+.content-box {
+	min-width :250px;
+	margin: 5px;
+	padding: 10px;
+	border-radius: 3px;
+	background-color: #FFFF99;
+}
+
+.content-box ul {
+	list-style: none;
+}
+
+.title-font {
+	font-size: 2rem;
+}
+
+.config-img {
+	margin: 0 10px;
+	width: 25px;
+}
+
+.back-red {
+	background-color: red;
+}
+
+.button-logout {
+	position: fixed;
+	font-size: 1rem;
+	right: -15px;
+	top: 0px;
+}
+
+.input-form {
+	margin: 20px auto;
+	max-width: 600px;
+}
+
+.input-box {
+	margin-bottom: 30px;
+}
+
+.mode-dark {
+	color: black;
+	background-color: black;
+}

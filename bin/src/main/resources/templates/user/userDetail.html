@@ -43,7 +43,7 @@
 	<!-- common header bg-danger managed-link -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
 		<h1>
-			<a class="navbar-brand title-font" th:href="@{/user/userList}">就活ポータル.com</a>
+			<a class="navbar-brand title-font" th:href="@{/user/userList}">WebPortal.com</a>
 		</h1>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarToggler" aria-controls="navbarToggler"
@@ -68,43 +68,68 @@
 	<!-- contents -->
 	<div class="container">
 		<div class="content-box">
-			<h2>受験報告詳細画面</h2>
-			<label for="examreport_id">受験報告ID</label>
-			<p class="form-group input-box" th:text="*{examreport_id}"></p>
-			<input type="hidden" name="examreport_id" th:value="*{examreport_id}">
+			<h2>ユーザ詳細</h2>
+			<div class="input-form">
+				<form method="post" th:action="@{/user/userDetail}"
+					th:object="${userFormForUpdate}">
 
-			<label for="user_id">クラス番号</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
+					<label for="user_id">ユーザID(メールアドレス)</label>
+					<p class="view-mail" th:text="*{user_id}"></p>
+					<input type="hidden" name="user_id" th:value="*{user_id}">
 
-			<label for="user_id">氏名</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
+					<hr>
 
-			<label for="recruitment_number">求人番号</label>
-			<p class="form-group input-box" th:text="*{recruitment_number}"></p>
-			<input type="hidden" name="recruitment_number" th:value="*{recruitment_number}">
+					<label for="password">パスワード</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+						<input type="password" class="form-control" name="password"
+							placeholder="xxxxxxxx" th:field="*{password}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}">password error</span>
+						<p>※未入力の場合、前のパスワードを維持します</p>
+					</div>
 
-			<label for="company_name">企業名</label>
-			<p class="form-group input-box" th:text="*{company_name}"></p>
-			<input type="hidden" name="company_name" th:value="*{company_name}">
+					<label for="user_name">ユーザ名</label>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_name')} ? 'has-error'">
+						<input type="text" class="form-control" name="user_name"
+							placeholder="情報 太郎" th:field="*{user_name}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+							th:errors="*{user_name}">user_name error</span>
+					</div>
 
-			<label for="exam_application_place">試験の申込経路</label>
-			<p class="form-group input-box" th:text="*{exam_application_place}"></p>
-			<input type="hidden" name="exam_application_place" th:value="*{exam_application_place}">
+					<label for="role">権限設定</label>
+					<div class="form-group input-box">
+						<div th:each="item : ${radioRole}">
+							<input type="radio" name="radioRole" th:text="${item.key}"
+								th:value="${item.value}" th:field="*{role}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+							th:errors="*{role}">role error</span>
+					</div>
 
-			<label for="exam_date_time">日時</label>
-			<p class="form-group input-box" th:text="*{exam_date_time}"></p>
-			<input type="hidden" name="exam_date_time" th:value="*{exam_date_time}">
+					<p>クラス</p>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_class')}? 'has-error'">
+						<input type="text" class="form-control" name="user_class"
+							placeholder="SxAx" th:field="*{user_class}"> <span
+							class="text-danger" th:if="${#fields.hasErrors('user_class')}"
+							th:errors="*{user_class}">user_class error</span>
+					</div>
+					<p>番号</p>
+					<div class="form-group input-box"
+						th:classappend="${#fields.hasErrors('user_student_no')}? 'has-error'">
+						<input type="number" class="form-control" name="user_student_no"
+							placeholder="xx" th:field="*{user_student_no}"> <span
+							class="text-danger"
+							th:if="${#fields.hasErrors('user_student_no')}"
+							th:errors="*{user_student_no}">user_student_no error</span>
+					</div>
 
-			<label for="examination_location">受験場所</label>
-			<p class="form-group input-box" th:text="*{examination_location}"></p>
-			<input type="hidden" name="examination_location" th:value="*{examination_location}">
-
-			<label for="user_id">試験内容</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
-
+					<button class="btn btn-primary" type="submit" name="update">更新</button>
+					<button class="btn btn-primary" type="submit" name="delete">削除</button>
+				</form>
+			</div>
 		</div>
 	</div>
 

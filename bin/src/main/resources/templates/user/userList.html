@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>WebPortal UserDetail</title>
+<title>WebPortal ユーザ管理</title>
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="manifest" th:href="@{/css/manifest.json}"
@@ -31,19 +31,13 @@
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
 
-<style>
-.view-mail {
-	font-size: 1.5rem;
-}
-</style>
-
 </head>
 
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-	<!-- common header bg-danger managed-link -->
+	<!-- common header bg-danger -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
 		<h1>
-			<a class="navbar-brand title-font" th:href="@{/user/userList}">就活ポータル.com</a>
+			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
 		</h1>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarToggler" aria-controls="navbarToggler"
@@ -66,44 +60,33 @@
 	</nav>
 
 	<!-- contents -->
-	<div class="container">
+	<div class="container text-left">
 		<div class="content-box">
-			<h2>受験報告詳細画面</h2>
-			<label for="examreport_id">受験報告ID</label>
-			<p class="form-group input-box" th:text="*{examreport_id}"></p>
-			<input type="hidden" name="examreport_id" th:value="*{examreport_id}">
+			<!-- 登録・更新・削除処理の結果表示用 -->
+			<label class="text-info" th:text="${result}">結果表示</label><br>
 
-			<label for="user_id">クラス番号</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
+			<h2>ユーザ一覧</h2>
+			<table class="table table-hover table-striped table-responsive">
+				<tr>
+					<th class="text-nowrap">ユーザID(メールアドレス)</th>
+					<th class="text-nowrap">ユーザ名</th>
+					<th class="text-nowrap">ダークモード</th>
+					<th class="text-nowrap">権限</th>
+					<th class="text-nowrap"></th>
+				</tr>
+				<tr th:each="user : ${userEntity.userlist}" th:object="${user}">
+					<td class="text-nowrap" th:text="*{user_id}"></td>
+					<td class="text-nowrap" th:text="*{user_name}"></td>
+					<td class="text-nowrap" th:text="*{user_darkmode}"></td>
+					<td class="text-nowrap" th:text="*{role}"></td>
+					<td class="text-nowrap"><a class="btn btn-success"
+						th:href="@{'/user/userDetail/' + *{user_id}}">詳細</a></td>
 
-			<label for="user_id">氏名</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
+				</tr>
+			</table>
 
-			<label for="recruitment_number">求人番号</label>
-			<p class="form-group input-box" th:text="*{recruitment_number}"></p>
-			<input type="hidden" name="recruitment_number" th:value="*{recruitment_number}">
-
-			<label for="company_name">企業名</label>
-			<p class="form-group input-box" th:text="*{company_name}"></p>
-			<input type="hidden" name="company_name" th:value="*{company_name}">
-
-			<label for="exam_application_place">試験の申込経路</label>
-			<p class="form-group input-box" th:text="*{exam_application_place}"></p>
-			<input type="hidden" name="exam_application_place" th:value="*{exam_application_place}">
-
-			<label for="exam_date_time">日時</label>
-			<p class="form-group input-box" th:text="*{exam_date_time}"></p>
-			<input type="hidden" name="exam_date_time" th:value="*{exam_date_time}">
-
-			<label for="examination_location">受験場所</label>
-			<p class="form-group input-box" th:text="*{examination_location}"></p>
-			<input type="hidden" name="examination_location" th:value="*{examination_location}">
-
-			<label for="user_id">試験内容</label>
-			<p class="form-group input-box" th:text="*{no}"></p>
-			<input type="hidden" name="no" th:value="*{no}">
+			<td class="text-nowrap"><a class="btn btn-success"
+						th:href="@{'/user/userInsert'}">新規登録</a></td>
 
 		</div>
 	</div>

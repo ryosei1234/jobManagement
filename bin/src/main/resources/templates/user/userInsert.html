@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 <meta charset="UTF-8">
 <title>WebPortal Main</title>
-
 <!-- モバイル設定 -->
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -16,7 +14,6 @@
 <meta name="apple-mobile-web-app-title" content="WebPortal">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <!-- アイコン設定 -->
 <link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
 	href="../static/img/XXX.png">
@@ -24,7 +21,6 @@
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
 <link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
-
 <!-- スタイル設定 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -35,9 +31,7 @@
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
 </head>
-
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-
 	<!-- 共通ヘッダ -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
@@ -62,52 +56,69 @@
 			</ul>
 		</div>
 	</nav>
-
 	<!-- コンテンツ -->
-	<div class="container text-left">
+	<div class="container">
 		<div class="content-box">
-
-			<h2>受験報告一覧画面</h2>
-
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/exam/examInsert'}">作成</a></td>
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/exam/examDetail'}">詳細</a></td>
-
-			<form method="post" th:action="@{/exam/examlist}">
-				<div class="input-group">
-					<input type="text" class="form-control" name=""
-						placeholder="ここに入力"> <span
-						class="input-group-btn">
-						<button type="submit" class="btn btn-success">検索</button>
-					</span>
+			<h2>ユーザ新規登録</h2>
+			<hr>
+			<form method="post" th:action="@{/user/userInsert}" id="form_user"
+				th:object="${userFormIn}">
+				<p>ユーザID(メールアドレス)</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_id')} ? 'has-error'">
+					<input type="text" class="form-control" name="user_id"
+						placeholder="xxx@xxx.xxx" th:field="*{user_id}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
+						th:errors="*{user_id}">user_id error</span>
 				</div>
+				<p>パスワード</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+					<input type="password" class="form-control" name="password"
+						placeholder="xxxxxxxxxx" th:field="*{password}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('password')}"
+						th:errors="*{password}">password error</span>
+				</div>
+				<p>ユーザ名</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_name')}? 'has-error'">
+					<input type="text" class="form-control" name="user_name"
+						placeholder="情報 太郎" th:field="*{user_name}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_name')}"
+						th:errors="*{user_name}">user_name error</span>
+				</div>
+				<label for="role">権限設定</label>
+					<div class="form-group input-box">
+						<div th:each="item : ${radioRole}">
+							<input type="radio" name="radioRole" th:text="${item.key}"
+								th:value="${item.value}" th:field="*{role}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+							th:errors="*{role}">role error</span>
+					</div>
+				<p>クラス</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_class')}? 'has-error'">
+					<input type="text" class="form-control" name="user_class"
+						placeholder="SxAx" th:field="*{user_class}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('user_class')}"
+						th:errors="*{user_class}">user_class error</span>
+				</div>
+				<p>番号</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('user_student_no')}? 'has-error'">
+					<input type="number" class="form-control" name="user_student_no"
+						placeholder="xx" th:field="*{user_student_no}"> <span
+						class="text-danger"
+						th:if="${#fields.hasErrors('user_student_no')}"
+						th:errors="*{user_student_no}">user_student_no error</span>
+				</div>
+				<span class="input-group-btn"> <input type="submit"
+					id="action" class="btn btn-warning" value="登録">
+				</span>
 			</form>
-
-
-			<table class="table table-hover table-striped table-responsive">
-				<tr>
-					<th class="text-nowrap">受験報告ID</th>
-					<th class="text-nowrap">日付</th>
-					<th class="text-nowrap">企業名</th>
-					<th class="text-nowrap">報告状況</th>
-				</tr>
-				<tr th:each="exam : ${examEntity.examlist}" th:object="${exam}">
-					<td class="text-nowrap" th:text="*{examreport_id}"></td>
-					<td class="text-nowrap" th:text="*{exam_date_time}"></td>
-					<td class="text-nowrap" th:text="*{company_name}"></td>
-					<td class="text-nowrap" th:text="*{exam_report_status}"></td>
-					<td class="text-nowrap"><a class="btn btn-success"
-						th:href="@{'/exam/examDetail/' + *{examreport_id}}">詳細</a></td>
-				</tr>
-			</table>
-
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/user/userInsert'}">出力</a></td>
-
 		</div>
 	</div>
-
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

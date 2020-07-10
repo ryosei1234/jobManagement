@@ -64,46 +64,41 @@
 	</nav>
 
 	<!-- コンテンツ -->
-	<div class="container text-left">
-		<div class="content-box">
+	<div class="container">
+		<div class="row">
 
-			<h2>受験報告一覧画面</h2>
-
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/exam/examInsert'}">作成</a></td>
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/exam/examDetail'}">詳細</a></td>
-
-			<form method="post" th:action="@{/exam/examlist}">
-				<div class="input-group">
-					<input type="text" class="form-control" name=""
-						placeholder="ここに入力"> <span
-						class="input-group-btn">
-						<button type="submit" class="btn btn-success">検索</button>
-					</span>
+			<div class="col-sm-6">
+				<div class="content-box">
+					<h2>受験報告一覧</h2>
+					<form method="post" th:action="@{/exam/examlist}">
+						<div class="input-button">
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-success">受験報告一覧画面へ</button>
+							</span>
+						</div>
+					</form>
 				</div>
-			</form>
+			</div>
 
+			<div class="col-sm-6">
+				<!-- 管理者のみのコンテンツ -->
+				<div class="content-box">
+					<h2>証明書発行一覧</h2>
+					<form method="get" th:action="@{/user/userList}">
+						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>
+					</form>
+				</div>
+			</div>
 
-			<table class="table table-hover table-striped table-responsive">
-				<tr>
-					<th class="text-nowrap">受験報告ID</th>
-					<th class="text-nowrap">日付</th>
-					<th class="text-nowrap">企業名</th>
-					<th class="text-nowrap">報告状況</th>
-				</tr>
-				<tr th:each="exam : ${examEntity.examlist}" th:object="${exam}">
-					<td class="text-nowrap" th:text="*{examreport_id}"></td>
-					<td class="text-nowrap" th:text="*{exam_date_time}"></td>
-					<td class="text-nowrap" th:text="*{company_name}"></td>
-					<td class="text-nowrap" th:text="*{exam_report_status}"></td>
-					<td class="text-nowrap"><a class="btn btn-success"
-						th:href="@{'/exam/examDetail/' + *{examreport_id}}">詳細</a></td>
-				</tr>
-			</table>
-
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/user/userInsert'}">出力</a></td>
+			<div class="col-sm-6">
+				<!-- 管理者のみのコンテンツ -->
+				<div class="content-box">
+					<h2>ユーザ一覧</h2>
+					<form method="get" th:action="@{/user/userList}">
+						<button type="submit" class="btn btn-success">ユーザ一覧画面へ</button>
+					</form>
+				</div>
+			</div>
 
 		</div>
 	</div>

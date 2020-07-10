@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+thead, tbody {
+  display: block;
+}
+tbody {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100px;
+}
