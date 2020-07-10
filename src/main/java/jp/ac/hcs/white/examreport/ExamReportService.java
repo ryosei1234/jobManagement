@@ -31,6 +31,12 @@ public class ExamReportService {
 		boolean result = (rowNumber> 0) ? true : false;
 		return result;
 	}
+	
+	public ExamReportData selectOne(String examreport_id) {
+		return examRepository.selectOne(examreport_id);
+
+	}
+
 
 
 	//public boolean deleteOne(ExamReportData )

@@ -6,6 +6,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,6 +72,16 @@ public class ExamReportController {
 				log.warn("[" + principal.getName() + "]受験報告登録失敗");
 			}
 			return getExamList(principal, model);
+
+	}
+	@GetMapping("/exam/examDetail/{examreport_id+.*}")
+	public String getExamDetail(@PathVariable("examreport_id") String examreport_id, Principal principal,Model model) {
+
+		ExamReportData data = examService.selectOne(examreport_id);
+
+		model.addAttribute("examdata", data);
+
+		return "exam/examDetail";
 
 	}
 }
