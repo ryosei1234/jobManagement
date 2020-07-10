@@ -23,7 +23,7 @@ public class ExamReportRepository {
 	/** SQL 1件取得 */
 	private static final String SQL_SELECT_ONE = "SELECT * FROM examreport WHERE examreport_id = ?";
 
-	private static final String SQL_SELECT_ROLE ="SELECT * FROM examreport WHERE user_id= ? ";
+	private static final String SQL_SELECT_ROLE ="SELECT role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
@@ -42,12 +42,13 @@ public class ExamReportRepository {
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public ExamReportEntity selectAll(String userId) throws DataAccessException {
+	public ExamReportEntity selectAll() throws DataAccessException {
 
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
 		return examreportEntity;
 	}
+
 
 	/**
 	 * Userテーブルから取得したデータをUserEntity形式にマッピングする.
@@ -77,7 +78,13 @@ public class ExamReportRepository {
 		}
 		return entity;
 	}
-
+	public ExamReportData selectRole(String role) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, role);
+		ExamReportEntity entity = mappingSelectExamResult(resultList);
+		// 必ず1件のみのため、最初のUserDataを取り出す
+		ExamReportData data = entity.getExamlist().get(0);
+		return data;
+	}
 
 	/**
 	 * UserテーブルからユーザIDをキーにデータを1件を取得.

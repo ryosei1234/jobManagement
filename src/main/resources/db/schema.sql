@@ -26,6 +26,9 @@ CREATE TABLE IF NOT EXISTS m_user (
 CREATE TABLE IF NOT EXISTS examreport (
   examreport_id VARCHAR(10) PRIMARY KEY,
   department CHAR(1),
+  user_name VARCHAR(60) NOT NULL,
+  user_class CHAR(4),
+  user_student_no INT,
   company_name_top CHAR(3),
   report_day DATE,
   recruitment_number INT,

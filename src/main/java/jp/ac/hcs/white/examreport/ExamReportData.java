@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ExamReportData {
-
+	  private String user_id;
+	  private String user_class;
+	  private int user_student_no;
+	  private String user_name;
+	  private String role;
 	  private String examreport_id ;
 	  private String department ;
 	  private String company_name_top;
