@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS examreport (
   Application_route VARCHAR(10),
   exam_date_time DATE,
   examination_location VARCHAR(50),
-  contens_test VARCHAR(10),
+  co_test VARCHAR(10),
   remarks VARCHAR(600),
   Exam_report_status VARCHAR(10)
 );
