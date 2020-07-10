@@ -19,9 +19,10 @@ public class ExamReportData {
 	  private Date report_day ;
 	  private int recruitment_number;
 	  private String company_name;
-	  private String exam_application_place ;
+	  private String application_route ;
 	  private Date exam_date_time;
 	  private String examination_location;
+	  private String contens_test;
 	  private String remarks;
 	  private String exam_report_status;
 }

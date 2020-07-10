@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS examreport (
   report_day DATE,
   recruitment_number INT,
   company_name VARCHAR(50),
-  Application_route VARCHAR(10),
+  application_route VARCHAR(10),
   exam_date_time DATE,
   examination_location VARCHAR(50),
   contens_test VARCHAR(10),
   remarks VARCHAR(600),
-  Exam_report_status VARCHAR(10)
+  exam_report_status VARCHAR(10)
 );

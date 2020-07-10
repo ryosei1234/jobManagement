@@ -45,8 +45,8 @@ public class ExamReportController {
 	public String postExamInsert(@RequestParam("examreport_id") String examreport_id, @RequestParam("department") String department,
 			@RequestParam("company_name_top") String company_name_top, @RequestParam("report_day") Date report_day,
 			@RequestParam("recruitment_number") int recruitment_number, @RequestParam("company_name") String company_name,
-			@RequestParam("exam_application_place") String exam_application_place,@RequestParam("exam_date_time") String exam_date_time,
-			@RequestParam("examination_location") String examination_location, @RequestParam("remarks") String remarks,
+			@RequestParam("application_route") String application_route,@RequestParam("exam_date_time") String exam_date_time,
+			@RequestParam("examination_location") String examination_location, @RequestParam("contens_test") String contens_test,@RequestParam("remarks") String remarks,
 			@RequestParam("exam_report_status") String exam_report_status, Principal principal,Model model) {
 
 			ExamReportData data = new ExamReportData();
@@ -56,8 +56,9 @@ public class ExamReportController {
 			data.setReport_day(report_day);
 			data.setRecruitment_number(recruitment_number);
 			data.setCompany_name(company_name);
-			data.setExam_application_place(exam_application_place);
+			data.setApplication_route(application_route);
 			data.setExamination_location(examination_location);
+			data.setContens_test(contens_test);
 			data.setRemarks(remarks);
 			data.setExam_report_status(exam_report_status);
 

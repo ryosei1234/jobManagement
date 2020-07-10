@@ -25,10 +25,10 @@ public class ExamReportRepository {
 
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,exam_application_place,exam_date_time,examination_location,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
+	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,exam_application_place=?,exam_date_time=?,examination_location=?,remarks=?,exam_report_status=?";
+	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
 
 
 	@Autowired
@@ -43,7 +43,7 @@ public class ExamReportRepository {
 	 * @throws DataAccessException
 	 */
 	public ExamReportEntity selectAll(String userId) throws DataAccessException {
-		
+
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
 		return examreportEntity;
@@ -67,9 +67,10 @@ public class ExamReportRepository {
 			data.setExamreport_id((String) map.get("examreport_id"));
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name((String) map.get("company_name"));
-			data.setExam_application_place((String) map.get("exam_application_place"));
+			data.setApplication_route((String) map.get("application_route"));
 			data.setExam_date_time((Date) map.get("exam_date_time"));
 			data.setExamination_location((String) map.get("examination_location"));
+			data.setContens_test((String) map.get("contens_test"));
 			data.setRemarks((String) map.get("remarks"));
 			data.setExam_report_status((String) map.get("exam_report_status"));
 			entity.getExamlist().add(data);
@@ -106,8 +107,9 @@ public class ExamReportRepository {
 				ExamReportData.getReport_day(),
 				ExamReportData.getRecruitment_number(),
 				ExamReportData.getCompany_name(),
-				ExamReportData.getExam_application_place(),
+				ExamReportData.getApplication_route(),
 				ExamReportData.getExam_date_time(),
+				ExamReportData.getContens_test(),
 				ExamReportData.getExamination_location(),
 				ExamReportData.getRemarks()
 
@@ -129,9 +131,10 @@ public class ExamReportRepository {
 						data.getReport_day(),
 						data.getRecruitment_number(),
 						data.getCompany_name(),
-						data.getExam_application_place(),
+						data.getApplication_route(),
 						data.getExam_date_time(),
 						data.getExamination_location(),
+						data.getContens_test(),
 						data.getRemarks(),
 						data.getExam_report_status());
 
