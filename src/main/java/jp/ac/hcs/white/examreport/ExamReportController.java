@@ -74,7 +74,7 @@ public class ExamReportController {
 			return getExamList(principal, model);
 
 	}
-	@GetMapping("/exam/examDetail/{examreport_id+.*}")
+	@GetMapping("/exam/examDetail/{examreport_id:.+}")
 	public String getExamDetail(@PathVariable("examreport_id") String examreport_id, Principal principal,Model model) {
 
 		ExamReportData data = examService.selectOne(examreport_id);

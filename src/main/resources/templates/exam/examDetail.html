@@ -67,7 +67,7 @@
 
 	<!-- contents -->
 	<div class="container">
-		<div class="content-box">
+		<div class="content-box" th:object="${examdata}">
 			<h2>受験報告詳細画面</h2>
 			<label for="examreport_id">受験報告ID</label>
 			<p class="form-group input-box" th:text="*{examreport_id}"></p>

@@ -23,7 +23,7 @@ public class ExamReportRepository {
 	/** SQL 1件取得 */
 	private static final String SQL_SELECT_ONE = "SELECT * FROM examreport WHERE examreport_id = ?";
 
-
+	private static final String SQL_SELECT_ROLE ="SELECT * FROM examreport WHERE user_id= ? ";
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
