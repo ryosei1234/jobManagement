@@ -16,13 +16,9 @@ public class ExamReportService {
 	ExamReportRepository examRepository;
 
 
-	public ExamReportEntity selectAll(String userId) throws DataAccessException {
-
-		examRepository.selectAll(userId);
-
+	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
 		//ExamReportData data = new ExamReportData();
-
-		return examRepository.selectAll(userId);
+		return examRepository.selectAll();
 	}
 
 
@@ -31,10 +27,13 @@ public class ExamReportService {
 		boolean result = (rowNumber> 0) ? true : false;
 		return result;
 	}
-	
+
 	public ExamReportData selectOne(String examreport_id) {
 		return examRepository.selectOne(examreport_id);
 
+	}
+	public ExamReportData selectRole(String user_id) throws DataAccessException {
+		return examRepository.selectRole(user_id);
 	}
 
 

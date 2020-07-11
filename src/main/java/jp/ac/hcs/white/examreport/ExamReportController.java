@@ -34,8 +34,10 @@ public class ExamReportController {
 		//TODO	selectone使う
 		System.out.println(principal);
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
-
-		ExamReportEntity examEntity = examService.selectAll(principal.getName());
+		ExamReportEntity examEntity;
+		ExamReportData  userrole = examService.selectRole(principal.getName());
+		System.out.println(userrole);
+		examEntity = examService.selectAll(principal.getName());
 		model.addAttribute("examEntity",examEntity);
 
 		return "exam/examlist";

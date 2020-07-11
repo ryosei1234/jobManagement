@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS examreport (
   user_student_no INT,
   company_name_top CHAR(3),
   report_day DATE,
-  recruitment_number INT,
+  recruitment_number INT,/*文字型にする*/
   company_name VARCHAR(50),
   application_route VARCHAR(10),
   exam_date_time DATE,

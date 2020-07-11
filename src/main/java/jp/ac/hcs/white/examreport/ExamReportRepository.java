@@ -78,7 +78,7 @@ public class ExamReportRepository {
 		}
 		return entity;
 	}
-	public ExamReportData selectRole(String role) throws DataAccessException {
+	public String selectRole(String role) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, role);
 		ExamReportEntity entity = mappingSelectExamResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
