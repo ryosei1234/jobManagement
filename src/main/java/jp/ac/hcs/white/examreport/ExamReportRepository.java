@@ -39,10 +39,11 @@ public class ExamReportRepository {
 
 	/**
 	 * Userテーブルから全データを取得.
+	 * @param user_Id
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public ExamReportEntity selectAll() throws DataAccessException {
+	public ExamReportEntity selectAll(String user_Id) throws DataAccessException {
 
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
