@@ -18,7 +18,7 @@ public class ExamReportService {
 
 	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
 		//ExamReportData data = new ExamReportData();
-		return examRepository.selectAll();
+		return examRepository.selectAll(user_id);
 	}
 
 
@@ -32,9 +32,9 @@ public class ExamReportService {
 		return examRepository.selectOne(examreport_id);
 
 	}
-	public ExamReportData selectRole(String user_id) throws DataAccessException {
+	/*public ExamReportData selectRole(String user_id) throws DataAccessException {
 		return examRepository.selectRole(user_id);
-	}
+	}*/
 
 
 

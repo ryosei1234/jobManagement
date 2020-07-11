@@ -10,20 +10,35 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * ユーザ情報のデータを管理する.
  * - Userテーブル
  */
 @Repository
+@Slf4j
 public class ExamReportRepository {
 
+
+
+	 /** SQL 生徒用全件取得(期限日昇順)*/
+	 private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
+
+
+	 /** SQL 教員、事務用全件取得(期限日昇順)*/
+	 private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
+
 	/** SQL 全件取得（ユーザID昇順） */
-	private static final String SQL_SELECT_ALL = "SELECT * FROM examreport order by examreport_id";
+	//private static final String SQL_SELECT_ALL = "SELECT * FROM examreport order by examreport_id";
+
+	 /** SQL ユーザ情報1件取得 */
+	 private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件取得 */
 	private static final String SQL_SELECT_ONE = "SELECT * FROM examreport WHERE examreport_id = ?";
 
-	private static final String SQL_SELECT_ROLE ="SELECT role FROM m_user WHERE user_id = ?";
+	//private static final String SQL_SELECT_ROLE ="SELECT user_role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
@@ -43,11 +58,31 @@ public class ExamReportRepository {
 	 * @return UserEntity
 	 * @throws DataAccessException
 	 */
-	public ExamReportEntity selectAll(String user_Id) throws DataAccessException {
+	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
 
+		  List<Map<String, Object>> resultList = null;
+		  List<Map<String, Object>> role = jdbc.queryForList(SQL_SELECT_USER_ONE, user_id);
+
+		  if ("STUDENT".equals(role.get(0).get("USER_ROLE"))) {
+		   resultList = jdbc.queryForList(SQL_SELECT_STUDENT_ALL, user_id);
+		  } else {
+		   resultList = jdbc.queryForList(SQL_SELECT_ALL);
+		  }
+
+		  ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
+		  return examreportEntity;
+
+
+		/*ExamReportData role = selectRole(user_id);
+		log.warn(role.toString());
+		if (role.toString() == "STUDENT") {
+
+		}else {
+
+		}
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
-		return examreportEntity;
+		return examreportEntity;*/
 	}
 
 
@@ -61,6 +96,7 @@ public class ExamReportRepository {
 
 		for (Map<String, Object> map : resultList) {
 			ExamReportData data = new ExamReportData();
+			log.warn("検査ぴえん:" + resultList.toString());
 			data.setExamreport_id((String) map.get("examreport_id"));
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name_top((String) map.get("company_name_top"));
@@ -79,13 +115,13 @@ public class ExamReportRepository {
 		}
 		return entity;
 	}
-	public String selectRole(String role) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, role);
+	/*public ExamReportData selectRole(String user_id) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, user_id);
 		ExamReportEntity entity = mappingSelectExamResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
 		ExamReportData data = entity.getExamlist().get(0);
 		return data;
-	}
+	}*/
 
 	/**
 	 * UserテーブルからユーザIDをキーにデータを1件を取得.

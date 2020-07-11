@@ -31,12 +31,9 @@ public class ExamReportController {
 	 */
 	@PostMapping("/exam/examlist")
 	public String getExamList(Principal principal, Model model) {
-		//TODO	selectone使う
-		System.out.println(principal);
+		System.out.println(principal.getName());
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 		ExamReportEntity examEntity;
-		ExamReportData  userrole = examService.selectRole(principal.getName());
-		System.out.println(userrole);
 		examEntity = examService.selectAll(principal.getName());
 		model.addAttribute("examEntity",examEntity);
 
