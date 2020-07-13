@@ -1,5 +1,7 @@
 package jp.ac.hcs.white.user;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -63,7 +65,7 @@ public class UserData {
 	/**
 	 *
 	 */
-	private String created_at;
+	private Timestamp created_at;
 
 	/**
 	 *
@@ -73,7 +75,7 @@ public class UserData {
 	/**
 	 *
 	 */
-	private String update_at;
+	private Timestamp update_at;
 
 	/**
 	 *
