@@ -1,5 +1,6 @@
 package jp.ac.hcs.white.examreport;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,12 @@ public class ExamReportRepository {
 
 	//private static final String SQL_SELECT_ROLE ="SELECT user_role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
+	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
 
+	private static final String SQL_REPORT_COUNT ="SELECT count(*) FROM examreport";
 
 	@Autowired
 	private JdbcTemplate jdbc;
@@ -105,7 +107,8 @@ public class ExamReportRepository {
 			data.setRecruitment_number((Integer) map.get("recruitment_number"));
 			data.setCompany_name((String) map.get("company_name"));
 			data.setApplication_route((String) map.get("application_route"));
-			data.setExam_date_time((Date) map.get("exam_date_time"));
+			String exam_date_time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("exam_date_time"));
+			data.setExam_date_time(exam_date_time);
 			data.setExamination_location((String) map.get("examination_location"));
 			data.setContens_test((String) map.get("contens_test"));
 			data.setRemarks((String) map.get("remarks"));
@@ -171,8 +174,12 @@ public class ExamReportRepository {
 	 * @throws DataAccessException
 	 */
 	public int insertOne(ExamReportData data) throws DataAccessException {
+		//List<Map<String, Object>> cnt = jdbc.queryForList(SQL_REPORT_COUNT);
+		//data.setExamreport_id(cnt.get(0));
+		log.warn("検査インサートぴえん:" + data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
-						data.getExamreport_id(),
+						1,
+						data.getUser_id(),
 						data.getDepartment(),
 						data.getCompany_name_top(),
 						data.getReport_day(),
@@ -183,7 +190,7 @@ public class ExamReportRepository {
 						data.getExamination_location(),
 						data.getContens_test(),
 						data.getRemarks(),
-						data.getExam_report_status());
+						"新規作成");
 
 		return rowNumber;
 	}

@@ -1,9 +1,6 @@
 package jp.ac.hcs.white.examreport;
 
 import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -97,13 +94,8 @@ public class ExamReportController {
 		if (bindingResult.hasErrors()) {
 			return getExamInsert(form, model);
 		}
-		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-        Date date = null;
-		try {
-			date = sdFormat.parse(form.getExam_date_time());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+
+
 		ExamReportData data = new ExamReportData();
 		data.setDepartment(form.getDepartment());
 		data.setUser_id(principal.getName());
@@ -111,7 +103,7 @@ public class ExamReportController {
 		data.setRecruitment_number(form.getRecruitment_number());
 		data.setCompany_name(form.getCompany_name());
 		data.setApplication_route(form.getApplication_route());
-		data.setExam_date_time(date);
+		data.setExam_date_time(form.getExam_date_time());
 		data.setExamination_location(form.getExamination_location());
 		data.setContens_test(form.getContens_test());
 		data.setRemarks(form.getRemarks());

@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS examreport (
   recruitment_number INT,/*文字型にする*/
   company_name VARCHAR(50),
   application_route VARCHAR(10),
-  exam_date_time DATE,
+  exam_date_time DATETIME,
   examination_location VARCHAR(50),
   contens_test VARCHAR(10),
   remarks VARCHAR(600),
