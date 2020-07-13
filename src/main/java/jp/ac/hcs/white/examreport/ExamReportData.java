@@ -12,15 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ExamReportData {
-	  private String user_id;
-	  private String user_class;
-	  private int user_student_no;
-	  private String user_name;
-	  private String role;
 	  private String examreport_id ;
+	  private String user_id;
 	  private String department ;
 	  private String company_name_top;
-	  private Date report_day ;
+	  private Date report_day;
 	  private int recruitment_number;
 	  private String company_name;
 	  private String application_route ;

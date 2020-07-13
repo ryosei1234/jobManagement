@@ -1,15 +1,18 @@
 package jp.ac.hcs.white.examreport;
 
 import java.security.Principal;
-import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +25,34 @@ public class ExamReportController {
 
 	@Autowired
 	ExamReportService examService;
+
+	/** 権限のラジオボタン用変数 */
+	private Map<String, String> radioroute;
+	private Map<String, String> radiotest;
+
+	/** 権限のラジオボタンを初期化する処理 */
+	private Map<String, String> initRadioRoute() {
+		Map<String, String> radioroute = new LinkedHashMap<>();
+		radioroute.put("学校斡旋", "1");
+		radioroute.put("ネット", "2");
+		radioroute.put("斡旋サイト", "3");
+		radioroute.put("企業HP", "4");
+		radioroute.put("新聞・雑誌", "5");
+		radioroute.put("ジョブカフェ等", "6");
+		radioroute.put("その他", "99");
+		return radioroute;
+	}
+
+	private Map<String, String> initRadioTest() {
+		Map<String, String> radiotest = new LinkedHashMap<>();
+		radiotest.put("1次試験", "1");
+		radiotest.put("2次試験", "2");
+		radiotest.put("3次試験", "3");
+		radiotest.put("4次試験", "4");
+		radiotest.put("次試験", "5");
+		radiotest.put("最終試験", "6");
+		return radiotest;
+	}
 
 	/**
 	 *
@@ -40,35 +71,50 @@ public class ExamReportController {
 		return "exam/examlist";
 	}
 
+	@GetMapping("/exam/examInsert")
+	public String getUserInsert(@ModelAttribute ExamForm form, Model model) {
+		// ラジオボタンの準備
+				radioroute = initRadioRoute();
+				model.addAttribute("radioRoute", radioroute);
+
+				radiotest = initRadioTest();
+				model.addAttribute("radioRoute", radiotest);
+
+		return "exam/examInsert";
+	}
+
+
 	@PostMapping("/exam/insert")
-	public String postExamInsert(@RequestParam("examreport_id") String examreport_id, @RequestParam("department") String department,
-			@RequestParam("company_name_top") String company_name_top, @RequestParam("report_day") Date report_day,
-			@RequestParam("recruitment_number") int recruitment_number, @RequestParam("company_name") String company_name,
-			@RequestParam("application_route") String application_route,@RequestParam("exam_date_time") String exam_date_time,
-			@RequestParam("examination_location") String examination_location, @RequestParam("contens_test") String contens_test,@RequestParam("remarks") String remarks,
-			@RequestParam("exam_report_status") String exam_report_status, Principal principal,Model model) {
+	public String postExamInsert(@ModelAttribute @Validated ExamForm form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model) {
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getUserInsert(form, model);
+		}
 
-			ExamReportData data = new ExamReportData();
-			data.setExamreport_id(examreport_id);
-			data.setDepartment(department);
-			data.setCompany_name_top(company_name_top);
-			data.setReport_day(report_day);
-			data.setRecruitment_number(recruitment_number);
-			data.setCompany_name(company_name);
-			data.setApplication_route(application_route);
-			data.setExamination_location(examination_location);
-			data.setContens_test(contens_test);
-			data.setRemarks(remarks);
-			data.setExam_report_status(exam_report_status);
+		ExamReportData data = new ExamReportData();
+		data.setDepartment(form.getDepartment());
+		data.setUser_id(principal.getName());
+		data.setCompany_name_top(form.getCompany_name_top());
+		data.setRecruitment_number(form.getRecruitment_number());
+		data.setCompany_name(form.getCompany_name());
+		data.setApplication_route(form.getApplication_route());
+		data.setExam_date_time(form.getExam_date_time());
+		data.setExamination_location(form.getExamination_location());
+		data.setContens_test(form.getContens_test());
+		data.setRemarks(form.getRemarks());
 
-			boolean result = examService.insertOne(data);
+		boolean result = examService.insertOne(data);
 
-			if (result) {
-				log.info("[" + principal.getName() + "]受験報告登録成功");
-			} else {
-				log.warn("[" + principal.getName() + "]受験報告登録失敗");
-			}
-			return getExamList(principal, model);
+		if (result) {
+			log.info("[" + principal.getName() + "]受験報告登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]受験報告登録失敗");
+		}
+
+		return getExamList(principal, model);
 
 	}
 	@GetMapping("/exam/examDetail/{examreport_id:.+}")
