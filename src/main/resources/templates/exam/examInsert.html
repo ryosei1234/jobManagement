@@ -63,59 +63,81 @@
 			<hr>
 			<form method="post" th:action="@{/exam/examInsert}" id="form_user"
 				th:object="${userForm}">
-				<p>	企業名 先頭カナ3文字</p>
+				<p>学科コード</p>
 				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('recruitment')}?'has-error'">
-					<input type="number" class="form-control" name="recruitment"
-						placeholder="xxx" th:field="*{recruitment}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('recruitment')}"
-						th:errors="*{recruitment}">recruitment error</span>
+					th:classappend="${#fields.hasErrors('department')} ? 'has-error'">
+					<input type="text" class="form-control" name="department"
+						placeholder="x" th:field="*{department}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('department')}"
+						th:errors="*{department}">department error</span>
 				</div>
-
+				<p>企業先頭カナ3文字</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('company_name_top')} ? 'has-error'">
+					<input type="text" class="form-control" name="company_name_top"
+						placeholder="xxx" th:field="*{company_name_top}"> <span
+						class="text-danger"
+						th:if="${#fields.hasErrors('company_name_top')}"
+						th:errors="*{company_name_top}">company_name_top error</span>
+				</div>
 				<p>求人番号</p>
 				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('recruitment')}?'has-error'">
-					<input type="number" class="form-control" name="recruitment"
-						placeholder="xxx" th:field="*{recruitment}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('recruitment')}"
-						th:errors="*{recruitment}">recruitment error</span>
+					th:classappend="${#fields.hasErrors('recruitment_number')} ? 'has-error'">
+					<input type="text" class="form-control" name="recruitment_number"
+						placeholder="xxx" th:field="*{recruitment_number}"> <span
+						class="text-danger"
+						th:if="${#fields.hasErrors('recruitment_number')}"
+						th:errors="*{recruitment_number}">recruitment_number error</span>
 				</div>
 				<p>企業名</p>
 				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('company')}?'has-error'">
-					<input type="text" class="form-control" name="company"
-						placeholder="株式会社xxx" th:field="*{company}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('company')}"
-						th:errors="*{company}">company error</span>
+					th:classappend="${#fields.hasErrors('company_name')} ? 'has-error'">
+					<input type="text" class="form-control" name="company_name"
+						placeholder="株式会社xxx" th:field="*{company_name}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('company_name')}"
+						th:errors="*{company_name}">company_name error</span>
 				</div>
-				<p>試験の申し込み経路</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('route')}?'has-error'">
-					<input type="checkbox" name="riyu" value="1">学校斡旋 <input
-						type="checkbox" name="riyu" value="1">ネット <input
-						type="checkbox" name="riyu" value="1">斡旋サイト <input
-						type="checkbox" name="riyu" value="1">企業HP <input
-						type="checkbox" name="riyu" value="1">新聞・雑誌 <input
-						type="checkbox" name="riyu" value="1">ジョブカフェ等 <input
-						type="checkbox" name="riyu" value="1">その他 <span
-						class="text-danger" th:if="${#fields.hasErrors('route')}"
-						th:errors="*{route}">route error</span>
+				<p>試験の申込経路</p>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioRole}">
+						<input type="radio" name="radioRole" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{role}">
+					</div>
+					<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+						th:errors="*{role}">role error</span>
 				</div>
 				<p>日時</p>
 				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
-					<input type="datetime-local" class="form-control" name="date_time"
-						th:field="*{date_time}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
-						th:errors="*{user_id}">user_id error</span>
+					th:classappend="${#fields.hasErrors('exam_date_time')} ? 'has-error'">
+					<input type="datetime-local" class="form-control"
+						name="exam_date_time" th:field="*{exam_date_time}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('exam_date_time')}"
+						th:errors="*{exam_date_time}">exam_date_time error</span>
 				</div>
 				<p>受験場所</p>
 				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('user_id')}?'has-error'">
-					<input type="text" class="form-control" name="user_id"
-						placeholder="xxxxxxx@xxx.xxx" th:field="*{user_id}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('user_id')}"
-						th:errors="*{user_id}">user_id error</span>
+					th:classappend="${#fields.hasErrors('examination_location')} ? 'has-error'">
+					<input type="text" class="form-control" name="examination_location"
+						placeholder="xxx" th:field="*{examination_location}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('examination_location')}"
+						th:errors="*{examination_location}">examination_location error</span>
+				</div>
+				<p>試験内容</p>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioRole}">
+						<input type="radio" name="radioRole" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{role}">
+					</div>
+					<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+						th:errors="*{role}">role error</span>
+				</div>
+				<p>備考</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('remarks')} ? 'has-error'">
+					<input type="text" class="form-control" name="remarks"
+						placeholder="xxxxxxx" th:field="*{remarks}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('remarks')}"
+						th:errors="*{remarks}">remarks error</span>
 				</div>
 		</div>
 		<span class="input-group-btn"> <input type="submit" id="action"
