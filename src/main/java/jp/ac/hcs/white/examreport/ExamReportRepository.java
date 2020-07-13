@@ -98,12 +98,11 @@ public class ExamReportRepository {
 			ExamReportData data = new ExamReportData();
 			log.warn("検査ぴえん:" + resultList.toString());
 			data.setExamreport_id((String) map.get("examreport_id"));
+			data.setUser_id((String) map.get("user_id"));
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name_top((String) map.get("company_name_top"));
 			data.setReport_day((Date) map.get("report_day"));
 			data.setRecruitment_number((Integer) map.get("recruitment_number"));
-			data.setExamreport_id((String) map.get("examreport_id"));
-			data.setDepartment((String) map.get("department"));
 			data.setCompany_name((String) map.get("company_name"));
 			data.setApplication_route((String) map.get("application_route"));
 			data.setExam_date_time((Date) map.get("exam_date_time"));
@@ -153,8 +152,8 @@ public class ExamReportRepository {
 				ExamReportData.getCompany_name(),
 				ExamReportData.getApplication_route(),
 				ExamReportData.getExam_date_time(),
-				ExamReportData.getContens_test(),
 				ExamReportData.getExamination_location(),
+				ExamReportData.getContens_test(),
 				ExamReportData.getRemarks()
 
 				);
