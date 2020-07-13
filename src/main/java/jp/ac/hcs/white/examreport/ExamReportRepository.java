@@ -40,7 +40,7 @@ public class ExamReportRepository {
 
 	//private static final String SQL_SELECT_ROLE ="SELECT user_role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
+	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '新規作成')";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
