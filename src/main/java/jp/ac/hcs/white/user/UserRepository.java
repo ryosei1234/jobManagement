@@ -1,5 +1,6 @@
 package jp.ac.hcs.white.user;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * ユーザ情報のデータを管理する.
  * - Userテーブル
  */
 @Repository
+@Slf4j
 public class UserRepository {
 
 	/** SQL 全件取得（ユーザID昇順） */
@@ -24,10 +28,10 @@ public class UserRepository {
 
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id) "
-									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID',sysdate ,? ,sysdate, ?)";
+									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID', ? ,? , ?, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新有 */
-	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? WHERE user_id = ?";
+	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,upadate_at = sysdate,update_user_id = ? WHERE user_id = ?";
 
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
@@ -60,12 +64,17 @@ public class UserRepository {
 		for (Map<String, Object> map : resultList) {
 			UserData data = new UserData();
 			data.setUser_id((String) map.get("user_id"));
+			//data.setPassword((String) map.get("password"));
 			data.setUser_name((String) map.get("user_name"));
 			data.setUser_class((String)map.get("user_class"));
 			data.setUser_darkmode((boolean) map.get("user_darkmode"));
 			data.setRole((String) map.get("user_role"));
 			data.setUser_student_no((int)map.get("user_student_no"));
 			data.setUser_status((String)map.get("user_status"));
+			data.setCreated_at((Timestamp) map.get("created_at"));
+			data.setCreated_user_id((String)map.get("created_user_id"));
+			data.setUpdate_at((Timestamp) map.get("update_at"));
+			data.setUpdate_user_id((String)map.get("Update_user_id"));
 			entity.getUserlist().add(data);
 		}
 		return entity;
@@ -92,6 +101,8 @@ public class UserRepository {
 				data.getRole(),
 				data.getUser_class(),
 				data.getUser_student_no(),
+				new Timestamp(System.currentTimeMillis()),
+				data.getUpdate_user_id(),
 				data.getUser_id());
 		return rowNumber;
 	}
@@ -103,6 +114,7 @@ public class UserRepository {
 	 * @throws DataAccessException
 	 */
 	public int insertOne(UserData data,String user_id) throws DataAccessException {
+		log.warn(data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
 						data.getUser_id(),
 						passwordEncoder.encode(data.getPassword()),
@@ -110,7 +122,9 @@ public class UserRepository {
 						data.getRole(),
 						data.getUser_class(),
 						data.getUser_student_no(),
+						new Timestamp(System.currentTimeMillis()),
 						user_id,
+						new Timestamp(System.currentTimeMillis()),
 						user_id);
 
 
