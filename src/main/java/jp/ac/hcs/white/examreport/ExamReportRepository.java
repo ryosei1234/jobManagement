@@ -36,7 +36,7 @@ public class ExamReportRepository {
 	 private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件取得 */
-	private static final String SQL_SELECT_ONE = "SELECT * FROM examreport WHERE examreport_id = ?";
+	private static final String SQL_SELECT_ONE = "SELECT examreport_id,user_class,user_student_no,user_name,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,Exam_report_status FROM examreport, m_user WHERE m_user.user_id = examreport.user_id AND examreport_id = ?";
 
 	//private static final String SQL_SELECT_ROLE ="SELECT user_role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
@@ -110,6 +110,10 @@ public class ExamReportRepository {
 			data.setContens_test((String) map.get("contens_test"));
 			data.setRemarks((String) map.get("remarks"));
 			data.setExam_report_status((String) map.get("exam_report_status"));
+			data.setUser_class((String) map.get("user_class"));
+			data.setUser_student_no((int) map.get("user_student_no"));
+			data.setUser_name((String) map.get("user_name"));
+
 			entity.getExamlist().add(data);
 		}
 		return entity;
