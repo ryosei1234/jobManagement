@@ -78,13 +78,13 @@ public class ExamReportController {
 				model.addAttribute("radioRoute", radioroute);
 
 				radiotest = initRadioTest();
-				model.addAttribute("radioRoute", radiotest);
+				model.addAttribute("radioTest", radiotest);
 
 		return "exam/examInsert";
 	}
 
 
-	@PostMapping("/exam/insert")
+	@PostMapping("/exam/examInsert")
 	public String postExamInsert(@ModelAttribute @Validated ExamForm form,
 			BindingResult bindingResult,
 			Principal principal,
