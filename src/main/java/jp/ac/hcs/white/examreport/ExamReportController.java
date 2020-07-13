@@ -78,7 +78,7 @@ public class ExamReportController {
 				model.addAttribute("radioRoute", radioroute);
 
 				radiotest = initRadioTest();
-				model.addAttribute("radioRoute", radiotest);
+				model.addAttribute("radioTest", radiotest);
 
 		return "exam/examInsert";
 	}
