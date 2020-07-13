@@ -59,10 +59,10 @@
 	<!-- コンテンツ -->
 	<div class="container">
 		<div class="content-box">
-			<h2>受験報告新規登録作成</h2>
+			<h2>受験報告修正画面</h2>
 			<hr>
 			<form method="post" th:action="@{/exam/examInsert}"
-				th:object="${examForm}">
+				th:object="${userForm}">
 				<p>学科コード</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('department')} ? 'has-error'">
@@ -97,14 +97,14 @@
 						class="text-danger" th:if="${#fields.hasErrors('company_name')}"
 						th:errors="*{company_name}">company_name error</span>
 				</div>
-				<label for="application_route">試験の申込経路</label>
+				<p>試験の申込経路</p>
 				<div class="form-group input-box">
-					<div th:each="item : ${radioRoute}">
-						<input type="radio" name="application_route" th:text="${item.key}"
-							th:value="${item.value}" th:field="*{application_route}">
+					<div th:each="item : ${radioRole}">
+						<input type="radio" name="radioRole" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{role}">
 					</div>
-					<span class="text-danger" th:if="${#fields.hasErrors('application_route')}"
-						th:errors="*{application_route}">application_route error</span>
+					<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+						th:errors="*{role}">role error</span>
 				</div>
 				<p>日時</p>
 				<div class="form-group input-box"
@@ -122,14 +122,14 @@
 						class="text-danger" th:if="${#fields.hasErrors('examination_location')}"
 						th:errors="*{examination_location}">examination_location error</span>
 				</div>
-				<label for="contens_test">試験内容</label>
+				<p>試験内容</p>
 				<div class="form-group input-box">
-					<div th:each="item : ${radioTest}">
-						<input type="radio" name="contens_test" th:text="${item.key}"
-							th:value="${item.value}" th:field="*{contens_test}">
+					<div th:each="item : ${radioRole}">
+						<input type="radio" name="radioRole" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{role}">
 					</div>
-					<span class="text-danger" th:if="${#fields.hasErrors('contens_test')}"
-						th:errors="*{contens_test}">contens_test error</span>
+					<span class="text-danger" th:if="${#fields.hasErrors('role')}"
+						th:errors="*{role}">role error</span>
 				</div>
 				<p>備考</p>
 				<div class="form-group input-box"

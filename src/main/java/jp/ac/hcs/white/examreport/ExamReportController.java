@@ -84,7 +84,7 @@ public class ExamReportController {
 	}
 
 
-	@PostMapping("/exam/insert")
+	@PostMapping("/exam/examInsert")
 	public String postExamInsert(@ModelAttribute @Validated ExamForm form,
 			BindingResult bindingResult,
 			Principal principal,
