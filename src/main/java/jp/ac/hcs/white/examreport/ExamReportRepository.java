@@ -53,11 +53,10 @@ public class ExamReportRepository {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
-
 	/**
-	 * Userテーブルから全データを取得.
-	 * @param user_Id
-	 * @return UserEntity
+	 * examreportテーブルから全件取得
+	 * @param user_id
+	 * @return examreportEntity
 	 * @throws DataAccessException
 	 */
 	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
@@ -75,11 +74,10 @@ public class ExamReportRepository {
 		return examreportEntity;
 	}
 
-
 	/**
-	 * Userテーブルから取得したデータをUserEntity形式にマッピングする.
-	 * @param resultList Userテーブルから取得したデータ
-	 * @return UserEntity
+	 * examreportテーブルから取得したデータをExamReportEntity形式にマッピングする.
+	 * @param resultList
+	 * @return entity
 	 */
 	private ExamReportEntity mappingSelectExamResult(List<Map<String, Object>> resultList) {
 		ExamReportEntity entity = new ExamReportEntity();
@@ -111,9 +109,9 @@ public class ExamReportRepository {
 	}
 
 	/**
-	 * UserテーブルからユーザIDをキーにデータを1件を取得.
-	 * @param user_id 検索するユーザID
-	 * @return UserEntity
+	 * examreportテーブルから受験報告IDをキーにデータを1件を取得.
+	 * @param examreport_id 検索する受験報告ID
+	 * @return data
 	 * @throws DataAccessException
 	 */
 	public ExamReportData selectOne(String examreport_id) throws DataAccessException {
@@ -124,11 +122,10 @@ public class ExamReportRepository {
 		return data;
 	}
 
-
 	/**
-	 * (管理用)Userテーブルのデータを1件更新する(パスワード更新無).
-	 * @param data 更新するユーザ情報
-	 * @return 更新データ数
+	 *  examreportテーブルのデータを1件更新する
+	 * @param ExamReportData　更新する受験報告情報
+	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
 	public int updateOne(ExamReportData ExamReportData) throws DataAccessException {
@@ -149,9 +146,9 @@ public class ExamReportRepository {
 	}
 
 	/**
-	 * (管理用)Userテーブルのデータを1件追加する
+	 * examreportテーブルのデータを1件追加する
 	 * @param data
-	 * @return rowNumber
+	 * @return eowNumber
 	 * @throws DataAccessException
 	 */
 	public int insertOne(ExamReportData data) throws DataAccessException {
@@ -184,12 +181,13 @@ public class ExamReportRepository {
 
 		return rowNumber;
 	}
+
 	/**
-	 *
+	 * examreportテーブルから一致するデータを検索する
 	 * @param search_examreport_id
 	 * @param search_user_id
 	 * @param search_company_name
-	 * @return
+	 * @return exaEntity
 	 * @throws DataAccessException
 	 */
 	public ExamReportEntity searchByExam_idAndUsernameANDCompanyname(String search_examreport_id,String search_user_id, String search_company_name)
@@ -214,6 +212,5 @@ public class ExamReportRepository {
 
 		jdbc.query(SQL_SELECT_CSV, handler);
 	}
-
 
 }
