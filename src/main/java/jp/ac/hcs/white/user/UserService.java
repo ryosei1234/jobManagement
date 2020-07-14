@@ -54,19 +54,11 @@ public class UserService {
 	 * @param role
 	 * @return userinsert
 	 */
-	public int insertOne(String user_id,String password, String user_name, String role, String user_class, String user_student_no ,String update_id) {
+	public boolean insertOne(UserData userData, String userId) {
 
-		UserData userData = new UserData();
-		userData.setUser_id(user_id);
-		userData.setPassword(password);
-		userData.setUser_name(user_name);
-		userData.setRole(role);
-		userData.setUser_class(user_class);
-		userData.setUser_student_no(user_student_no);
-
-		log.info("[" + userData.getUser_id() + "]ユーザ追加:" + userData.getPassword() + userData.getUser_name() + userData.getRole() + userData.getUser_student_no());
-		int userinsert = userRepository.insertOne(userData,update_id);
-		return userinsert;
+		int rowNumber = userRepository.insertOne(userData,userId);
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
 	}
 
 	/**

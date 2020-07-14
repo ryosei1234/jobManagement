@@ -146,7 +146,7 @@ public class UserController {
 	 * @return 新規登録画面
 	 */
 	@GetMapping("/user/userInsert")
-	public String insert(@ModelAttribute UserFormIn userformin,Model model){
+	public String getUserInsert(@ModelAttribute UserFormIn userformin,Model model){
 
 		// ラジオボタンの準備
 				radioRole = initRadioRole();
@@ -154,34 +154,39 @@ public class UserController {
 
 		return "user/userInsert";
 	}
-	/**
-	 * 一件分のユーザを追加する
-	 * @param principal ログイン情報
-	 * @param model
-	 * @param user_id ユーザ
-	 * @param password
-	 * @param user_name
-	 * @param role
-	 * @param user_class
-	 * @param user_student_no
-	 * @param userformin
-	 * @param bindingResult データバインド実施結果
-	 * @return
-	 */
+
 	@PostMapping("/user/userInsert")
-	public String insertOne(Principal principal,Model model, @RequestParam(value="user_id",required = false) String user_id ,
-			@RequestParam(value="password", required = false) String password , @RequestParam(value="user_name",required = false) String user_name ,
-			@RequestParam(value="role",required = false) String role,@RequestParam(value="user_class",required = false) String user_class,
-			@RequestParam(value="user_student_no",required = false) String user_student_no,
-			@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult)
-			{
+	public String insertOne(@ModelAttribute @Validated UserFormIn form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model){
+
+		System.out.println(form.toString());
+		if (bindingResult.hasErrors()) {
+			return getUserInsert(form, model);
+		}
+		log.warn("インサート;;" + form.toString());
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 
-		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no, principal.getName());
-		UserEntity userEntity = userService.selectAll();
-		model.addAttribute("userform",userformin);
-		model.addAttribute("userEntity",userEntity);
-		return "user/userList";
+		UserData data = new UserData();
+		data.setUser_id(form.getUser_id());
+		data.setPassword(form.getPassword());
+		data.setUser_name(form.getUser_name());
+		data.setUser_darkmode(false);
+		data.setRole(form.getRole());
+		data.setUser_class(form.getUser_class());
+		data.setUser_student_no(form.getUser_student_no());
+		log.warn("インサート;;" + data.toString());
+
+		boolean result = userService.insertOne(data, principal.getName());
+
+		if (result) {
+			log.info("[" + principal.getName() + "]ユーザ登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]ユーザ登録失敗");
+		}
+
+		return getUserList(model);
 	}
 
 	/**
