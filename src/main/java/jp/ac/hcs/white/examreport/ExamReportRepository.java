@@ -48,8 +48,6 @@ public class ExamReportRepository {
 
 	private static final String SQL_REPORT_COUNT ="SELECT count(*) FROM examreport";
 
-	private static final String SQL_SEARCH_BY_USER_ID_AND_USER_NAME ="SELECT * FROM m_user where user_id LIKE ? and user_name LIKE ?";
-
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
 	@Autowired
@@ -118,13 +116,14 @@ public class ExamReportRepository {
 			data.setRemarks((String) map.get("remarks"));
 			data.setExam_report_status((String) map.get("exam_report_status"));
 			data.setUser_class((String) map.get("user_class"));
-			data.setUser_student_no((int) map.get("user_student_no"));
+			data.setUser_student_no((String) map.get("user_student_no"));
 			data.setUser_name((String) map.get("user_name"));
 
 			entity.getExamlist().add(data);
 		}
 		return entity;
 	}
+
 	/*public ExamReportData selectRole(String user_id) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, user_id);
 		ExamReportEntity entity = mappingSelectExamResult(resultList);

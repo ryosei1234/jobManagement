@@ -55,7 +55,7 @@ public class UserData {
 	/**
 	 *
 	 */
-	private int user_student_no;
+	private String user_student_no;
 
 	/**
 	 *

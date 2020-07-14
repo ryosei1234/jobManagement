@@ -73,7 +73,7 @@ public class UserRepository {
 			data.setUser_class((String)map.get("user_class"));
 			data.setUser_darkmode((boolean) map.get("user_darkmode"));
 			data.setRole((String) map.get("user_role"));
-			data.setUser_student_no((int)map.get("user_student_no"));
+			data.setUser_student_no((String)map.get("user_student_no"));
 			data.setUser_status((String)map.get("user_status"));
 			data.setCreated_at((Timestamp) map.get("created_at"));
 			data.setCreated_user_id((String)map.get("created_user_id"));

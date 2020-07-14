@@ -26,6 +26,6 @@ public class ExamReportData {
 	  private String remarks;
 	  private String exam_report_status;
 	  private String user_class;
-	  private int user_student_no;
+	  private String user_student_no;
 	  private String user_name;
 }
