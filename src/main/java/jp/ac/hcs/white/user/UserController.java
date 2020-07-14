@@ -201,5 +201,21 @@ public class UserController {
 		return getUserList(model);
 
 	}
+
+	@PostMapping("/user/search")
+	public String search(@RequestParam("search_user_id") String search_user_id,
+			@RequestParam("search_user_name") String search_user_name, Model model) {
+
+		UserEntity userEntity = userService.search(search_user_id, search_user_name);
+		model.addAttribute("userEntity", userEntity);
+
+		// 検索ワードの連携
+		model.addAttribute("search_user_id", search_user_id);
+		model.addAttribute("search_user_name", search_user_name);
+
+		return "user/userList";
+	}
+
+
 }
 

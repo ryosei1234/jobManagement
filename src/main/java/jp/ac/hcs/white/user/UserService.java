@@ -79,4 +79,15 @@ public class UserService {
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}
+
+	public UserEntity search(String search_user_id, String search_user_name) {
+
+		UserEntity userEntity = null;
+
+		// 検索条件によって異なるSQLを使用する場合は、ここで分岐させる
+		userEntity = userRepository.searchByUserIdAndUsername(search_user_id, search_user_name);
+
+		return userEntity;
+	}
+
 }

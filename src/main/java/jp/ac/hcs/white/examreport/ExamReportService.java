@@ -40,4 +40,14 @@ public class ExamReportService {
 
 	//public boolean deleteOne(ExamReportData )
 
+	public ExamReportEntity search(String search_examreport_id, String search_user_id, String search_company_name) {
+
+		ExamReportEntity examreportEntity = null;
+
+		// 検索条件によって異なるSQLを使用する場合は、ここで分岐させる
+		examreportEntity = examRepository.searchByExam_idAndUsernameANDCompanyname(search_examreport_id, search_user_id,search_company_name);
+
+		return examreportEntity;
+	}
+
 }
