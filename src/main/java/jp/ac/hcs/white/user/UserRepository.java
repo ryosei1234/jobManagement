@@ -36,6 +36,10 @@ public class UserRepository {
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
 
+
+	private static final String SQL_SEARCH_BY_USER_ID_AND_USER_NAME ="SELECT * FROM m_user where user_id LIKE ? and user_name LIKE ?";
+
+
 	@Autowired
 	private JdbcTemplate jdbc;
 
@@ -141,6 +145,17 @@ public class UserRepository {
 		int rowNumber = jdbc.update(SQL_DELETE_ONE, user_id);
 		return rowNumber;
 }
+
+	public UserEntity searchByUserIdAndUsername(String search_user_id, String search_user_name)
+			throws DataAccessException {
+		String like_search_user_id = '%' + search_user_id + '%';
+		String like_search_user_name = '%' + search_user_name + '%';
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_USER_ID_AND_USER_NAME,
+				like_search_user_id, like_search_user_name);
+		UserEntity userEntity = mappingSelectResult(resultList);
+		return userEntity;
+	}
+
 
 
 }
