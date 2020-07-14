@@ -50,7 +50,7 @@ public class ExamReportRepository {
 
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
-	private static final String SQL_SELECT_CSV = "SELECT * FROM task order by comment";
+	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport order by company_name_top";
 
 	@Autowired
 	private JdbcTemplate jdbc;
