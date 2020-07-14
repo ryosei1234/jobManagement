@@ -75,11 +75,13 @@
 			<h2>受験報告検索</h2>
 			<form class="form-inline" method="post" th:action="@{/exam/search}">
 				<input type="text" class="form-control" name="search_examreport_id"
-					th:value="${search_examreport_id}" placeholder="受験報告ID : あいまい検索" size=30>
-				<input type="text" class="form-control" name="search_user_id"
-					th:value="${search_user_id}" placeholder="ユーザID : あいまい検索" size=30>
-				<input type="text" class="form-control" name="search_company_name"
-					th:value="${search_company_name}" placeholder="企業名 : あいまい検索" size=30>
+					th:value="${search_examreport_id}" placeholder="受験報告ID : あいまい検索"
+					size=30> <input type="text" class="form-control"
+					name="search_user_id" th:value="${search_user_id}"
+					placeholder="ユーザID : あいまい検索" size=30> <input type="text"
+					class="form-control" name="search_company_name"
+					th:value="${search_company_name}" placeholder="企業名 : あいまい検索"
+					size=30>
 				<button type="submit" class="btn btn-success">検索</button>
 			</form>
 			<hr>
@@ -103,8 +105,10 @@
 				</tr>
 			</table>
 
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{''}">出力</a></td>
+			<form method="post" th:action="@{/exam/csv}">
+				<button type="submit" class="btn btn-info">CSV出力</button>
+			</form>
+
 
 		</div>
 	</div>
