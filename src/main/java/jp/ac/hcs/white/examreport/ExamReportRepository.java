@@ -48,6 +48,10 @@ public class ExamReportRepository {
 
 	private static final String SQL_REPORT_COUNT ="SELECT count(*) FROM examreport";
 
+	private static final String SQL_SEARCH_BY_USER_ID_AND_USER_NAME ="SELECT * FROM m_user where user_id LIKE ? and user_name LIKE ?";
+
+	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM m_user where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
+
 	@Autowired
 	private JdbcTemplate jdbc;
 
@@ -194,5 +198,17 @@ public class ExamReportRepository {
 
 		return rowNumber;
 	}
+
+	public ExamReportEntity searchByUserIdAndUsername(String search_examreport_id,String search_user_id, String search_company_name)
+			throws DataAccessException {
+		String like_search_examreport_id = '%' + search_examreport_id + '%';
+		String like_search_user_id = '%' + search_user_id + '%';
+		String like_search_company_name = '%' + search_company_name + '%';
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_USER_ID_AND_USER_NAME,
+				like_search_examreport_id,like_search_user_id, like_search_company_name);
+		ExamReportEntity examReportEntity = mappingSelectExamResult(resultList);
+		return examReportEntity;
+	}
+
 
 }
