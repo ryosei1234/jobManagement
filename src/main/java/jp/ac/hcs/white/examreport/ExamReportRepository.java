@@ -46,7 +46,7 @@ public class ExamReportRepository {
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
 
-	private static final String SQL_REPORT_COUNT ="SELECT count(*) FROM examreport";
+	private static final String SQL_REPORT_COUNT ="SELECT COUNT(*) FROM examreport";
 
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
@@ -179,11 +179,20 @@ public class ExamReportRepository {
 	 * @throws DataAccessException
 	 */
 	public int insertOne(ExamReportData data) throws DataAccessException {
-		//List<Map<String, Object>> cnt = jdbc.queryForList(SQL_REPORT_COUNT);
-		//data.setExamreport_id(cnt.get(0));
+		int cnt = String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString())).length();
+
+		String  examreport_id = "0";
+
+		for(int i = 0;i<(9 - cnt); i++) {
+			examreport_id += "0";
+		}
+		examreport_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString()));
+
+
+		log.warn(examreport_id);
 		log.warn("検査インサートぴえん:" + data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
-						1,
+						examreport_id,
 						data.getUser_id(),
 						data.getDepartment(),
 						data.getCompany_name_top(),
