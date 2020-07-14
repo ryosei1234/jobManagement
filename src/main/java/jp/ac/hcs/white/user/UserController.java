@@ -119,7 +119,7 @@ public class UserController {
 		data.setUser_name(form.getUser_name());
 		data.setRole(form.getRole());
 		data.setUser_class(form.getUser_class());
-		data.setUser_student_no(Integer.parseInt(form.getUser_student_no()));
+		data.setUser_student_no(form.getUser_student_no());
 		data.setUpdate_user_id(principal.getName());
 
 		boolean result = false;
@@ -159,7 +159,7 @@ public class UserController {
 	public String insertOne(Principal principal,Model model, @RequestParam(value="user_id",required = false) String user_id ,
 			@RequestParam(value="password", required = false) String password , @RequestParam(value="user_name",required = false) String user_name ,
 			@RequestParam(value="role",required = false) String role,@RequestParam(value="user_class",required = false) String user_class,
-			@RequestParam(value="user_student_no",required = false) int user_student_no,
+			@RequestParam(value="user_student_no",required = false) String user_student_no,
 			@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult)
 			{
 		System.out.println("ひん;;");

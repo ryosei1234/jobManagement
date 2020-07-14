@@ -54,7 +54,7 @@ public class UserService {
 	 * @param role
 	 * @return userinsert
 	 */
-	public int insertOne(String user_id,String password, String user_name, String role, String user_class, int user_student_no ,String update_id) {
+	public int insertOne(String user_id,String password, String user_name, String role, String user_class, String user_student_no ,String update_id) {
 
 		UserData userData = new UserData();
 		userData.setUser_id(user_id);
