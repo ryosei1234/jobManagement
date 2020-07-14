@@ -158,7 +158,7 @@ public class ExamReportController {
 	 * @param model
 	 * @return CSVファイル
 	 */
-	@PostMapping("/task/csv")
+	@PostMapping("/exam/csv")
 	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
 
 		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
