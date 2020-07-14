@@ -41,44 +41,48 @@ public class UserData {
 
 	/**
 	 * 権限
-	 * - 管理 : "ROLE_ADMIN"
-	 * - 一般 : "ROLE_GENERAL"
+	 * - 学生 : "ROLE_STUDENT"
+	 * - 先生 : "ROLE_TEACHAR"
+	 * - 事務 : "ROLE_STAFF"
 	 * 必須入力
 	 */
 	private String role;
 
 	/**
-	 *
+	 *ユーザのクラス
 	 */
 	private String user_class;
 
 	/**
-	 *
+	 * ユーザの出席番号
 	 */
 	private String user_student_no;
 
 	/**
-	 *
+	 * ユーザ状態
+	 * 必須入力
 	 */
 	private String user_status;
 
 	/**
-	 *
+	 * 作成時のタイムスタンプ
+	 * 必須入力
 	 */
 	private Timestamp created_at;
 
 	/**
-	 *
+	 * 作成時のユーザID
+	 * 必須入力
 	 */
 	private String created_user_id;
 
 	/**
-	 *
+	 * 更新時のタイムスタンプ
 	 */
 	private Timestamp update_at;
 
 	/**
-	 *
+	 * 更新時のユーザID
 	 */
 	private String update_user_id;
 

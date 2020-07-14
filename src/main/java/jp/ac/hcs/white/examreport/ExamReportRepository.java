@@ -21,35 +21,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExamReportRepository {
 
+	/** SQL 生徒用全件取得(期限日昇順)*/
+	private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
 
+	/** SQL 教員、事務用全件取得(期限日昇順)*/
+	private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
 
-	 /** SQL 生徒用全件取得(期限日昇順)*/
-	 private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
-
-
-	 /** SQL 教員、事務用全件取得(期限日昇順)*/
-	 private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
-
-	/** SQL 全件取得（ユーザID昇順） */
-	//private static final String SQL_SELECT_ALL = "SELECT * FROM examreport order by examreport_id";
-
-	 /** SQL ユーザ情報1件取得 */
-	 private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
+	/** SQL ユーザ情報1件取得 */
+	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件取得 */
 	private static final String SQL_SELECT_ONE = "SELECT examreport_id,user_class,user_student_no,user_name,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,Exam_report_status FROM examreport, m_user WHERE m_user.user_id = examreport.user_id AND examreport_id = ?";
 
-	//private static final String SQL_SELECT_ROLE ="SELECT user_role FROM m_user WHERE user_id = ?";
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
 
+	/** SQL 受験報告書の番号をカウントアップ */
 	private static final String SQL_REPORT_COUNT ="SELECT COUNT(*) FROM examreport";
 
+	/** SQL 受験報告書検索*/
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
+	/** SQL CSV出力*/
 	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport order by company_name_top";
 
 	@Autowired
@@ -66,29 +62,17 @@ public class ExamReportRepository {
 	 */
 	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
 
-		  List<Map<String, Object>> resultList = null;
-		  List<Map<String, Object>> role = jdbc.queryForList(SQL_SELECT_USER_ONE, user_id);
-
-		  if ("STUDENT".equals(role.get(0).get("USER_ROLE"))) {
-		   resultList = jdbc.queryForList(SQL_SELECT_STUDENT_ALL, user_id);
-		  } else {
-		   resultList = jdbc.queryForList(SQL_SELECT_ALL);
-		  }
-
-		  ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
-		  return examreportEntity;
-
-
-		/*ExamReportData role = selectRole(user_id);
-		log.warn(role.toString());
-		if (role.toString() == "STUDENT") {
-
-		}else {
-
+		List<Map<String, Object>> resultList = null;
+		List<Map<String, Object>> role = jdbc.queryForList(SQL_SELECT_USER_ONE, user_id);
+		log.warn((String) role.get(0).get("USER_ROLE"));
+		if ("ROLE_STUDENT".equals(role.get(0).get("USER_ROLE"))) {
+			resultList = jdbc.queryForList(SQL_SELECT_STUDENT_ALL, user_id);
+		} else {
+			resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		}
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ALL);
+
 		ExamReportEntity examreportEntity = mappingSelectExamResult(resultList);
-		return examreportEntity;*/
+		return examreportEntity;
 	}
 
 
@@ -125,14 +109,6 @@ public class ExamReportRepository {
 		}
 		return entity;
 	}
-
-	/*public ExamReportData selectRole(String user_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ROLE, user_id);
-		ExamReportEntity entity = mappingSelectExamResult(resultList);
-		// 必ず1件のみのため、最初のUserDataを取り出す
-		ExamReportData data = entity.getExamlist().get(0);
-		return data;
-	}*/
 
 	/**
 	 * UserテーブルからユーザIDをキーにデータを1件を取得.
@@ -192,23 +168,30 @@ public class ExamReportRepository {
 		log.warn(examreport_id);
 		log.warn("検査インサートぴえん:" + data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
-						examreport_id,
-						data.getUser_id(),
-						data.getDepartment(),
-						data.getCompany_name_top(),
-						data.getReport_day(),
-						data.getRecruitment_number(),
-						data.getCompany_name(),
-						data.getApplication_route(),
-						data.getExam_date_time(),
-						data.getExamination_location(),
-						data.getContens_test(),
-						data.getRemarks(),
-						"新規作成");
+				examreport_id,
+				data.getUser_id(),
+				data.getDepartment(),
+				data.getCompany_name_top(),
+				data.getReport_day(),
+				data.getRecruitment_number(),
+				data.getCompany_name(),
+				data.getApplication_route(),
+				data.getExam_date_time(),
+				data.getExamination_location(),
+				data.getContens_test(),
+				data.getRemarks(),
+				"新規作成");
 
 		return rowNumber;
 	}
-
+	/**
+	 *
+	 * @param search_examreport_id
+	 * @param search_user_id
+	 * @param search_company_name
+	 * @return
+	 * @throws DataAccessException
+	 */
 	public ExamReportEntity searchByExam_idAndUsernameANDCompanyname(String search_examreport_id,String search_user_id, String search_company_name)
 			throws DataAccessException {
 		String like_search_examreport_id = '%' + search_examreport_id + '%';
