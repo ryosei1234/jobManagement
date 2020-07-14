@@ -50,6 +50,8 @@ public class ExamReportRepository {
 
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
+	private static final String SQL_SELECT_CSV = "SELECT * FROM task order by comment";
+
 	@Autowired
 	private JdbcTemplate jdbc;
 
@@ -205,8 +207,20 @@ public class ExamReportRepository {
 		String like_search_company_name = '%' + search_company_name + '%';
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME,
 				like_search_examreport_id,like_search_user_id, like_search_company_name);
-		ExamReportEntity examReportEntity = mappingSelectExamResult(resultList);
-		return examReportEntity;
+		ExamReportEntity examEntity = mappingSelectExamResult(resultList);
+		return examEntity;
+	}
+
+	/**
+	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する.
+	 * @throws DataAccessException
+	 */
+	public void saveCsv() throws DataAccessException {
+
+		// CSVファイル出力用設定
+		CsvCallbackHandler handler = new CsvCallbackHandler();
+
+		jdbc.query(SQL_SELECT_CSV, handler);
 	}
 
 
