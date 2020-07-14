@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.ac.hcs.white.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -137,8 +136,8 @@ public class ExamReportController {
 			@RequestParam("search_user_id") String search_user_id,@RequestParam("search_company_name") String search_company_name,
 			Model model) {
 
-		UserEntity userEntity = examService.search(search_examreport_id, search_user_id,search_company_name);
-		model.addAttribute("userEntity", userEntity);
+		ExamReportEntity examreportEntity = examService.search(search_examreport_id, search_user_id,search_company_name);
+		model.addAttribute("examreportEntity", examreportEntity);
 
 		// 検索ワードの連携
 		model.addAttribute("search_examreport_id", search_examreport_id);

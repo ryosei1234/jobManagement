@@ -199,7 +199,7 @@ public class ExamReportRepository {
 		return rowNumber;
 	}
 
-	public ExamReportEntity searchByUserIdAndUsername(String search_examreport_id,String search_user_id, String search_company_name)
+	public ExamReportEntity searchByExam_idAndUsernameANDCompanyname(String search_examreport_id,String search_user_id, String search_company_name)
 			throws DataAccessException {
 		String like_search_examreport_id = '%' + search_examreport_id + '%';
 		String like_search_user_id = '%' + search_user_id + '%';
