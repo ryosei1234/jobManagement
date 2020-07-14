@@ -65,6 +65,16 @@
 			<!-- 登録・更新・削除処理の結果表示用 -->
 			<label class="text-info" th:text="${result}">結果表示</label><br>
 
+			<h2>ユーザ検索</h2>
+			<form method="post" th:action="@{/user/userlist}">
+				<div class="input-group">
+					<input type="text" class="form-control" name="" placeholder="ここに入力">
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-success">検索</button>
+					</span>
+				</div>
+			</form>
+
 			<h2>ユーザ一覧</h2>
 			<table class="table table-hover table-striped table-responsive">
 				<tr>
@@ -86,7 +96,7 @@
 			</table>
 
 			<td class="text-nowrap"><a class="btn btn-success"
-						th:href="@{'/user/userInsert'}">新規登録</a></td>
+				th:href="@{'/user/userInsert'}">新規登録</a></td>
 
 		</div>
 	</div>
