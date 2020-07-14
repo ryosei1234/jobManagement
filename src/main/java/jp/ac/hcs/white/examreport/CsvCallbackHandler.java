@@ -27,10 +27,10 @@ public class CsvCallbackHandler implements RowCallbackHandler {
 			BufferedWriter bw = new BufferedWriter(fw);
 			do {
 				// テーブルのデータ構造
-				String str = rs.getInt("id") + ","
-						+ rs.getString("user_id") + ","
-						+ rs.getString("comment") + ","
-						+ rs.getDate("limitday");
+				String str = rs.getInt("examreport_id") + ","
+						+ rs.getString("company_name") + ","
+						+ rs.getString("examination_location") + ","
+						+ rs.getDate("report_day");
 
 				bw.write(str);
 				bw.newLine();
