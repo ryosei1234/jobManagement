@@ -30,13 +30,13 @@ public class UserRepository {
 	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id) "
 									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID', ? , ?, ?, ?)";
 
-	/** SQL 1件更新 管理者 パスワード更新有 */
+	/** SQL 1件更新 パスワード更新有 */
 	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? WHERE user_id = ?";
 
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
 
-
+    /** SQL 検索*/
 	private static final String SQL_SEARCH_BY_USER_ID_AND_USER_NAME ="SELECT * FROM m_user where user_id LIKE ? and user_name LIKE ?";
 
 
@@ -112,7 +112,7 @@ public class UserRepository {
 	}
 
 	/**
-	 * (管理用)Userテーブルのデータを1件追加する
+	 * Userテーブルのデータを1件追加する
 	 * @param data
 	 * @return rowNumber
 	 * @throws DataAccessException
@@ -136,7 +136,7 @@ public class UserRepository {
 	}
 
 	/**
-	 * (管理用)Userテーブルのデータを1件削除する
+	 * Userテーブルのデータを1件削除する
 	 * @param user_id
 	 * @return rowNumber
 	 * @throws DataAccessException
@@ -145,7 +145,13 @@ public class UserRepository {
 		int rowNumber = jdbc.update(SQL_DELETE_ONE, user_id);
 		return rowNumber;
 }
-
+	/**
+	 * ユーザを検索する
+	 * @param search_user_id
+	 * @param search_user_name
+	 * @return userEntity
+	 * @throws DataAccessException
+	 */
 	public UserEntity searchByUserIdAndUsername(String search_user_id, String search_user_name)
 			throws DataAccessException {
 		String like_search_user_id = '%' + search_user_id + '%';
