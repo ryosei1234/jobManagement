@@ -39,29 +39,29 @@ public class ExamReportController {
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioRoute() {
 		Map<String, String> radioroute = new LinkedHashMap<>();
-		radioroute.put("学校斡旋", "1");
-		radioroute.put("ネット", "2");
-		radioroute.put("斡旋サイト", "3");
-		radioroute.put("企業HP", "4");
-		radioroute.put("新聞・雑誌", "5");
-		radioroute.put("ジョブカフェ等", "6");
-		radioroute.put("その他", "99");
+		radioroute.put("学校斡旋", "学校斡旋");
+		radioroute.put("ネット", "ネット");
+		radioroute.put("斡旋サイト", "斡旋サイト");
+		radioroute.put("企業HP", "企業HP");
+		radioroute.put("新聞・雑誌", "新聞・雑誌");
+		radioroute.put("ジョブカフェ等", "ジョブカフェ等");
+		radioroute.put("その他", "その他");
 		return radioroute;
 	}
-
+	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioTest() {
 		Map<String, String> radiotest = new LinkedHashMap<>();
-		radiotest.put("1次試験", "1");
-		radiotest.put("2次試験", "2");
-		radiotest.put("3次試験", "3");
-		radiotest.put("4次試験", "4");
-		radiotest.put("次試験", "5");
-		radiotest.put("最終試験", "6");
+		radiotest.put("1次試験", "1次試験");
+		radiotest.put("2次試験", "2次試験");
+		radiotest.put("3次試験", "3次試験");
+		radiotest.put("4次試験", "4次試験");
+		radiotest.put("次試験", "次試験");
+		radiotest.put("最終試験", "最終試験");
 		return radiotest;
 	}
 
 	/**
-	 *
+	 * 受験報告一覧を表示
 	 * @param principal ログイン情報
 	 * @param model
 	 * @return 受験報告一覧画面
@@ -76,7 +76,12 @@ public class ExamReportController {
 
 		return "exam/examlist";
 	}
-
+	/**
+	 * 一件分の受験報告を追加する
+	 * @param form	追加する受験報告情報
+	 * @param model
+	 * @return	受験報告登録画面
+	 */
 	@GetMapping("/exam/examInsert")
 	public String getExamInsert(@ModelAttribute ExamForm form, Model model) {
 		// ラジオボタンの準備
@@ -89,7 +94,14 @@ public class ExamReportController {
 		return "exam/examInsert";
 	}
 
-
+	/**
+	 * 一件分の受験報告を追加する
+	 * @param form	追加する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
 	@PostMapping("/exam/examInsert")
 	public String postExamInsert(@ModelAttribute @Validated ExamForm form,
 			BindingResult bindingResult,
@@ -125,6 +137,14 @@ public class ExamReportController {
 		return getExamList(principal, model);
 
 	}
+
+	/**
+	 * 受験報告の詳細画面を表示する
+	 * @param examreport_id 受験報告ID
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告詳細画面
+	 */
 	@GetMapping("/exam/examDetail/{examreport_id:.+}")
 	public String getExamDetail(@PathVariable("examreport_id") String examreport_id, Principal principal,Model model) {
 
@@ -135,7 +155,14 @@ public class ExamReportController {
 		return "exam/examDetail";
 
 	}
-
+	/**
+	 * 受験報告を検索する
+	 * @param search_examreport_id 検索したい受験報告ID
+	 * @param search_user_id 検索したいユーザID
+	 * @param search_company_name 検索したい企業名
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
 	@PostMapping("/exam/search")
 	public String search(@RequestParam("search_examreport_id") String search_examreport_id,
 			@RequestParam("search_user_id") String search_user_id,@RequestParam("search_company_name") String search_company_name,

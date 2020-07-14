@@ -140,10 +140,10 @@ public class UserController {
 		return getUserList(model);
 	}
 	/**
-	 * 1件分のデータを追加する
-	 * @param userform
+	 * 一件分のユーザを追加する
+	 * @param userform 追加するユーザ情報
 	 * @param model
-	 * @return insert
+	 * @return 新規登録画面
 	 */
 	@GetMapping("/user/userInsert")
 	public String insert(@ModelAttribute UserFormIn userformin,Model model){
@@ -154,7 +154,20 @@ public class UserController {
 
 		return "user/userInsert";
 	}
-
+	/**
+	 * 一件分のユーザを追加する
+	 * @param principal ログイン情報
+	 * @param model
+	 * @param user_id ユーザ
+	 * @param password
+	 * @param user_name
+	 * @param role
+	 * @param user_class
+	 * @param user_student_no
+	 * @param userformin
+	 * @param bindingResult データバインド実施結果
+	 * @return
+	 */
 	@PostMapping("/user/userInsert")
 	public String insertOne(Principal principal,Model model, @RequestParam(value="user_id",required = false) String user_id ,
 			@RequestParam(value="password", required = false) String password , @RequestParam(value="user_name",required = false) String user_name ,
@@ -162,12 +175,7 @@ public class UserController {
 			@RequestParam(value="user_student_no",required = false) String user_student_no,
 			@ModelAttribute @Validated UserFormIn userformin,BindingResult bindingResult)
 			{
-		System.out.println("ひん;;");
-		System.out.println(user_id + password + user_name + role + user_class + user_student_no);
-
-		System.out.println("おけまる");
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
-		log.info(password);
 
 		int insert = userService.insertOne(user_id,password , user_name , role, user_class, user_student_no, principal.getName());
 		UserEntity userEntity = userService.selectAll();
@@ -201,7 +209,13 @@ public class UserController {
 		return getUserList(model);
 
 	}
-
+	/**
+	 * ユーザを検索する
+	 * @param search_user_id 検索するユーザID
+	 * @param search_user_name 検索するユーザ名
+	 * @param model
+	 * @return ユーザ一覧画面
+	 */
 	@PostMapping("/user/search")
 	public String search(@RequestParam("search_user_id") String search_user_id,
 			@RequestParam("search_user_name") String search_user_name, Model model) {
