@@ -73,15 +73,17 @@
 				th:href="@{'/exam/examInsert'}">作成</a></td>
 
 			<h2>受験報告検索</h2>
-			<form method="post" th:action="@{/exam/examlist}">
-				<div class="input-group">
-					<input type="text" class="form-control" name=""
-						placeholder="ここに入力"> <span
-						class="input-group-btn">
-						<button type="submit" class="btn btn-success">検索</button>
-					</span>
-				</div>
+			<form class="form-inline" method="post" th:action="@{/exam/search}">
+				<input type="text" class="form-control" name="search_examreport_id"
+					th:value="${search_examreport_id}" placeholder="受験報告ID : あいまい検索" size=30>
+				<input type="text" class="form-control" name="search_user_id"
+					th:value="${search_user_id}" placeholder="ユーザID : あいまい検索" size=30>
+				<input type="text" class="form-control" name="search_company_name"
+					th:value="search_company_name" placeholder="企業名 : あいまい検索" size=30>
+				<button type="submit" class="btn btn-success">検索</button>
 			</form>
+			<hr>
+
 
 
 			<table class="table table-hover table-striped table-responsive">
