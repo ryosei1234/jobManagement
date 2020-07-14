@@ -1,10 +1,14 @@
 package jp.ac.hcs.white.examreport;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.ac.hcs.white.WebConfig;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -146,5 +151,39 @@ public class ExamReportController {
 
 		return "exam/examlist";
 	}
+
+	/**
+	 * 情報をCSVファイルとしてダウンロードさせる.
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return CSVファイル
+	 */
+	@PostMapping("/task/csv")
+	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
+
+		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
+
+		// タスク情報のCSVファイルをサーバ上に保存
+		examService.saveCsv();
+
+		// CSVファイルをサーバから読み込み
+		byte[] bytes = null;
+		try {
+			bytes = examService.loadCsv(WebConfig.FILENAME_CSV);
+			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
+		} catch (IOException e) {
+			log.warn("[" + principal.getName() + "]CSVファイル読み込み失敗:" + WebConfig.FILENAME_CSV);
+			e.printStackTrace();
+		}
+
+		// CSVファイルのダウンロード用ヘッダー情報設定
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv; charset=UTF-8");
+		header.setContentDispositionFormData("filename", WebConfig.FILENAME_CSV);
+
+		// CSVファイルを端末へ送信
+		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
+	}
+
 
 }
