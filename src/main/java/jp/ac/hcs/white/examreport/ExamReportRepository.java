@@ -161,7 +161,6 @@ public class ExamReportRepository {
 		}
 		examreport_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString()));
 
-
 		log.warn(examreport_id);
 		log.warn("検査インサートぴえん:" + data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,

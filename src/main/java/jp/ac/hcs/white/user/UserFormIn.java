@@ -15,6 +15,7 @@ import lombok.Data;
  */
 @Data
 public class UserFormIn {
+
 	//ユーザID
 	@NotBlank(message = "{require_check}")
 	@Email(message = "{email_check}")
@@ -45,6 +46,5 @@ public class UserFormIn {
 	//出席番号
 	@NotBlank(message="{require_check}")
 	private String user_student_no;
-
 
 }
