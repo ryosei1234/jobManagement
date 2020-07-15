@@ -26,7 +26,7 @@ public class UserFormIn {
 	@Pattern(regexp = "^[a-zA-Z0-9]+$",message="{pattern_check}")
 	private String password;
 
-	/** ダークモードフラグ */
+	// ダークモードフラグ
 	private boolean darkmode;
 
 	//ユーザ名
