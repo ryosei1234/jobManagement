@@ -26,6 +26,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+
 	/** 権限のラジオボタン用変数 */
 	private Map<String, String> radioRole;
 
@@ -88,8 +90,6 @@ public class UserController {
 		return "user/userDetail";
 	}
 
-
-
 	/**
 	 * 1件分のユーザ情報でデータベースを更新する.
 	 * パスワードの更新が不要の場合は、画面側で何も値を設定しないものとする.
@@ -104,8 +104,8 @@ public class UserController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) {
-		 System.out.println(form.getUser_student_no());
-		 System.out.println();
+		System.out.println(form.getUser_student_no());
+		System.out.println();
 		// 入力チェックに引っかかった場合、前の画面に戻る
 		if (bindingResult.hasErrors()) {
 			return getUserDetail(form, form.getUser_id(), principal, model);
@@ -124,9 +124,9 @@ public class UserController {
 
 		boolean result = false;
 
-	// パスワード更新有
+		// パスワード更新有
 		data.setPassword(form.getPassword());
-			result = userService.updateOneWithPassword(data);
+		result = userService.updateOneWithPassword(data);
 
 
 		if (result) {
@@ -139,22 +139,31 @@ public class UserController {
 
 		return getUserList(model);
 	}
+
 	/**
 	 * 一件分のユーザを追加する
 	 * @param userform 追加するユーザ情報
-	 * @param model
+	 * @param model データバインド実施結果
 	 * @return 新規登録画面
 	 */
 	@GetMapping("/user/userInsert")
 	public String getUserInsert(@ModelAttribute UserFormIn userformin,Model model){
 
 		// ラジオボタンの準備
-				radioRole = initRadioRole();
-				model.addAttribute("radioRole", radioRole);
+		radioRole = initRadioRole();
+		model.addAttribute("radioRole", radioRole);
 
 		return "user/userInsert";
 	}
 
+	/**
+	 *  一件分のユーザを追加する
+	 * @param form 追加するユーザ情報
+	 * @param bindingResult
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return ユーザ一覧画面
+	 */
 	@PostMapping("/user/userInsert")
 	public String insertOne(@ModelAttribute @Validated UserFormIn form,
 			BindingResult bindingResult,
@@ -208,11 +217,9 @@ public class UserController {
 			log.warn("[" + principal.getName() + "]ユーザ削除失敗");
 		}
 
-
-
 		return getUserList(model);
-
 	}
+
 	/**
 	 * ユーザを検索する
 	 * @param search_user_id 検索するユーザID
@@ -233,7 +240,5 @@ public class UserController {
 
 		return "user/userList";
 	}
-
-
 }
 

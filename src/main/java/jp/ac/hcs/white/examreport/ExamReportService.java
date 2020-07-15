@@ -64,7 +64,6 @@ public class ExamReportService {
 
 		ExamReportEntity examEntity = null;
 
-		// 検索条件によって異なるSQLを使用する場合は、ここで分岐させる
 		examEntity = examRepository.searchByExam_idAndUsernameANDCompanyname(search_examreport_id, search_user_id,search_company_name);
 
 		return examEntity;
