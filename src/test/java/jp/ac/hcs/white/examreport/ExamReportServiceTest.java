@@ -16,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ExamReportServiceTest {
 
 	@Autowired
-	ExamReportService examreportService;
+	ExamReportService examService;
 
 	@Test
 	public void testSelectAll() {
 		// 1.Ready
 		// 2.Do
-		ExamReportEntity examEntity = examreportService.selectAll("yamada@xxx.co.jp");
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
 		// 3.Assert
 		//assertNotNull(examEntity);
 		// 4.logs
@@ -31,22 +31,52 @@ public class ExamReportServiceTest {
 
 	@Test
 	public void testInsertOne() {
-		fail("まだ実装されていません");
+		// 1.Ready
+		ExamReportData data = new ExamReportData();
+		data.setDepartment("S");
+		data.setUser_id("yamada@xxx.co.jp");
+		data.setCompany_name_top("エイチ");
+		data.setRecruitment_number(110);
+		data.setCompany_name("株式会社");
+		data.setApplication_route("斡旋");
+		data.setExam_date_time("2020-07-29");
+		data.setExamination_location("東京");
+		data.setContens_test("1次試験");
+		data.setRemarks("備考");
+		// 2.Do
+		boolean result = examService.insertOne(data);
+		// 3.Assert
+		assertEquals(true, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testInsertOne]taskEntity:" + examEntity.toString());
 	}
 
 	@Test
 	public void testSelectOne() {
-		fail("まだ実装されていません");
+		// 1.Ready
+		// 2.Do
+		ExamReportData examEntity = examService.selectOne("0000000001");
+		// 3.Assert
+		//assertNotNull(examEntity);
+		// 4.logs
+		log.warn("[testSelectOne]examEntity:" + examEntity.toString());
 	}
 
 	@Test
 	public void testSearch() {
-		fail("まだ実装されていません");
+		// 1.Ready
+		// 2.Do
+		ExamReportEntity examEntity = examService.search("0000000001","","");
+		// 3.Assert
+		//assertNotNull(examEntity);
+		// 4.logs
+		log.warn("[testSearch]examEntity:" + examEntity.toString());
 	}
 
 	@Test
 	public void testSaveCsv() {
-		fail("まだ実装されていません");
+
 	}
 
 	@Test
