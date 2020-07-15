@@ -26,6 +26,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+
 	/** 権限のラジオボタン用変数 */
 	private Map<String, String> radioRole;
 
@@ -88,8 +90,6 @@ public class UserController {
 		return "user/userDetail";
 	}
 
-
-
 	/**
 	 * 1件分のユーザ情報でデータベースを更新する.
 	 * パスワードの更新が不要の場合は、画面側で何も値を設定しないものとする.
@@ -139,10 +139,11 @@ public class UserController {
 
 		return getUserList(model);
 	}
+
 	/**
 	 * 一件分のユーザを追加する
 	 * @param userform 追加するユーザ情報
-	 * @param model
+	 * @param model データバインド実施結果
 	 * @return 新規登録画面
 	 */
 	@GetMapping("/user/userInsert")
@@ -155,6 +156,14 @@ public class UserController {
 		return "user/userInsert";
 	}
 
+	/**
+	 *  一件分のユーザを追加する
+	 * @param form 追加するユーザ情報
+	 * @param bindingResult
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return ユーザ一覧画面
+	 */
 	@PostMapping("/user/userInsert")
 	public String insertOne(@ModelAttribute @Validated UserFormIn form,
 			BindingResult bindingResult,
