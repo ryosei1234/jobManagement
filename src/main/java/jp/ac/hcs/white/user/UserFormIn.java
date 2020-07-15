@@ -9,6 +9,10 @@ import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
 
+/**
+ * アップデート用にパスワード、ダークモード、権限のチェックを外したUserForm.
+ * その他の内容はUserFormInに準じる.
+ */
 @Data
 public class UserFormIn {
 	//ユーザID
