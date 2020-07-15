@@ -1,6 +1,6 @@
 /* 開発用にデータ削除を追加 : リリース時は消す
 DROP TABLE m_user;
-DROP TABLE task;
+DROP TABLE examreport;
  */
 
 /* ユーザマスタ */
@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS m_user (
 /*受験報告テーブル*/
 CREATE TABLE IF NOT EXISTS examreport (
   examreport_id VARCHAR(10) PRIMARY KEY,
-  user_id VARCHAR(254),
+  user_id VARCHAR(254) NOT NULL,
   department CHAR(1),
   company_name_top CHAR(3),
   report_day DATE,
-  recruitment_number INT,/*文字型にする*/
+  recruitment_number INT,
   company_name VARCHAR(50),
   application_route VARCHAR(10),
   exam_date_time DATETIME,
