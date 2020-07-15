@@ -46,7 +46,7 @@ public class ExamReportRepository {
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
 	/** SQL CSV出力*/
-	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport order by company_name_top";
+	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport JOIN m_user ON examreport.user_id = m_user.user_id order by company_name_top";
 
 	@Autowired
 	private JdbcTemplate jdbc;
@@ -202,7 +202,7 @@ public class ExamReportRepository {
 	}
 
 	/**
-	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する.
+	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する
 	 * @throws DataAccessException
 	 */
 	public void saveCsv() throws DataAccessException {

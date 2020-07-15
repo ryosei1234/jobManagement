@@ -28,10 +28,19 @@ public class CsvCallbackHandler implements RowCallbackHandler {
 			do {
 				// テーブルのデータ構造
 				String str = rs.getInt("examreport_id") + ","
+						+ rs.getString("user_class") + ","
+						+ rs.getString("user_student_no") + ","
+						+ rs.getString("user_name") + ","
+						+ rs.getString("department") + ","
+						+ rs.getString("company_name_top") + ","
+						+ rs.getDate("report_day") + ","
+						+ rs.getInt("recruitment_number") + ","
 						+ rs.getString("company_name") + ","
+						+ rs.getString("application_route") + ","
+						+ rs.getString("exam_date_time") + ","
 						+ rs.getString("examination_location") + ","
-						+ rs.getDate("report_day");
-
+						+ rs.getString("contens_test") + ","
+						+ rs.getString("remarks");
 				bw.write(str);
 				bw.newLine();
 			} while (rs.next());
