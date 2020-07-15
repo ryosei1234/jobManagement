@@ -172,8 +172,19 @@ public class UserController {
 			Principal principal,
 			Model model){
 
+		UserEntity userEntity = userService.selectAll();
+		System.out.println("ユーザエンティティ" + userEntity.getUserlist());
+		model.addAttribute("userEntity", userEntity);
+		for (UserData data : userEntity.getUserlist()) {
+			if (form.getUser_id().equals(data.getUser_id())){
+				return "/user/userInsert";
+			}else {
+				System.out.println("aaaaa" + data.getUser_id());
+			};
+		}
+
 		if (bindingResult.hasErrors()) {
-			return getUserInsert(form, model);
+			return getUserList(model);
 		}
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 
