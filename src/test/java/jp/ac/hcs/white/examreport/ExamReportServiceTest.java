@@ -2,12 +2,15 @@ package jp.ac.hcs.white.examreport;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import jp.ac.hcs.white.WebConfig;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -67,7 +70,7 @@ public class ExamReportServiceTest {
 	public void testSearch() {
 		// 1.Ready
 		// 2.Do
-		ExamReportEntity examEntity = examService.search("0000000001","","");
+		ExamReportEntity examEntity = examService.search("0000000001", "", "");
 		// 3.Assert
 		//assertNotNull(examEntity);
 		// 4.logs
@@ -76,12 +79,33 @@ public class ExamReportServiceTest {
 
 	@Test
 	public void testSaveCsv() {
+		// 1.Ready
+		examService.saveCsv();
+		// 2.Do
+		// 3.Assert
+		//assertNotNull(examEntity);
+		// 4.logs
 
 	}
 
 	@Test
 	public void testLoadCsv() {
-		fail("まだ実装されていません");
+		// 1.Ready
+		// 2.Do
+		byte[] bytes = null;
+
+		try {
+			bytes = examService.loadCsv(WebConfig.FILENAME_CSV);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+
+		// 3.Assert
+		//assertNotNull(examEntity);
+		// 4.logs
+
 	}
 
 }
