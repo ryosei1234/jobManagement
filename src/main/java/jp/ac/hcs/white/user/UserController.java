@@ -83,6 +83,8 @@ public class UserController {
 			form.setUser_id(data.getUser_id());
 			form.setUser_name(data.getUser_name());
 			form.setDarkmode(data.isUser_darkmode());
+			form.setUser_class(data.getUser_class());
+			form.setUser_student_no(data.getUser_student_no());
 			form.setRole(data.getRole());
 			model.addAttribute("userFormForUpdate", form);
 		}

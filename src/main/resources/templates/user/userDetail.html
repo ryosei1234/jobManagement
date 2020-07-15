@@ -119,7 +119,7 @@
 					<p>番号</p>
 					<div class="form-group input-box"
 						th:classappend="${#fields.hasErrors('user_student_no')}? 'has-error'">
-						<input type="number" class="form-control" name="user_student_no"
+						<input type="text" class="form-control" name="user_student_no"
 							placeholder="xx" th:field="*{user_student_no}"> <span
 							class="text-danger"
 							th:if="${#fields.hasErrors('user_student_no')}"
