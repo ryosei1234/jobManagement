@@ -98,6 +98,12 @@ public class UserRepository {
 		return data;
 	}
 
+	/**
+	 * Userテーブルのデータを1件更新する
+	 * @param data
+	 * @return rowNumber
+	 * @throws DataAccessException
+	 */
 	public int updateOneWithPassword(UserData data) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_UPDATE_ONE_WITH_PASSWORD,
 				passwordEncoder.encode(data.getPassword()),
