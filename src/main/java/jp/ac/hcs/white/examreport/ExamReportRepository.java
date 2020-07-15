@@ -202,7 +202,7 @@ public class ExamReportRepository {
 	}
 
 	/**
-	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する.
+	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する
 	 * @throws DataAccessException
 	 */
 	public void saveCsv() throws DataAccessException {
