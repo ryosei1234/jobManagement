@@ -161,11 +161,9 @@ public class UserController {
 			Principal principal,
 			Model model){
 
-		System.out.println(form.toString());
 		if (bindingResult.hasErrors()) {
 			return getUserInsert(form, model);
 		}
-		log.warn("インサート;;" + form.toString());
 		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 
 		UserData data = new UserData();
