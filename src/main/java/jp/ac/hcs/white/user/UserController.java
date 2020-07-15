@@ -104,8 +104,8 @@ public class UserController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) {
-		 System.out.println(form.getUser_student_no());
-		 System.out.println();
+		System.out.println(form.getUser_student_no());
+		System.out.println();
 		// 入力チェックに引っかかった場合、前の画面に戻る
 		if (bindingResult.hasErrors()) {
 			return getUserDetail(form, form.getUser_id(), principal, model);
@@ -124,9 +124,9 @@ public class UserController {
 
 		boolean result = false;
 
-	// パスワード更新有
+		// パスワード更新有
 		data.setPassword(form.getPassword());
-			result = userService.updateOneWithPassword(data);
+		result = userService.updateOneWithPassword(data);
 
 
 		if (result) {
@@ -149,8 +149,8 @@ public class UserController {
 	public String getUserInsert(@ModelAttribute UserFormIn userformin,Model model){
 
 		// ラジオボタンの準備
-				radioRole = initRadioRole();
-				model.addAttribute("radioRole", radioRole);
+		radioRole = initRadioRole();
+		model.addAttribute("radioRole", radioRole);
 
 		return "user/userInsert";
 	}
@@ -208,11 +208,9 @@ public class UserController {
 			log.warn("[" + principal.getName() + "]ユーザ削除失敗");
 		}
 
-
-
 		return getUserList(model);
-
 	}
+
 	/**
 	 * ユーザを検索する
 	 * @param search_user_id 検索するユーザID
@@ -233,7 +231,5 @@ public class UserController {
 
 		return "user/userList";
 	}
-
-
 }
 

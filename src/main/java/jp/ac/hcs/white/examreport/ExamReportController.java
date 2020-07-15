@@ -76,6 +76,7 @@ public class ExamReportController {
 
 		return "exam/examlist";
 	}
+
 	/**
 	 * 一件分の受験報告を追加する
 	 * @param form	追加する受験報告情報
@@ -85,11 +86,11 @@ public class ExamReportController {
 	@GetMapping("/exam/examInsert")
 	public String getExamInsert(@ModelAttribute ExamForm form, Model model) {
 		// ラジオボタンの準備
-				radioroute = initRadioRoute();
-				model.addAttribute("radioRoute", radioroute);
+		radioroute = initRadioRoute();
+		model.addAttribute("radioRoute", radioroute);
 
-				radiotest = initRadioTest();
-				model.addAttribute("radioTest", radiotest);
+		radiotest = initRadioTest();
+		model.addAttribute("radioTest", radiotest);
 
 		return "exam/examInsert";
 	}
@@ -112,7 +113,6 @@ public class ExamReportController {
 		if (bindingResult.hasErrors()) {
 			return getExamInsert(form, model);
 		}
-
 
 		ExamReportData data = new ExamReportData();
 		data.setDepartment(form.getDepartment());
@@ -153,8 +153,8 @@ public class ExamReportController {
 		model.addAttribute("examdata", data);
 
 		return "exam/examDetail";
-
 	}
+
 	/**
 	 * 受験報告を検索する
 	 * @param search_examreport_id 検索したい受験報告ID
@@ -211,6 +211,4 @@ public class ExamReportController {
 		// CSVファイルを端末へ送信
 		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
 	}
-
-
 }
