@@ -2,11 +2,14 @@ package jp.ac.hcs.white.examreport;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 
 @Data
 public class ExamForm {
 
+@Length(min = 1, max = 1, message="{length_check}")
 @NotBlank(message = "{require_check}")
 private String department;
 
