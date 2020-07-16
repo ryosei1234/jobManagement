@@ -27,7 +27,6 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-
 	/** 権限のラジオボタン用変数 */
 	private Map<String, String> radioRole;
 
@@ -130,7 +129,6 @@ public class UserController {
 		data.setPassword(form.getPassword());
 		result = userService.updateOneWithPassword(data);
 
-
 		if (result) {
 			log.info("[" + principal.getName() + "]ユーザ更新成功");
 			model.addAttribute("result", "ユーザ更新成功");
@@ -149,7 +147,7 @@ public class UserController {
 	 * @return 新規登録画面
 	 */
 	@GetMapping("/user/userInsert")
-	public String getUserInsert(@ModelAttribute UserFormIn userformin,Model model){
+	public String getUserInsert(@ModelAttribute UserFormIn userformin, Model model){
 
 		// ラジオボタンの準備
 		radioRole = initRadioRole();

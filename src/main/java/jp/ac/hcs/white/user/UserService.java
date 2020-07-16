@@ -56,7 +56,7 @@ public class UserService {
 	 */
 	public boolean insertOne(UserData userData, String userId) {
 
-		int rowNumber = userRepository.insertOne(userData,userId);
+		int rowNumber = userRepository.insertOne(userData, userId);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}
