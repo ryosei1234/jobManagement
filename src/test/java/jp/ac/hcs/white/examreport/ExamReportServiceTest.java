@@ -1,6 +1,8 @@
 package jp.ac.hcs.white.examreport;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
@@ -8,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import jp.ac.hcs.white.WebConfig;
@@ -20,6 +23,8 @@ public class ExamReportServiceTest {
 
 	@Autowired
 	ExamReportService examService;
+	@SpyBean
+	ExamReportRepository examRepository;
 
 	@Test
 	public void testSelectAll() {
@@ -50,6 +55,30 @@ public class ExamReportServiceTest {
 		boolean result = examService.insertOne(data);
 		// 3.Assert
 		assertEquals(true, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testInsertOne]taskEntity:" + examEntity.toString());
+	}
+
+	@Test
+	public void testInsertOne_失敗() {
+		// 1.Ready
+		ExamReportData data = new ExamReportData();
+		data.setDepartment("S");
+		data.setUser_id("yamada@xxx.co.jp");
+		data.setCompany_name_top("エイチ");
+		data.setRecruitment_number(110);
+		data.setCompany_name("株式会社");
+		data.setApplication_route("斡旋");
+		data.setExam_date_time("2020-07-29");
+		data.setExamination_location("東京");
+		data.setContens_test("1次試験");
+		data.setRemarks("備考");
+		// 2.Do
+		doReturn(0).when(examRepository).insertOne(any());
+		boolean result = examService.insertOne(data);
+		// 3.Assert
+		assertEquals(false, result);
 		// 4.logs
 		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
 		log.warn("[testInsertOne]taskEntity:" + examEntity.toString());
