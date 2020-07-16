@@ -68,7 +68,6 @@ public class ExamReportController {
 	 */
 	@PostMapping("/exam/examlist")
 	public String getExamList(Principal principal, Model model) {
-		System.out.println(principal.getName());
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 		ExamReportEntity examEntity;
 		examEntity = examService.selectAll(principal.getName());
