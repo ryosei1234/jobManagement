@@ -92,7 +92,7 @@
 
 			<div class="col-sm-6">
 				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
+				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STAFF')">
 					<h2>ユーザ一覧</h2>
 					<form method="get" th:action="@{/user/userList}">
 						<button type="submit" class="btn btn-success">ユーザ一覧画面へ</button>

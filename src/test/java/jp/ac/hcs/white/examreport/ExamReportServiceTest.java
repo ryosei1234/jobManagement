@@ -85,27 +85,22 @@ public class ExamReportServiceTest {
 		// 3.Assert
 		//assertNotNull(examEntity);
 		// 4.logs
-
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testSaveCsv]examEntity:" + examEntity.toString());
 	}
 
 	@Test
-	public void testLoadCsv() {
+	public void testLoadCsv() throws IOException {
 		// 1.Ready
 		// 2.Do
-		byte[] bytes = null;
 
-		try {
-			bytes = examService.loadCsv(WebConfig.FILENAME_CSV);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
+		byte[] bytes = examService.loadCsv(WebConfig.FILENAME_CSV);
+		// TODO 自動生成された catch ブロック
 
 		// 3.Assert
 		//assertNotNull(examEntity);
 		// 4.logs
-
+		log.warn("[testLoadCsv]examEntity:" + bytes.toString());
 	}
 
 }

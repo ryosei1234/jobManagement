@@ -43,12 +43,22 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateOneWithPassword() {
 		// 1.Ready
+		UserData data = new UserData();
+		data.setUser_id("aaa@xxx.co.jp");
+		data.setUser_name("山田");
+		data.setRole("ROLE_TEACHER");
+		data.setUser_class("S3A1");
+		data.setUser_student_no("00");
+		data.setUpdate_user_id("aaa@xxx.co.jp");
+
 		// 2.Do
-		UserData userEntity = userService.selectOne("yamada@xxx.co.jp");
+		data.setPassword("password");
+		boolean result = userService.updateOneWithPassword(data);
 		// 3.Assert
-		//assertNotNull(examEntity);
+		//assertEquals(true, result);
 		// 4.logs
-		log.warn("[testSelectOne]userEntity:" + userEntity.toString());
+		UserEntity userEntity = userService.selectAll();
+		log.warn("[testUpdateOne]userEntity:" + userEntity.toString());
 	}
 
 	@Test
@@ -87,7 +97,7 @@ public class UserServiceTest {
 	public void testSearch() {
 		// 1.Ready
 		// 2.Do
-		UserEntity userEntity = userService.search("yamada@xxx.co.jp", "");
+		UserEntity userEntity = userService.search("aaa@xxx.co.jp", "");
 		// 3.Assert
 		//assertNotNull(examEntity);
 		// 4.logs
