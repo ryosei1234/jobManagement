@@ -167,7 +167,7 @@ public class ExamReportController {
 			@RequestParam("search_user_id") String search_user_id,@RequestParam("search_company_name") String search_company_name,
 			Model model) {
 
-		ExamReportEntity examEntity = examService.search(search_examreport_id, search_user_id,search_company_name);
+		ExamReportEntity examEntity = examService.search(search_examreport_id, search_user_id, search_company_name);
 		model.addAttribute("examEntity", examEntity);
 
 		// 検索ワードの連携
