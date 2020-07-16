@@ -15,7 +15,6 @@ public class UserFormForUpdate {
 	private String user_id;
 
 	//パスワード
-
 	private String password;
 
 	/** ダークモードフラグ */

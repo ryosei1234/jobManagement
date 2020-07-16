@@ -34,7 +34,6 @@ public class UserService {
 		return userRepository.selectOne(user_id);
 	}
 
-
 	/**
 	 * (管理用)ユーザ情報を1件更新する(パスワード更新有).
 	 * @param userData 更新するユーザ情報(パスワードは平文)
@@ -42,6 +41,18 @@ public class UserService {
 	 */
 	public boolean updateOneWithPassword(UserData userData) {
 		int rowNumber = userRepository.updateOneWithPassword(userData);
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
+	}
+
+
+	/**
+	 * (管理用)ユーザ情報を1件更新する(パスワード更新無).
+	 * @param userData 更新するユーザ情報(パスワードは設定しない)
+	 * @return 処理結果(成功:true, 失敗:false)
+	 */
+	public boolean updateOne(UserData userData) {
+		int rowNumber = userRepository.updateOne(userData);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}

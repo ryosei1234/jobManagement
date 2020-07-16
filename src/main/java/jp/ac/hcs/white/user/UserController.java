@@ -104,8 +104,7 @@ public class UserController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model) {
-		System.out.println(form.getUser_student_no());
-		System.out.println();
+
 		// 入力チェックに引っかかった場合、前の画面に戻る
 		if (bindingResult.hasErrors()) {
 			return getUserDetail(form, form.getUser_id(), principal, model);
@@ -124,9 +123,14 @@ public class UserController {
 
 		boolean result = false;
 
-		// パスワード更新有
-		data.setPassword(form.getPassword());
-		result = userService.updateOneWithPassword(data);
+		if (form.getPassword() == null || form.getPassword().equals("")) {
+			// パスワード更新無
+			result = userService.updateOne(data);
+		} else {
+			// パスワード更新有
+			data.setPassword(form.getPassword());
+			result = userService.updateOneWithPassword(data);
+		}
 
 		if (result) {
 			log.info("[" + principal.getName() + "]ユーザ更新成功");
