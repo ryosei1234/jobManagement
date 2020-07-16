@@ -27,7 +27,7 @@ public class UserRepository {
 	private static final String SQL_SELECT_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id) "
+	private static final String SQL_INSERT_ONE = "INSERT INTO m_user(user_id, encrypted_password, user_name, user_role, user_class, user_student_no, user_darkmode, user_status, created_at, created_user_id, update_at, update_user_id) "
 									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID', ? , ?, ?, ?)";
 
 	/** SQL 1件更新 パスワード更新有 */
@@ -135,7 +135,6 @@ public class UserRepository {
 						user_id,
 						new Timestamp(System.currentTimeMillis()),
 						user_id);
-
 
 		return rowNumber;
 	}

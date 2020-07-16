@@ -25,16 +25,16 @@ public class ExamReportRepository {
 	private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time, exam_report_status FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
 
 	/** SQL 教員、事務用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time, exam_report_status FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
+	private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number, exam_date_time, exam_report_status FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
 
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 
 	/** SQL 1件取得 */
-	private static final String SQL_SELECT_ONE = "SELECT examreport_id,user_class,user_student_no,user_name,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,Exam_report_status FROM examreport, m_user WHERE m_user.user_id = examreport.user_id AND examreport_id = ?";
+	private static final String SQL_SELECT_ONE = "SELECT examreport_id, user_class, user_student_no,user_name, department, company_name_top, report_day, recruitment_number, company_name, application_route, exam_date_time, examination_location, contens_test, remarks, exam_report_status FROM examreport, m_user WHERE m_user.user_id = examreport.user_id AND examreport_id = ?";
 
 	/** SQL 1件追加  */
-	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id,department, company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test,remarks,exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id, department, company_name_top, report_day, recruitment_number, company_name, application_route, exam_date_time, examination_location, contens_test, remarks, exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
