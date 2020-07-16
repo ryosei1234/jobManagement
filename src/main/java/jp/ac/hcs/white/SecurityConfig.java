@@ -50,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll() // ログインページは直リンクOK
 				.antMatchers("/signup").permitAll() // 新規ユーザー登録画面は直リンクOK
 				.antMatchers("/h2-console/**").permitAll() // XXX h2-console使用時は有効にする.
-				.antMatchers("/exam/**").hasAnyRole("ROLE_TEACHER","ROLE_SUTDENT") // 受験報告機能は管理権限ユーザに許可
-				.antMatchers("/exam/**").hasAnyRole("ROLE_TEACHER","ROLE_SUTDENT") // 受験報告機能は管理権限ユーザに許可
+				.antMatchers("/exam/**").hasAnyRole("TEACHER","STUDENT") // 受験報告機能は管理権限ユーザに許可
+				.antMatchers("/csv/**").hasAuthority("TEACHER") // CSV出力機能は管理権限ユーザに許可
 				.anyRequest().authenticated(); // それ以外は直リンク禁止
 
 		//ログイン処理
