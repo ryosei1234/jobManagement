@@ -63,7 +63,6 @@ public class ExamReportRepository {
 
 		List<Map<String, Object>> resultList = null;
 		List<Map<String, Object>> role = jdbc.queryForList(SQL_SELECT_USER_ONE, user_id);
-		log.warn((String) role.get(0).get("USER_ROLE"));
 		if ("ROLE_STUDENT".equals(role.get(0).get("USER_ROLE"))) {
 			resultList = jdbc.queryForList(SQL_SELECT_STUDENT_ALL, user_id);
 		} else {
@@ -84,7 +83,6 @@ public class ExamReportRepository {
 
 		for (Map<String, Object> map : resultList) {
 			ExamReportData data = new ExamReportData();
-			log.warn("検査ぴえん:" + resultList.toString());
 			data.setExamreport_id((String) map.get("examreport_id"));
 			data.setUser_id((String) map.get("user_id"));
 			data.setDepartment((String) map.get("department"));
@@ -161,8 +159,6 @@ public class ExamReportRepository {
 		}
 		examreport_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString()));
 
-		log.warn(examreport_id);
-		log.warn("検査インサートぴえん:" + data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
 				examreport_id,
 				data.getUser_id(),

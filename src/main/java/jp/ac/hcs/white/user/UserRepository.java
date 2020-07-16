@@ -124,7 +124,6 @@ public class UserRepository {
 	 * @throws DataAccessException
 	 */
 	public int insertOne(UserData data,String user_id) throws DataAccessException {
-		log.warn(data.toString());
 		int rowNumber = jdbc.update(SQL_INSERT_ONE,
 						data.getUser_id(),
 						passwordEncoder.encode(data.getPassword()),
