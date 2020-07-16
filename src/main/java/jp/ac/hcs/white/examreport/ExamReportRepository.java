@@ -22,10 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ExamReportRepository {
 
 	/** SQL 生徒用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
+	private static final String SQL_SELECT_STUDENT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department ,company_name_top ,company_name, report_day,recruitment_number, exam_date_time, exam_report_status FROM examreport, m_user WHERE examreport.user_id = m_user.user_id AND examreport.user_id = ? ORDER BY examreport_id";
 
 	/** SQL 教員、事務用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
+	private static final String SQL_SELECT_ALL = "SELECT examreport_id, examreport.user_id, user_class, user_student_no, user_name, department, company_name_top, company_name, report_day,recruitment_number,exam_date_time, exam_report_status FROM examreport, m_user WHERE examreport.user_id = m_user.user_id ORDER BY examreport_id";
 
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";

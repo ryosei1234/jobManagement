@@ -49,7 +49,6 @@ public class UserController {
 
 		UserEntity userEntity = userService.selectAll();
 		model.addAttribute("userEntity", userEntity);
-		System.out.println("一覧");
 		return "user/userList";
 	}
 
