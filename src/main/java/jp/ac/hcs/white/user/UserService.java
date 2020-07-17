@@ -35,7 +35,7 @@ public class UserService {
 	}
 
 	/**
-	 * (管理用)ユーザ情報を1件更新する(パスワード更新有).
+	 * ユーザ情報を1件更新する(パスワード更新有).
 	 * @param userData 更新するユーザ情報(パスワードは平文)
 	 * @return 処理結果(成功:true, 失敗:false)
 	 */
@@ -47,7 +47,7 @@ public class UserService {
 
 
 	/**
-	 * (管理用)ユーザ情報を1件更新する(パスワード更新無).
+	 * ユーザ情報を1件更新する(パスワード更新無).
 	 * @param userData 更新するユーザ情報(パスワードは設定しない)
 	 * @return 処理結果(成功:true, 失敗:false)
 	 */
@@ -58,7 +58,7 @@ public class UserService {
 	}
 
 	/**
-	 * (管理用)Userテーブルのデータを1件追加する
+	 * Userテーブルのデータを1件追加する
 	 * @param user_id
 	 * @param password
 	 * @param user_name
@@ -73,7 +73,7 @@ public class UserService {
 	}
 
 	/**
-	 * (管理用)ユーザ情報を1件削除する.
+	 * ユーザ情報を1件削除する.
 	 * @param userData 削除するユーザID(メールアドレス)
 	 * @return 処理結果(成功:true, 失敗:false)
 	 */
@@ -82,7 +82,12 @@ public class UserService {
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}
-
+	/**
+	 * ユーザ検索をする
+	 * @param search_user_id
+	 * @param search_user_name
+	 * @return userEntity
+	 */
 	public UserEntity search(String search_user_id, String search_user_name) {
 
 		UserEntity userEntity = null;

@@ -173,21 +173,23 @@ public class UserController {
 			Principal principal,
 			Model model){
 
+		if (bindingResult.hasErrors()) {
+			return getUserInsert(form,model);
+		}
+
+		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
+
 		UserEntity userEntity = userService.selectAll();
 		System.out.println("ユーザエンティティ" + userEntity.getUserlist());
 		model.addAttribute("userEntity", userEntity);
+
 		for (UserData data : userEntity.getUserlist()) {
 			if (form.getUser_id().equals(data.getUser_id())){
-				return "/user/userInsert";
+				return "user/userInsert";
 			}else {
 				System.out.println("aaaaa" + data.getUser_id());
 			};
 		}
-
-		if (bindingResult.hasErrors()) {
-			return getUserList(model);
-		}
-		log.info("[" + principal.getName() + "]ユーザ追加:" + principal.getName());
 
 		UserData data = new UserData();
 		data.setUser_id(form.getUser_id());
