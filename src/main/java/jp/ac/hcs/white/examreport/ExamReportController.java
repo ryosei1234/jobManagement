@@ -213,11 +213,14 @@ public class ExamReportController {
 		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
 	}
 
-	@GetMapping("/exam/examUpdate/{examreport_id:.+}")
+
+
+
+	@GetMapping("/exam/examUpdate")
 	public String getExamUpdate(@ModelAttribute ExamFormForUpdate form,
-			@PathVariable("examreport_id") String examreport_id,
-			Principal principal,
-			Model model) {
+			Model model,
+			String examreport_id
+			) {
 
 		// ラジオボタンの準備
 		radioroute = initRadioRoute();
@@ -226,24 +229,44 @@ public class ExamReportController {
 		radiotest = initRadioTest();
 		model.addAttribute("radioTest", radiotest);
 
-		// 検索するユーザーIDのチェック
-		if (examreport_id != null && examreport_id.length() > 0) {
+		return "exam/examUpdate";
+	}
 
-			log.info("[" + principal.getName() + "]ユーザ検索:" + examreport_id);
 
-			ExamReportData data = examService.selectOne(examreport_id);
+	@PostMapping("/exam/examUpdate/{examreport_id:.+}")
+	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
+			BindingResult bindingResult,
+			Principal principal,
+			@PathVariable("examreport_id") String examreport_id,
+			Model model) {
 
-			form.setDepartment(data.getDepartment());
-			form.setCompany_name_top(data.getCompany_name_top());
-			form.setRecruitment_number(data.getRecruitment_number());
-			form.setCompany_name(data.getCompany_name());
-			form.setApplication_route(data.getApplication_route());
-			form.setExam_date_time(data.getExam_date_time());
-			form.setExamination_location(data.getExamination_location());
-			form.setRemarks(data.getRemarks());
-			model.addAttribute("examFormForUpdate", form);
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getExamUpdate(form, model,examreport_id);
 		}
 
-		return "exam/examUpdate";
+		ExamReportData data = new ExamReportData();
+		data.setExamreport_id(examreport_id);
+		data.setDepartment(form.getDepartment());
+		data.setUser_id(principal.getName());
+		data.setCompany_name_top(form.getCompany_name_top());
+		data.setRecruitment_number(form.getRecruitment_number());
+		data.setCompany_name(form.getCompany_name());
+		data.setApplication_route(form.getApplication_route());
+		data.setExam_date_time(form.getExam_date_time());
+		data.setExamination_location(form.getExamination_location());
+		data.setContens_test(form.getContens_test());
+		data.setRemarks(form.getRemarks());
+
+		boolean result = examService.UpdateOne(data);
+
+		if (result) {
+			log.info("[" + principal.getName() + "]受験報告登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]受験報告登録失敗");
+		}
+
+		return getExamList(principal, model);
+
 	}
 }
