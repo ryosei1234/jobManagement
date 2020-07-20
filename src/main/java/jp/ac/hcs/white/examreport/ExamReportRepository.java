@@ -45,6 +45,9 @@ public class ExamReportRepository {
 	/** SQL 受験報告書検索*/
 	private static final String SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM examreport where examreport_id LIKE ? and user_id LIKE ? and company_name LIKE ?";
 
+	/** SQL 受験報告更新*/
+	private static final String SQL_UPDATE_REPORT = "UPDATE examreport SET department=?, company_name_top=? ,recruitment_number=? ,company_name=? ,application_route=? ,exam_date_time=? ,examination_location=? ,contens_test=? ,remarks=? ,exam_report_status=? WHERE  examreport_id=?";
+
 	/** SQL CSV出力*/
 	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport JOIN m_user ON examreport.user_id = m_user.user_id order by company_name_top";
 
@@ -131,6 +134,22 @@ public class ExamReportRepository {
 				ExamReportData.getDepartment(),
 				ExamReportData.getCompany_name_top(),
 				ExamReportData.getReport_day(),
+				ExamReportData.getRecruitment_number(),
+				ExamReportData.getCompany_name(),
+				ExamReportData.getApplication_route(),
+				ExamReportData.getExam_date_time(),
+				ExamReportData.getExamination_location(),
+				ExamReportData.getContens_test(),
+				ExamReportData.getRemarks()
+
+				);
+		return rowNumber;
+	}
+
+	public int updatereport(ExamReportData ExamReportData) throws DataAccessException {
+		int rowNumber = jdbc.update(SQL_UPDATE_REPORT,
+				ExamReportData.getDepartment(),
+				ExamReportData.getCompany_name_top(),
 				ExamReportData.getRecruitment_number(),
 				ExamReportData.getCompany_name(),
 				ExamReportData.getApplication_route(),
