@@ -48,6 +48,7 @@ public class ExamReportController {
 		radioroute.put("その他", "その他");
 		return radioroute;
 	}
+
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioTest() {
 		Map<String, String> radiotest = new LinkedHashMap<>();
@@ -71,7 +72,7 @@ public class ExamReportController {
 		log.info("[" + principal.getName() + "]受験報告検索" + principal.getName());
 		ExamReportEntity examEntity;
 		examEntity = examService.selectAll(principal.getName());
-		model.addAttribute("examEntity",examEntity);
+		model.addAttribute("examEntity", examEntity);
 
 		return "exam/examlist";
 	}
@@ -145,7 +146,7 @@ public class ExamReportController {
 	 * @return 受験報告詳細画面
 	 */
 	@GetMapping("/exam/examDetail/{examreport_id:.+}")
-	public String getExamDetail(@PathVariable("examreport_id") String examreport_id, Principal principal,Model model) {
+	public String getExamDetail(@PathVariable("examreport_id") String examreport_id, Principal principal, Model model) {
 
 		ExamReportData data = examService.selectOne(examreport_id);
 
@@ -164,7 +165,8 @@ public class ExamReportController {
 	 */
 	@PostMapping("/exam/search")
 	public String search(@RequestParam("search_examreport_id") String search_examreport_id,
-			@RequestParam("search_user_id") String search_user_id,@RequestParam("search_company_name") String search_company_name,
+			@RequestParam("search_user_id") String search_user_id,
+			@RequestParam("search_company_name") String search_company_name,
 			Model model) {
 
 		ExamReportEntity examEntity = examService.search(search_examreport_id, search_user_id, search_company_name);
@@ -209,5 +211,39 @@ public class ExamReportController {
 
 		// CSVファイルを端末へ送信
 		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
+	}
+
+	@GetMapping("/exam/examUpdate/{examreport_id:.+}")
+	public String getExamUpdate(@ModelAttribute ExamFormForUpdate form,
+			@PathVariable("examreport_id") String examreport_id,
+			Principal principal,
+			Model model) {
+
+		// ラジオボタンの準備
+		radioroute = initRadioRoute();
+		model.addAttribute("radioRoute", radioroute);
+
+		radiotest = initRadioTest();
+		model.addAttribute("radioTest", radiotest);
+
+		// 検索するユーザーIDのチェック
+		if (examreport_id != null && examreport_id.length() > 0) {
+
+			log.info("[" + principal.getName() + "]ユーザ検索:" + examreport_id);
+
+			ExamReportData data = examService.selectOne(examreport_id);
+
+			form.setDepartment(data.getDepartment());
+			form.setCompany_name_top(data.getCompany_name_top());
+			form.setRecruitment_number(data.getRecruitment_number());
+			form.setCompany_name(data.getCompany_name());
+			form.setApplication_route(data.getApplication_route());
+			form.setExam_date_time(data.getExam_date_time());
+			form.setExamination_location(data.getExamination_location());
+			form.setRemarks(data.getRemarks());
+			model.addAttribute("examFormForUpdate", form);
+		}
+
+		return "exam/examUpdate";
 	}
 }

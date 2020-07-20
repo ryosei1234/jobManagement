@@ -78,9 +78,8 @@
 			<input type="hidden" name="user_class" th:value="*{user_class}">
 			<label for="user_student_no">番号</label>
 			<p class="form-group input-box" th:text="*{user_student_no}"></p>
-			<input type="hidden" name="user_student_no" th:value="*{user_student_no}">
-
-			<label for="user_name">氏名</label>
+			<input type="hidden" name="user_student_no"
+				th:value="*{user_student_no}"> <label for="user_name">氏名</label>
 			<p class="form-group input-box" th:text="*{user_name}"></p>
 			<input type="hidden" name="user_name" th:value="*{user_name}">
 
@@ -90,45 +89,46 @@
 
 			<label for="company_name_top">企業先頭カナ3文字</label>
 			<p class="form-group input-box" th:text="*{company_name_top}"></p>
-			<input type="hidden" name="company_name_top" th:value="*{company_name_top}">
-
-			<label for="report_day">報告日</label>
+			<input type="hidden" name="company_name_top"
+				th:value="*{company_name_top}"> <label for="report_day">報告日</label>
 			<p class="form-group input-box" th:text="*{report_day}"></p>
 			<input type="hidden" name="report_day" th:value="*{report_day}">
 
 			<label for="recruitment_number">求人番号</label>
 			<p class="form-group input-box" th:text="*{recruitment_number}"></p>
-			<input type="hidden" name="recruitment_number" th:value="*{recruitment_number}">
-
-			<label for="company_name">企業名</label>
+			<input type="hidden" name="recruitment_number"
+				th:value="*{recruitment_number}"> <label for="company_name">企業名</label>
 			<p class="form-group input-box" th:text="*{company_name}"></p>
 			<input type="hidden" name="company_name" th:value="*{company_name}">
 
 			<label for="Application_route">試験の申込経路</label>
 			<p class="form-group input-box" th:text="*{Application_route}"></p>
-			<input type="hidden" name="Application_route" th:value="*{Application_route}">
-
-			<label for="exam_date_time">日時</label>
+			<input type="hidden" name="Application_route"
+				th:value="*{Application_route}"> <label for="exam_date_time">日時</label>
 			<p class="form-group input-box" th:text="*{exam_date_time}"></p>
-			<input type="hidden" name="exam_date_time" th:value="*{exam_date_time}">
-
-			<label for="examination_location">受験場所</label>
+			<input type="hidden" name="exam_date_time"
+				th:value="*{exam_date_time}"> <label
+				for="examination_location">受験場所</label>
 			<p class="form-group input-box" th:text="*{examination_location}"></p>
-			<input type="hidden" name="examination_location" th:value="*{examination_location}">
-
-			<label for="contens_test">試験内容</label>
+			<input type="hidden" name="examination_location"
+				th:value="*{examination_location}"> <label
+				for="contens_test">試験内容</label>
 			<p class="form-group input-box" th:text="*{contens_test}"></p>
 			<input type="hidden" name="contens_test" th:value="*{contens_test}">
 
 			<label for="remarks">備考</label>
 			<p class="form-group input-box" th:text="*{remarks}"></p>
-			<input type="hidden" name="remarks" th:value="*{remarks}">
-
-			<label for="Exam_report_status">報告状態</label>
+			<input type="hidden" name="remarks" th:value="*{remarks}"> <label
+				for="Exam_report_status">報告状態</label>
 			<p class="form-group input-box" th:text="*{Exam_report_status}"></p>
-			<input type="hidden" name="Exam_report_status" th:value="*{Exam_report_status}">
+			<input type="hidden" name="Exam_report_status"
+				th:value="*{Exam_report_status}">
+
+			<td class="text-nowrap"><a class="btn btn-success"
+				th:href="@{'/exam/examUpdate/' + *{examreport_id}}">更新</a></td>
 
 		</div>
+
 	</div>
 
 	<!-- common js -->
