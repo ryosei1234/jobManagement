@@ -83,7 +83,7 @@
 				<p>求人番号</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('recruitment_number')} ? 'has-error'">
-					<input type="text" class="form-control" name="recruitment_number"
+					<input type="number" class="form-control" name="recruitment_number"
 						placeholder="xxx" th:field="*{recruitment_number}"> <span
 						class="text-danger"
 						th:if="${#fields.hasErrors('recruitment_number')}"

@@ -76,10 +76,13 @@
 			<label for="user_class">クラス</label>
 			<p class="form-group input-box" th:text="*{user_class}"></p>
 			<input type="hidden" name="user_class" th:value="*{user_class}">
+
 			<label for="user_student_no">番号</label>
 			<p class="form-group input-box" th:text="*{user_student_no}"></p>
 			<input type="hidden" name="user_student_no"
-				th:value="*{user_student_no}"> <label for="user_name">氏名</label>
+				th:value="*{user_student_no}">
+
+			<label for="user_name">氏名</label>
 			<p class="form-group input-box" th:text="*{user_name}"></p>
 			<input type="hidden" name="user_name" th:value="*{user_name}">
 
@@ -90,14 +93,18 @@
 			<label for="company_name_top">企業先頭カナ3文字</label>
 			<p class="form-group input-box" th:text="*{company_name_top}"></p>
 			<input type="hidden" name="company_name_top"
-				th:value="*{company_name_top}"> <label for="report_day">報告日</label>
+				th:value="*{company_name_top}">
+
+			<label for="report_day">報告日</label>
 			<p class="form-group input-box" th:text="*{report_day}"></p>
 			<input type="hidden" name="report_day" th:value="*{report_day}">
 
 			<label for="recruitment_number">求人番号</label>
 			<p class="form-group input-box" th:text="*{recruitment_number}"></p>
 			<input type="hidden" name="recruitment_number"
-				th:value="*{recruitment_number}"> <label for="company_name">企業名</label>
+				th:value="*{recruitment_number}">
+
+			<label for="company_name">企業名</label>
 			<p class="form-group input-box" th:text="*{company_name}"></p>
 			<input type="hidden" name="company_name" th:value="*{company_name}">
 
@@ -128,6 +135,16 @@
 			<p class="form-group input-box" th:text="*{Exam_report_status}"></p>
 			<input type="hidden" name="Exam_report_status"
 				th:value="*{Exam_report_status}">
+
+			<label for="contens_test">承認</label>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioTest}">
+						<input type="radio" name="contens_test" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{contens_test}">
+					</div>
+					<span class="text-danger" th:if="${#fields.hasErrors('contens_test')}"
+						th:errors="*{contens_test}">contens_test error</span>
+				</div>
 
 			<td class="text-nowrap"><a class="btn btn-success"
 				th:href="@{'/exam/examUpdate/' + *{examreport_id}}">更新</a></td>
