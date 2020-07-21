@@ -61,11 +61,8 @@
 		<div class="content-box">
 			<h2>受験報告更新画面</h2>
 			<hr>
-			<form method="post" th:action="@{'/exam/examUpdate'}"
+			<form method="post" th:action="@{/exam/examUpdate}"
 				th:object="${examFormForUpdate}">
-
-				<input type="hidden" name="examreport_id" th:value=${examreport_id}>
-
 				<label for="department">学科コード</label>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('department')} ? 'has-error'">
@@ -86,7 +83,7 @@
 				<p>求人番号</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('recruitment_number')} ? 'has-error'">
-					<input type="number" class="form-control" name="recruitment_number"
+					<input type="text" class="form-control" name="recruitment_number"
 						placeholder="xxx" th:field="*{recruitment_number}"> <span
 						class="text-danger"
 						th:if="${#fields.hasErrors('recruitment_number')}"
@@ -150,10 +147,9 @@
 				<span class="input-group-btn"> <input type="submit"
 					id="action" class="btn btn-warning" value="更新">
 				</span>
-			</form>
 		</div>
 
-
+		</form>
 	</div>
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
