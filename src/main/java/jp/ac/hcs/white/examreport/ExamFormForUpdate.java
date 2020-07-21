@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class ExamFormForUpdate {
 
+	@NotBlank
 	private String examreport_id;
 
 	@Length(min = 1, max = 1, message="{length_check}")
@@ -19,7 +20,7 @@ public class ExamFormForUpdate {
 	private String company_name_top;
 
 	@NotBlank(message = "{require_check}")
-	private int recruitment_number;
+	private String recruitment_number;
 
 	@NotBlank(message = "{require_check}")
 	private String company_name;

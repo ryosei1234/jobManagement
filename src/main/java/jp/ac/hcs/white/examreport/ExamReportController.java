@@ -2,6 +2,7 @@ package jp.ac.hcs.white.examreport;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -235,14 +236,16 @@ public class ExamReportController {
 		form.setExamreport_id(data.getExamreport_id());
 		form.setDepartment(data.getDepartment());
 		form.setCompany_name_top(data.getCompany_name_top());
-		form.setRecruitment_number(data.getRecruitment_number());
+		form.setRecruitment_number(String.valueOf(data.getRecruitment_number()));
 		form.setCompany_name(data.getCompany_name());
 		form.setApplication_route(data.getApplication_route());
-		form.setExam_date_time(data.getExam_date_time());
+		Date sqlDate= Date.valueOf((data.getExam_date_time()));
 		form.setExamination_location(data.getExamination_location());
 		form.setContens_test(data.getContens_test());
 		form.setRemarks(data.getRemarks());
 		model.addAttribute("examFormForUpdate", form);
+		//model.addAttribute("sqlDate", sqlDate);
+		model.addAttribute("examreport_id",examreport_id);
 
 
 		return "exam/examUpdate";
@@ -265,7 +268,7 @@ public class ExamReportController {
 		data.setDepartment(form.getDepartment());
 		data.setUser_id(principal.getName());
 		data.setCompany_name_top(form.getCompany_name_top());
-		data.setRecruitment_number(form.getRecruitment_number());
+		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
 		data.setCompany_name(form.getCompany_name());
 		data.setApplication_route(form.getApplication_route());
 		data.setExam_date_time(form.getExam_date_time());

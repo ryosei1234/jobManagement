@@ -13,7 +13,7 @@ VALUES('hashiya@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.
 
 /* タスクテーブルのデータ*/
 INSERT INTO  examreport (examreport_id,user_id,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test ,remarks,Exam_report_status)
-VALUES('0000000001','yamada@xxx.co.jp','S','エイチ','2020-07-09','0000000001','株式会社HCS','斡旋','2020-07-17','東京','1次試験','あんぱんまん','新規作成');
+VALUES('0000000001','yamada@xxx.co.jp','S','エイチ','2020-07-09','0000000001','株式会社HCS','斡旋サイト','2020-07-17','東京','1次試験','あんぱんまん','新規作成');
 
 INSERT INTO  examreport (examreport_id,user_id,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test ,remarks,Exam_report_status)
-VALUES('0000000002','suzuki@xxx.co.jp','S','エイチ','2020-07-09','0000000002','株式会社HCS','斡旋','2020-07-17','札幌','1次試験','あんぱんまん','新規作成');
+VALUES('0000000002','suzuki@xxx.co.jp','S','エイチ','2020-07-09','0000000002','株式会社HCS','斡旋サイト','2020-07-17','札幌','1次試験','あんぱんまん','新規作成');
