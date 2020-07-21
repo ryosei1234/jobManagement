@@ -37,7 +37,7 @@ public class ExamReportRepository {
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id, department, company_name_top, report_day, recruitment_number, company_name, application_route, exam_date_time, examination_location, contens_test, remarks, exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=?";
+	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=? WHERE examreport_id = ?";
 
 	/** SQL 受験報告書の番号をカウントアップ */
 	private static final String SQL_REPORT_COUNT ="SELECT COUNT(*) FROM examreport";
@@ -129,7 +129,7 @@ public class ExamReportRepository {
 	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
-	public int updateOne(ExamReportData ExamReportData) throws DataAccessException {
+	public int updateOne(ExamReportData ExamReportData ) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
 				ExamReportData.getDepartment(),
 				ExamReportData.getCompany_name_top(),
@@ -142,11 +142,12 @@ public class ExamReportRepository {
 				ExamReportData.getContens_test(),
 				ExamReportData.getRemarks()
 
+
 				);
 		return rowNumber;
 	}
 
-	public int updatereport(ExamReportData ExamReportData) throws DataAccessException {
+	public int updatereport(ExamReportData ExamReportData, String examreport_id) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_UPDATE_REPORT,
 				ExamReportData.getDepartment(),
 				ExamReportData.getCompany_name_top(),
@@ -156,7 +157,8 @@ public class ExamReportRepository {
 				ExamReportData.getExam_date_time(),
 				ExamReportData.getExamination_location(),
 				ExamReportData.getContens_test(),
-				ExamReportData.getRemarks()
+				ExamReportData.getRemarks(),
+				examreport_id
 
 				);
 		return rowNumber;

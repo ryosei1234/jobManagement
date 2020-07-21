@@ -93,4 +93,11 @@ public class ExamReportService {
 		return bytes;
 	}
 
+	public boolean updateOne(ExamReportData examdata, String examreport_id) {
+
+		int rowNumber = examRepository.updatereport(examdata, examreport_id);
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
+	}
+
 }

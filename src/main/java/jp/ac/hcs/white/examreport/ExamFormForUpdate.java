@@ -8,6 +8,9 @@ import lombok.Data;
 
 @Data
 public class ExamFormForUpdate {
+
+	private String examreport_id;
+
 	@Length(min = 1, max = 1, message="{length_check}")
 	@NotBlank(message = "{require_check}")
 	private String department;

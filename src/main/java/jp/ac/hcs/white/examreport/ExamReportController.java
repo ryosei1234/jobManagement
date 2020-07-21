@@ -216,10 +216,11 @@ public class ExamReportController {
 
 
 
-	@GetMapping("/exam/examUpdate")
+	@GetMapping("/exam/examUpdate/{examreport_id:.+}")
 	public String getExamUpdate(@ModelAttribute ExamFormForUpdate form,
 			Model model,
-			String examreport_id
+			Principal principal,
+			@PathVariable("examreport_id")  String examreport_id
 			) {
 
 		// ラジオボタンの準備
@@ -229,24 +230,38 @@ public class ExamReportController {
 		radiotest = initRadioTest();
 		model.addAttribute("radioTest", radiotest);
 
+		ExamReportData data = examService.selectOne(examreport_id);
+		log.warn(data.toString());
+		form.setExamreport_id(data.getExamreport_id());
+		form.setDepartment(data.getDepartment());
+		form.setCompany_name_top(data.getCompany_name_top());
+		form.setRecruitment_number(data.getRecruitment_number());
+		form.setCompany_name(data.getCompany_name());
+		form.setApplication_route(data.getApplication_route());
+		form.setExam_date_time(data.getExam_date_time());
+		form.setExamination_location(data.getExamination_location());
+		form.setContens_test(data.getContens_test());
+		form.setRemarks(data.getRemarks());
+		model.addAttribute("examFormForUpdate", form);
+
+
 		return "exam/examUpdate";
 	}
 
 
-	@PostMapping("/exam/examUpdate/{examreport_id:.+}")
+	@PostMapping("/exam/examUpdate")
 	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
 			BindingResult bindingResult,
 			Principal principal,
-			@PathVariable("examreport_id") String examreport_id,
 			Model model) {
 
 		// 入力チェックに引っかかった場合、登録画面に戻る
 		if (bindingResult.hasErrors()) {
-			return getExamUpdate(form, model,examreport_id);
+			return getExamUpdate(form, model,principal,form.getExamreport_id());
 		}
 
 		ExamReportData data = new ExamReportData();
-		data.setExamreport_id(examreport_id);
+		data.setExamreport_id(form.getExamreport_id());
 		data.setDepartment(form.getDepartment());
 		data.setUser_id(principal.getName());
 		data.setCompany_name_top(form.getCompany_name_top());
@@ -258,7 +273,7 @@ public class ExamReportController {
 		data.setContens_test(form.getContens_test());
 		data.setRemarks(form.getRemarks());
 
-		boolean result = examService.UpdateOne(data);
+		boolean result = examService.updateOne(data,form.getExamreport_id());
 
 		if (result) {
 			log.info("[" + principal.getName() + "]受験報告登録成功");
