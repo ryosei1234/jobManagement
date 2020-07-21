@@ -2,7 +2,6 @@ package jp.ac.hcs.white.examreport;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,6 +35,7 @@ public class ExamReportController {
 	/** 権限のラジオボタン用変数 */
 	private Map<String, String> radioroute;
 	private Map<String, String> radiotest;
+	private Map<String, String> radiostatus;
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioRoute() {
@@ -60,6 +60,12 @@ public class ExamReportController {
 		radiotest.put("次試験", "次試験");
 		radiotest.put("最終試験", "最終試験");
 		return radiotest;
+	}
+	private Map<String, String> initRadioStatus() {
+		Map<String, String> radiostatus = new LinkedHashMap<>();
+		radiostatus.put("差し戻し中", "差し戻し中");
+		radiostatus.put("承認済", "承認済");
+		return radiostatus;
 	}
 
 	/**
@@ -119,7 +125,7 @@ public class ExamReportController {
 		data.setDepartment(form.getDepartment());
 		data.setUser_id(principal.getName());
 		data.setCompany_name_top(form.getCompany_name_top());
-		data.setRecruitment_number(form.getRecruitment_number());
+		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
 		data.setCompany_name(form.getCompany_name());
 		data.setApplication_route(form.getApplication_route());
 		data.setExam_date_time(form.getExam_date_time());
@@ -239,12 +245,11 @@ public class ExamReportController {
 		form.setRecruitment_number(String.valueOf(data.getRecruitment_number()));
 		form.setCompany_name(data.getCompany_name());
 		form.setApplication_route(data.getApplication_route());
-		Date sqlDate= Date.valueOf((data.getExam_date_time()));
+		form.setExam_date_time(data.getExam_date_time());
 		form.setExamination_location(data.getExamination_location());
 		form.setContens_test(data.getContens_test());
 		form.setRemarks(data.getRemarks());
 		model.addAttribute("examFormForUpdate", form);
-		//model.addAttribute("sqlDate", sqlDate);
 		model.addAttribute("examreport_id",examreport_id);
 
 
@@ -286,5 +291,42 @@ public class ExamReportController {
 
 		return getExamList(principal, model);
 
+	}
+	/**
+	 * 一件分の受験報告を追加する
+	 * @param form	追加する受験報告情報
+	 * @param model
+	 * @return	受験報告登録画面
+	 */
+	@GetMapping("/exam/examApproval/{examreport_id:.+}")
+	public String getStatus(@ModelAttribute ExamFormForStatus form, Model model, @PathVariable("examreport_id") String examreport_id) {
+		// ラジオボタンの準備
+		radiostatus = initRadioStatus();
+		model.addAttribute("radiostatus", radiostatus);
+		model.addAttribute("examreport_id",examreport_id);
+		log.warn(examreport_id);
+
+
+		return "exam/examApproval";
+	}
+
+	@PostMapping("/exam/examApproval/{examreport_id:.+}")
+	public String postStatus(@ModelAttribute @Validated ExamFormForStatus form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model,
+			@PathVariable("examreport_id") String examreport_id) {
+
+		log.warn(form.getExam_report_status());
+		log.warn(examreport_id);
+
+		boolean result = examService.examstatus(examreport_id,form.getExam_report_status());
+		if (result) {
+			log.info("[" + principal.getName() + "]	承認変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]承認変更失敗");
+		}
+
+		return getExamList(principal, model);
 	}
 }

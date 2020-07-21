@@ -17,7 +17,7 @@ private String department;
 private String company_name_top;
 
 @NotBlank(message = "{require_check}")
-private int recruitment_number;
+private String recruitment_number;
 
 @NotBlank(message = "{require_check}")
 private String company_name;

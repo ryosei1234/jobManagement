@@ -99,5 +99,10 @@ public class ExamReportService {
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}
+	public boolean examstatus(String examreport_id,String exam_report_status) {
+		int rowNumber = examRepository.statusOne(examreport_id, exam_report_status);
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
+	}
 
 }

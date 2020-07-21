@@ -51,6 +51,8 @@ public class ExamReportRepository {
 	/** SQL CSV出力*/
 	private static final String SQL_SELECT_CSV = "SELECT * FROM examreport JOIN m_user ON examreport.user_id = m_user.user_id order by company_name_top";
 
+	private static final String SQL_STATUS = "UPDATE examreport SET exam_report_status = ? WHERE examreport_id = ?";
+
 	@Autowired
 	private JdbcTemplate jdbc;
 
@@ -227,6 +229,14 @@ public class ExamReportRepository {
 		CsvCallbackHandler handler = new CsvCallbackHandler();
 
 		jdbc.query(SQL_SELECT_CSV, handler);
+	}
+
+	public int statusOne(String examreport_id, String exam_report_status) throws DataAccessException {
+		int rowNumber = jdbc.update(SQL_STATUS,
+				exam_report_status,
+				examreport_id
+				);
+		return rowNumber;
 	}
 
 }
