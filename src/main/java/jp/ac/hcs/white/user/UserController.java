@@ -278,7 +278,7 @@ public class UserController {
 		form.setRole(data.getRole());
 		model.addAttribute("userFormForUpdate", form);
 
-		return "/user/profileUpdate";
+		return "user/profileUpdate";
 	}
 
 	/**
@@ -291,8 +291,10 @@ public class UserController {
 	 * @return ユーザ一覧画面
 	 */
 	@PostMapping("/user/profileUpdate")
-	public String postProfileUpdate(@ModelAttribute UserFormForUpdate form, Model model,
-			BindingResult bindingResult, Principal principal) {
+	public String postProfileUpdate(@ModelAttribute @Validated UserFormForUpdate form, BindingResult bindingResult ,Model model,
+			 Principal principal) {
+
+		log.warn(form.toString());
 
 		// 入力チェックに引っかかった場合、前の画面に戻る
 		if (bindingResult.hasErrors()) {

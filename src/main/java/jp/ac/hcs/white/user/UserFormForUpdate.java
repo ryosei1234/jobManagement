@@ -31,6 +31,8 @@ public class UserFormForUpdate {
 	private String role;
 
 	//所属クラス
+	@NotNull
+	@NotBlank(message="{require_check}")
 	private String user_class;
 
 		//出席番号

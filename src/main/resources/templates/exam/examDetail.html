@@ -124,7 +124,7 @@
 			<input type="hidden" name="Exam_report_status"
 				th:value="*{Exam_report_status}">
 
-			<td class="text-nowrap"><a class="btn btn-success"
+			<td class="text-nowrap" sec:authorize="hasRole('ROLE_TEACHER')"><a class="btn btn-success"
 				th:href="@{'/exam/examApproval/' + *{examreport_id}}">承認</a></td>
 
 			<td class="text-nowrap"><a class="btn btn-success"
