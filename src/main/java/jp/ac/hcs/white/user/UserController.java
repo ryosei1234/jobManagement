@@ -257,7 +257,13 @@ public class UserController {
 		return "user/userList";
 	}
 
-
+	/**
+	 *
+	 * @param form
+	 * @param principal
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/user/profileUpdate")
 	public String getUserProfileUpdate(@ModelAttribute UserFormForUpdate form, Principal principal, Model model) {
 
@@ -272,7 +278,7 @@ public class UserController {
 		form.setRole(data.getRole());
 		model.addAttribute("userFormForUpdate", form);
 
-		return null;
+		return "/user/profileUpdate";
 	}
 
 	/**
