@@ -97,12 +97,5 @@ public class UserService {
 
 		return userEntity;
 	}
-	public boolean updateOne(UserData userData,String examreport_id) {
-
-		int rowNumber = userRepository.insertOne(userData, examreport_id);
-		boolean result = (rowNumber > 0) ? true : false;
-		return result;
-	}
-
 
 }
