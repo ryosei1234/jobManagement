@@ -36,9 +36,6 @@ public class ExamReportRepository {
 	/** SQL 1件追加  */
 	private static final String SQL_INSERT_ONE = "INSERT INTO examreport(examreport_id,user_id, department, company_name_top, report_day, recruitment_number, company_name, application_route, exam_date_time, examination_location, contens_test, remarks, exam_report_status ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE examreport SET examreport_id=?,department=?, company_name_top=?,report_day=?,recruitment_number=?,company_name=?,application_route=?,exam_date_time=?,examination_location=?,contens_test=?,remarks=?,exam_report_status=? WHERE examreport_id = ?";
-
 	/** SQL 受験報告書の番号をカウントアップ */
 	private static final String SQL_REPORT_COUNT ="SELECT COUNT(*) FROM examreport";
 
@@ -127,28 +124,11 @@ public class ExamReportRepository {
 
 	/**
 	 *  examreportテーブルのデータを1件更新する
-	 * @param ExamReportData　更新する受験報告情報
+	 * @param ExamReportData 更新する受験報告情報
+	 * @param examreport_id 受験報告ID
 	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
-	public int updateOne(ExamReportData ExamReportData ) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
-				ExamReportData.getDepartment(),
-				ExamReportData.getCompany_name_top(),
-				ExamReportData.getReport_day(),
-				ExamReportData.getRecruitment_number(),
-				ExamReportData.getCompany_name(),
-				ExamReportData.getApplication_route(),
-				ExamReportData.getExam_date_time(),
-				ExamReportData.getExamination_location(),
-				ExamReportData.getContens_test(),
-				ExamReportData.getRemarks()
-
-
-				);
-		return rowNumber;
-	}
-
 	public int updatereport(ExamReportData ExamReportData, String examreport_id) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_UPDATE_REPORT,
 				ExamReportData.getDepartment(),
@@ -231,6 +211,13 @@ public class ExamReportRepository {
 		jdbc.query(SQL_SELECT_CSV, handler);
 	}
 
+	/**
+	 *
+	 * @param examreport_id 1承認変更する受験報告ID
+	 * @param exam_report_status 現在の受験報告ステータス
+	 * @return rowNumber
+	 * @throws DataAccessException
+	 */
 	public int statusOne(String examreport_id, String exam_report_status) throws DataAccessException {
 		int rowNumber = jdbc.update(SQL_STATUS,
 				exam_report_status,

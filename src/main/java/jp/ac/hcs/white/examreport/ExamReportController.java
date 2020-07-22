@@ -222,7 +222,14 @@ public class ExamReportController {
 
 
 
-
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param model
+	 * @param principal ログイン情報
+	 * @param examreport_id 受験報告ID
+	 * @return 受験報告変更画面
+	 */
 	@GetMapping("/exam/examUpdate/{examreport_id:.+}")
 	public String getExamUpdate(@ModelAttribute ExamFormForUpdate form,
 			Model model,
@@ -256,7 +263,14 @@ public class ExamReportController {
 		return "exam/examUpdate";
 	}
 
-
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
 	@PostMapping("/exam/examUpdate")
 	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
 			BindingResult bindingResult,
@@ -292,11 +306,12 @@ public class ExamReportController {
 		return getExamList(principal, model);
 
 	}
+
 	/**
-	 * 一件分の受験報告を追加する
-	 * @param form	追加する受験報告情報
+	 * 一件分の受験報告を承認変更する画面を表示する
+	 * @param form	承認変更する受験報告情報
 	 * @param model
-	 * @return	受験報告登録画面
+	 * @return	受験報告承認画面
 	 */
 	@GetMapping("/exam/examApproval/{examreport_id:.+}")
 	public String getStatus(@ModelAttribute ExamFormForStatus form, Model model, @PathVariable("examreport_id") String examreport_id) {
@@ -310,6 +325,15 @@ public class ExamReportController {
 		return "exam/examApproval";
 	}
 
+	/**
+	 *	一件分の受験報告を承認変更をする
+	 * @param form 承認変更する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @param examreport_id 受験報告ID
+	 * @return 受験報告一覧画面
+	 */
 	@PostMapping("/exam/examApproval/{examreport_id:.+}")
 	public String postStatus(@ModelAttribute @Validated ExamFormForStatus form,
 			BindingResult bindingResult,

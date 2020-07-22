@@ -93,13 +93,28 @@ public class ExamReportService {
 		return bytes;
 	}
 
-	public boolean updateOne(ExamReportData examdata, String examreport_id) {
+	/**
+	 * 受験報告を一件分変更する
+	 * @param examdata 受験報告情報
+	 * @param examreport_id 受験報告ID
+	 * @return 処理結果(成功:true, 失敗:false)
+	 * @throws DataAccessException
+	 */
+	public boolean updateOne(ExamReportData examdata, String examreport_id) throws DataAccessException {
 
 		int rowNumber = examRepository.updatereport(examdata, examreport_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}
-	public boolean examstatus(String examreport_id,String exam_report_status) {
+
+	/**
+	 * 受験報告を承認変更する
+	 * @param examreport_id
+	 * @param exam_report_status
+	 * @return 処理結果(成功:true, 失敗:false)
+	 * @throws DataAccessException
+	 */
+	public boolean examstatus(String examreport_id,String exam_report_status) throws DataAccessException {
 		int rowNumber = examRepository.statusOne(examreport_id, exam_report_status);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;

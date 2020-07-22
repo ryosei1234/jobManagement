@@ -258,11 +258,11 @@ public class UserController {
 	}
 
 	/**
-	 *
-	 * @param form
-	 * @param principal
+	 * 自分のユーザ情報を変更する
+	 * @param form ログイン中のユーザ情報
+	 * @param principal ログイン情報
 	 * @param model
-	 * @return
+	 * @return プロフィール画面
 	 */
 	@GetMapping("/user/profileUpdate")
 	public String getUserProfileUpdate(@ModelAttribute UserFormForUpdate form, Principal principal, Model model) {
@@ -282,13 +282,13 @@ public class UserController {
 	}
 
 	/**
-	 * 1件分のユーザ情報でデータベースを更新する.
+	 * 自分のユーザ情報を変更する
 	 * パスワードの更新が不要の場合は、画面側で何も値を設定しないものとする.
-	 * @param form 更新するユーザ情報(パスワードは平文)
+	 * @param form ログイン中のユーザ情報(パスワードは平文)
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return ユーザ一覧画面
+	 * @return トップ画面
 	 */
 	@PostMapping("/user/profileUpdate")
 	public String postProfileUpdate(@ModelAttribute @Validated UserFormForUpdate form, BindingResult bindingResult ,Model model,
