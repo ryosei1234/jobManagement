@@ -57,7 +57,7 @@ public class ExamReportServiceTest {
 		assertEquals(true, result);
 		// 4.logs
 		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
-		log.warn("[testInsertOne]taskEntity:" + examEntity.toString());
+		log.warn("[testInsertOne]examEntity:" + examEntity.toString());
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class ExamReportServiceTest {
 		assertEquals(false, result);
 		// 4.logs
 		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
-		log.warn("[testInsertOne]taskEntity:" + examEntity.toString());
+		log.warn("[testInsertOne_失敗]examEntity:" + examEntity.toString());
 	}
 
 	@Test
@@ -130,6 +130,78 @@ public class ExamReportServiceTest {
 		//assertNotNull(examEntity);
 		// 4.logs
 		log.warn("[testLoadCsv]examEntity:" + bytes.toString());
+	}
+
+	@Test
+	public void testpostExamUpdate() {
+		// 1.Ready
+		ExamReportData data = new ExamReportData();
+		data.setExamreport_id("0000000001");
+		data.setDepartment("S");
+		data.setUser_id("yamada@xxx.co.jp");
+		data.setCompany_name_top("エイチ");
+		data.setRecruitment_number(110);
+		data.setCompany_name("株式会社");
+		data.setApplication_route("斡旋");
+		data.setExam_date_time("2020-07-29");
+		data.setExamination_location("東京");
+		data.setContens_test("2次試験");
+		data.setRemarks("備考");
+		// 2.Do
+		boolean result = examService.updateOne(data,"0000000001");
+		// 3.Assert
+		assertEquals(true, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testUpdateOne]examEntity:" + examEntity.toString());
+	}
+
+	@Test
+	public void testExamUpdate_失敗() {
+		// 1.Ready
+		ExamReportData data = new ExamReportData();
+		data.setDepartment("S");
+		data.setUser_id("yamada@xxx.co.jp");
+		data.setCompany_name_top("エイチ");
+		data.setRecruitment_number(110);
+		data.setCompany_name("株式会社");
+		data.setApplication_route("斡旋");
+		data.setExam_date_time("2020-07-29");
+		data.setExamination_location("東京");
+		data.setContens_test("2次試験");
+		data.setRemarks("備考");
+		// 2.Do
+		doReturn(0).when(examRepository).updatereport(any(),anyString());
+		boolean result = examService.updateOne(data,"");
+		// 3.Assert
+		assertEquals(false, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testUpdateOne_失敗]examEntity:" + examEntity.toString());
+	}
+
+	@Test
+	public void testStatus() {
+		// 1.Ready
+		// 2.Do
+		boolean result = examService.examstatus("0000000001","承認済み");
+		// 3.Assert
+		assertEquals(true, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testStatus]examEntity:" + examEntity.toString());
+	}
+
+	@Test
+	public void testStatus_失敗() {
+		// 1.Ready
+		// 2.Do
+		boolean result = examService.examstatus("","承認済み");
+		// 3.Assert
+		assertEquals(false, result);
+		// 4.logs
+		ExamReportEntity examEntity = examService.selectAll("yamada@xxx.co.jp");
+		log.warn("[testStatus_失敗]examEntity:" + examEntity.toString());
 	}
 
 }
