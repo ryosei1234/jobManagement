@@ -318,7 +318,7 @@ public class ExamReportController {
 		// ラジオボタンの準備
 		radiostatus = initRadioStatus();
 		model.addAttribute("radiostatus", radiostatus);
-		model.addAttribute("examreport_id",examreport_id);
+		model.addAttribute("examreport_id", examreport_id);
 		log.warn(examreport_id);
 
 

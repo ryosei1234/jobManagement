@@ -139,41 +139,6 @@ public class UserRepository {
 	}
 
 	/**
-	 * (管理用)Userテーブルのデータを1件更新する(パスワード更新有).
-	 * @param data 更新するユーザ情報
-	 * @return 更新データ数
-	 * @throws DataAccessException
-	 */
-	public int updateProOneWithPassword(UserData data) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_ONE_WITH_PASSWORD,
-				passwordEncoder.encode(data.getPassword()),
-				data.getUser_name(),
-				data.getUser_class(),
-				data.getUser_student_no(),
-				new Timestamp(System.currentTimeMillis()),
-				data.getUpdate_user_id(),
-				data.getUser_id());
-		return rowNumber;
-	}
-
-	/**
-	 * Userテーブルのデータを1件更新する(パスワード更新無).
-	 * @param data 更新するユーザ情報
-	 * @return 更新データ数
-	 * @throws DataAccessException
-	 */
-	public int updateProOne(UserData data) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
-				data.getUser_name(),
-				data.getUser_class(),
-				data.getUser_student_no(),
-				new Timestamp(System.currentTimeMillis()),
-				data.getUpdate_user_id(),
-				data.getUser_id());
-		return rowNumber;
-	}
-
-	/**
 	 * Userテーブルのデータを1件追加する
 	 * @param data
 	 * @return rowNumber
