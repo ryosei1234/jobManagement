@@ -256,5 +256,72 @@ public class UserController {
 
 		return "user/userList";
 	}
+
+
+	@GetMapping("/user/profileUpdate")
+	public String getUserProfileUpdate(@ModelAttribute UserFormForUpdate form, Principal principal, Model model) {
+
+		UserData data = userService.selectOne(principal.getName());
+
+		// データ表示準備(パスワードは暗号化済の為、表示しない)
+		form.setUser_id(data.getUser_id());
+		form.setUser_name(data.getUser_name());
+		form.setDarkmode(data.isUser_darkmode());
+		form.setUser_class(data.getUser_class());
+		form.setUser_student_no(data.getUser_student_no());
+		form.setRole(data.getRole());
+		model.addAttribute("userFormForUpdate", form);
+
+		return null;
+	}
+
+	/**
+	 * 1件分のユーザ情報でデータベースを更新する.
+	 * パスワードの更新が不要の場合は、画面側で何も値を設定しないものとする.
+	 * @param form 更新するユーザ情報(パスワードは平文)
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return ユーザ一覧画面
+	 */
+	@PostMapping("/user/profileUpdate")
+	public String postProfileUpdate(@ModelAttribute UserFormForUpdate form, Model model,
+			BindingResult bindingResult, Principal principal) {
+
+		// 入力チェックに引っかかった場合、前の画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getUserProfileUpdate(form, principal, model);
+		}
+
+		log.info("[" + principal.getName() + "]ユーザ更新:" + form.toString());
+
+		// ダークモードは更新しない為、設定無し
+		UserData data = new UserData();
+		data.setUser_id(form.getUser_id());
+		data.setUser_name(form.getUser_name());
+		data.setRole(form.getRole());
+		data.setUser_class(form.getUser_class());
+		data.setUser_student_no(form.getUser_student_no());
+		data.setUpdate_user_id(principal.getName());
+
+		boolean result = false;
+
+		if (form.getPassword() == null || form.getPassword().equals("")) {
+			// パスワード更新無
+			result = userService.updateOne(data);
+		} else {
+			// パスワード更新有
+			data.setPassword(form.getPassword());
+			result = userService.updateOneWithPassword(data);
+		}
+
+		if (result) {
+			log.warn("[" + principal.getName() + "]ユーザ更新成功");
+		} else {
+			log.warn("[" + principal.getName() + "]ユーザ更新失敗");
+		}
+
+		return "index";
+	}
 }
 
