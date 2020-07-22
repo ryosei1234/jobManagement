@@ -114,7 +114,7 @@ public class ExamReportService {
 	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-	public boolean examstatus(String examreport_id,String exam_report_status) throws DataAccessException {
+	public boolean examstatus(String examreport_id, String exam_report_status) throws DataAccessException {
 		int rowNumber = examRepository.statusOne(examreport_id, exam_report_status);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;

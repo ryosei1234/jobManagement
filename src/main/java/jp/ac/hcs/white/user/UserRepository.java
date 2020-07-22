@@ -36,12 +36,6 @@ public class UserRepository {
 	/** SQL 1件更新 管理者 パスワード更新無 */
 	private static final String SQL_UPDATE_ONE = "UPDATE m_user SET user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? WHERE user_id = ?";
 
-	/** SQL 1件更新 パスワード更新有 */
-	private static final String SQL_UPDATE_PROONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ? ,User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? WHERE user_id = ?";
-
-	/** SQL 1件更新 管理者 パスワード更新無 */
-	private static final String SQL_UPDATE_PROONE = "UPDATE m_user SET user_name = ? , User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? WHERE user_id = ?";
-
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
 
@@ -136,41 +130,6 @@ public class UserRepository {
 		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
 				data.getUser_name(),
 				data.getRole(),
-				data.getUser_class(),
-				data.getUser_student_no(),
-				new Timestamp(System.currentTimeMillis()),
-				data.getUpdate_user_id(),
-				data.getUser_id());
-		return rowNumber;
-	}
-
-	/**
-	 * (管理用)Userテーブルのデータを1件更新する(パスワード更新有).
-	 * @param data 更新するユーザ情報
-	 * @return 更新データ数
-	 * @throws DataAccessException
-	 */
-	public int updateProOneWithPassword(UserData data) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_ONE_WITH_PASSWORD,
-				passwordEncoder.encode(data.getPassword()),
-				data.getUser_name(),
-				data.getUser_class(),
-				data.getUser_student_no(),
-				new Timestamp(System.currentTimeMillis()),
-				data.getUpdate_user_id(),
-				data.getUser_id());
-		return rowNumber;
-	}
-
-	/**
-	 * Userテーブルのデータを1件更新する(パスワード更新無).
-	 * @param data 更新するユーザ情報
-	 * @return 更新データ数
-	 * @throws DataAccessException
-	 */
-	public int updateProOne(UserData data) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_ONE,
-				data.getUser_name(),
 				data.getUser_class(),
 				data.getUser_student_no(),
 				new Timestamp(System.currentTimeMillis()),
