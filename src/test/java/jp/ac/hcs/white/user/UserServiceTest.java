@@ -205,4 +205,44 @@ public class UserServiceTest {
 		log.warn("[testSearch]userEntity:" + userEntity.toString());
 	}
 
+	@Test
+	public void testprofileUpdateOne() {
+		// 1.Ready
+				UserData data = new UserData();
+				data.setUser_id("yamada@xxx.co.jp");
+				data.setUser_name("山田鈴木");
+				data.setRole("ROLE_TEACHER");
+				data.setUser_class("S3A1");
+				data.setUser_student_no("00");
+				data.setUpdate_user_id("yamada@xxx.co.jp");
+				// 2.Do
+				boolean result = userService.updateOne(data);
+				log.warn(""+result);
+				// 3.Assert
+				assertEquals(true, result);
+				// 4.logs
+				UserEntity userEntity = userService.selectAll();
+				log.warn("[testUpdateOne]userEntity:" + userEntity.toString());
+	}
+
+	@Test
+	public void testprofileUpdateOne_失敗() {
+		// 1.Ready
+				UserData data = new UserData();
+				data.setUser_name("山田");
+				data.setRole(null);
+				data.setUser_class("S3A1");
+				data.setUser_student_no("00");
+				data.setUpdate_user_id("aaa@xxx.co.jp");
+				data.setPassword("password");
+				// 2.Do
+
+				boolean result = userService.updateOneWithPassword(data);
+				// 3.Assert
+				assertEquals(false, result);
+				// 4.logs
+				UserEntity userEntity = userService.selectAll();
+				log.warn("[testUpdateOne]userEntity:" + userEntity.toString());
+	}
+
 }
