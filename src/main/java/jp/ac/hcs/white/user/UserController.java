@@ -291,7 +291,7 @@ public class UserController {
 	 * @return トップ画面
 	 */
 	@PostMapping("/user/profileUpdate")
-	public String postProfileUpdate(@ModelAttribute @Validated UserFormForUpdate form, BindingResult bindingResult ,Model model,
+	public String postProfileUpdate(@ModelAttribute @Validated UserFormForUpdate form, BindingResult bindingResult, Model model,
 			 Principal principal) {
 
 		log.warn(form.toString());
