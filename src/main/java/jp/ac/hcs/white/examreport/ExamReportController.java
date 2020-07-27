@@ -271,7 +271,7 @@ public class ExamReportController {
 	 * @param model
 	 * @return 受験報告一覧画面
 	 */
-	@PostMapping("/exam/examUpdate")
+	@PostMapping("/exam/examUpdate/{examreport_id:.+}")
 	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
 			BindingResult bindingResult,
 			Principal principal,

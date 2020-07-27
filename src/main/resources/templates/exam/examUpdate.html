@@ -61,7 +61,8 @@
 		<div class="content-box">
 			<h2>受験報告更新画面</h2>
 			<hr>
-			<form method="post" th:action="@{/exam/examUpdate}"
+			<form method="post"
+				th:action="@{'/exam/examUpdate/' + *{examreport_id}}"
 				th:object="${examFormForUpdate}">
 				<label for="department">学科コード</label>
 				<div class="form-group input-box"
@@ -147,9 +148,10 @@
 				<span class="input-group-btn"> <input type="submit"
 					id="action" class="btn btn-warning" value="更新">
 				</span>
+			</form>
 		</div>
 
-		</form>
+
 	</div>
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
