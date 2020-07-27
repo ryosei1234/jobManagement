@@ -174,7 +174,7 @@ public class UserServiceTest {
 	public void testDeleteOne() {
 		// 1.Ready
 		// 2.Do
-		boolean result = userService.deleteOne("yamada@xxx.co.jp");
+		boolean result = userService.deleteOne("hashiya@xxx.co.jp");
 		// 3.Assert
 		assertEquals(true, result);
 		// 4.logs
@@ -222,7 +222,7 @@ public class UserServiceTest {
 				assertEquals(true, result);
 				// 4.logs
 				UserEntity userEntity = userService.selectAll();
-				log.warn("[testUpdateOne]userEntity:" + userEntity.toString());
+				log.warn("[testprofileUpdateOne]userEntity:" + userEntity.toString());
 	}
 
 	@Test
@@ -242,7 +242,7 @@ public class UserServiceTest {
 				assertEquals(false, result);
 				// 4.logs
 				UserEntity userEntity = userService.selectAll();
-				log.warn("[testUpdateOne]userEntity:" + userEntity.toString());
+				log.warn("[testprofileUpdateOne]userEntity:" + userEntity.toString());
 	}
 
 }
