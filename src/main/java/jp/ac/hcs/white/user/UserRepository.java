@@ -10,14 +10,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * ユーザ情報のデータを管理する.
  * - Userテーブル
  */
 @Repository
-@Slf4j
 public class UserRepository {
 
 	/** SQL 全件取得（ユーザID昇順） */

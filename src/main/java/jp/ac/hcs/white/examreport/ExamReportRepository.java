@@ -11,14 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * ユーザ情報のデータを管理する.
  * - Userテーブル
  */
 @Repository
-@Slf4j
 public class ExamReportRepository {
 
 	/** SQL 生徒用全件取得(期限日昇順)*/
