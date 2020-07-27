@@ -1,5 +1,6 @@
 package jp.ac.hcs.white.examreport;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -86,7 +87,7 @@ public class ExamReportRepository {
 			data.setUser_id((String) map.get("user_id"));
 			data.setDepartment((String) map.get("department"));
 			data.setCompany_name_top((String) map.get("company_name_top"));
-			data.setReport_day((Date) map.get("report_day"));
+			data.setReport_day((Timestamp) map.get("report_day"));
 			data.setRecruitment_number((Integer) map.get("recruitment_number"));
 			data.setCompany_name((String) map.get("company_name"));
 			data.setApplication_route((String) map.get("application_route"));
@@ -164,7 +165,7 @@ public class ExamReportRepository {
 				data.getUser_id(),
 				data.getDepartment(),
 				data.getCompany_name_top(),
-				data.getReport_day(),
+				new Timestamp(System.currentTimeMillis()),
 				data.getRecruitment_number(),
 				data.getCompany_name(),
 				data.getApplication_route(),

@@ -1,6 +1,6 @@
 package jp.ac.hcs.white.examreport;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +33,7 @@ public class ExamReportData {
 	/*
 	 * 報告日
 	 */
-	private Date report_day;
+	private Timestamp report_day;
 	/*
 	 * 求人番号
 	 */

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS examreport (
   user_id VARCHAR(254) NOT NULL,
   department CHAR(1),
   company_name_top CHAR(3),
-  report_day DATE,
+  report_day TIMESTAMP,
   recruitment_number INT,
   company_name VARCHAR(50),
   application_route VARCHAR(10),
