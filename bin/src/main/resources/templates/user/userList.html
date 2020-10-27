@@ -47,7 +47,7 @@
 		<div class="collapse navbar-collapse" id="navbarToggler">
 			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/change}"> <img class="config-img"
+					th:href="@{/user/profileUpdate}"> <img class="config-img"
 						th:src="@{/css/config.png}" src="../static/css/config.png">
 				</a></li>
 				<li>
@@ -64,6 +64,17 @@
 		<div class="content-box">
 			<!-- 登録・更新・削除処理の結果表示用 -->
 			<label class="text-info" th:text="${result}">結果表示</label><br>
+
+			<h2>ユーザ検索</h2>
+			<form class="form-inline" method="post" th:action="@{/user/search}">
+				<input type="text" class="form-control" name="search_user_id"
+					th:value="${search_user_id}" placeholder="ユーザID : あいまい検索" size=30>
+				<input type="text" class="form-control" name="search_user_name"
+					th:value="${search_user_name}" placeholder="氏名 : あいまい検索" size=30>
+				<button type="submit" class="btn btn-success">検索</button>
+			</form>
+			<hr>
+
 
 			<h2>ユーザ一覧</h2>
 			<table class="table table-hover table-striped table-responsive">
@@ -86,7 +97,7 @@
 			</table>
 
 			<td class="text-nowrap"><a class="btn btn-success"
-						th:href="@{'/user/userInsert'}">新規登録</a></td>
+				th:href="@{'/user/userInsert'}">新規登録</a></td>
 
 		</div>
 	</div>

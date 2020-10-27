@@ -59,11 +59,12 @@
 	<!-- コンテンツ -->
 	<div class="container">
 		<div class="content-box">
-			<h2>受験報告新規登録作成</h2>
+			<h2>受験報告更新画面</h2>
 			<hr>
-			<form method="post" th:action="@{/exam/examInsert}"
-				th:object="${examForm}">
-				<p>学科コード</p>
+			<form method="post"
+				th:action="@{'/exam/examUpdate/' + *{examreport_id}}"
+				th:object="${examFormForUpdate}">
+				<label for="department">学科コード</label>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('department')} ? 'has-error'">
 					<input type="text" class="form-control" name="department"
@@ -143,11 +144,14 @@
 						class="text-danger" th:if="${#fields.hasErrors('remarks')}"
 						th:errors="*{remarks}">remarks error</span>
 				</div>
+
 				<span class="input-group-btn"> <input type="submit"
-					id="action" class="btn btn-warning" value="登録">
+					id="action" class="btn btn-warning" value="更新">
 				</span>
 			</form>
 		</div>
+
+
 	</div>
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -1,12 +1,12 @@
 {
-	"short_name": "WP",
-	"name": "WebPortal",
+	"short_name": "就活",
+	"name": "就活ポータル",
 	"start_url": "/",
 	"display": "standalone",
 	"icons": [
 		{
-			"src": "/css/WP.png",
-			"sizes": "192x192",
+			"src": "/css/icon.png",
+			"sizes": "128x128",
 			"type": "image/png"
 		}
 	]
