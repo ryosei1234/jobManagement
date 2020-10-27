@@ -15,7 +15,7 @@ public class JobHuntingService {
 	 * @return ExamReportEntity
 	 * @throws DataAccessException
 	 */
-	public JobHuntingEntitiy selectAll(String user_id) throws DataAccessException {
+	public JobHuntingEntity selectAll(String user_id) throws DataAccessException {
 		return examRepository.selectAll(user_id);
 	}
 }
