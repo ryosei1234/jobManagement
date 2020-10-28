@@ -123,18 +123,7 @@
 						th:errors="*{attendance_id}">attendance_id error</span>
 				</div>
 
-				<label for="lodging_day_id">航空便・宿泊予定</label>
-				<div class="form-group input-box">
-					<div th:each="item : ${radioInformation}">
-						<input type="radio" name="attendance_day" th:text="${item.key}"
-							th:value="${item.value}" th:field="lodging_day_id">
-					</div>
-					<span class="text-danger"
-						th:if="${#fields.hasErrors('lodging_day_id')}"
-						th:errors="*{lodging_day_id}">lodging_day_id error</span>
-				</div>
-
-				<p>連絡事項</p>
+				<p>スケジュール</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('schedule')} ? 'has-error'">
 					<input type="text" class="form-control" name="schedule"
