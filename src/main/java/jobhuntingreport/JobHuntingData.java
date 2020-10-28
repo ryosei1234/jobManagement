@@ -1,13 +1,17 @@
 package jobhuntingreport;
 
+import java.sql.Timestamp;
+
+/**
+ * 1件分のユーザ情報.
+ * 各項目のデータ仕様も合わせて管理する.
+ */
 
 public class JobHuntingData {
-
 	/*
 	 * 就職活動申請・報告ID
-	 * 必須入力
 	 */
-	private int examination_report_id;
+	private String examination_report_id ;
 	/*
 	 * ユーザID
 	 */
@@ -15,19 +19,19 @@ public class JobHuntingData {
 	/*
 	 * 就職活動申請・報告状態ID
 	 */
-	private int examination_status_id;
+	private String examination_status_id ;
 	/*
 	 * 活動内容ID
 	 */
-	private int action_id;
+	private String action_id;
 	/*
-	 * 活動場所
+	 * 活動場所日
 	 */
-	private String action_place;
+	private Timestamp action_place;
 	/*
 	 * 活動開始日時
 	 */
-	private String action_day;
+	private int action_day;
 	/*
 	 * 活動終了日時
 	 */
@@ -39,11 +43,11 @@ public class JobHuntingData {
 	/*
 	 * 就職活動続行ID
 	 */
-	private int action_status_id;
+	private String action_status_id;
 	/*
 	 * 出欠ID
 	 */
-	private int attendance_id;
+	private String attendance_id;
 	/*
 	 * 出欠日時
 	 */
@@ -51,9 +55,21 @@ public class JobHuntingData {
 	/*
 	 * 宿泊ID
 	 */
-	private int lodging_day_id;
+	private String lodging_day_id;
 	/*
 	 * 連絡事項
 	 */
 	private String information;
+	/*
+	 * ユーザのクラス
+	 */
+	private String user_class;
+	/*
+	 * ユーザの出席番号
+	 */
+	private String user_student_no;
+	/*
+	 * ユーザ名
+	 */
+	private String user_name;
 }
