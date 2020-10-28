@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS application_and_report (
   attendance_day DATETIME, /* 出欠日時 */
   lodging_day_id VARCHAR(10), /* 宿泊ID */
   information VARCHAR(300), /* 連絡事項 */
+  schedule VARCHAR(300),/* スケジュール */
   contents_report VARCHAR(300),/* 報告内容 */
   CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES m_user(user_id)
 );

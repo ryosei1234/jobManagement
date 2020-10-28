@@ -56,4 +56,12 @@ public class JobHuntingData {
 	 * 連絡事項
 	 */
 	private String information;
+	/*
+	 * スケジュール
+	 */
+	private String schedule;
+	/*
+	 * 報告内容
+	 */
+	private String contents_report;
 }
