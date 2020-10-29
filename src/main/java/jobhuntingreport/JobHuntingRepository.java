@@ -10,6 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import jp.ac.hcs.white.examreport.ExamReportEntity;
+
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
 	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
@@ -108,17 +110,112 @@ public class JobHuntingRepository {
 	}
 
 	/**
-	 * application_and_reportテーブルから就職活動申請・報告状態、ユーザー名、活動開始日時、企業名をキーにデータを一件取得
+	 * application_and_reportテーブルから就職活動申請・報告状態、ユーザー名、活動開始日時、企業名をキーにデータを取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
 	 * @return data
 	 * @throws DataAccessException
 	 */
-	public JobHuntingData search(int examination_status_id,String action_day,String user_name,String company_name) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME, examination_status_id,action_day,user_name,company_name);
+	public JobHuntingData search(int examination_report_id) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
-		JobHuntingData data = entity.getJoblist()
+		JobHuntingData data = entity.getJoblist().get(0);
 		return data;
 	}
+
+	/**
+	 * examreportテーブルから一致するデータを検索する
+	 * @param search_application_id
+	 * @param search_user_id
+	 * @param search_company_name
+	 * @return exaEntity
+	 * @throws DataAccessException
+	 */
+	public JobHuntingEntity searchByExam_idAndUsernameANDCompanyname(String search_application_id,String search_action_day,String search_user_id, String search_company_name)
+			throws DataAccessException {
+		String like_search_application_id = '%' + search_application_id + '%';
+		String like_search_action_day = '%' + search_action_day + '%';
+		String like_search_user_id = '%' + search_user_id + '%';
+		String like_search_company_name = '%' + search_company_name + '%';
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME,
+				like_search_application_id,like_search_user_id, like_search_company_name);
+		ExamReportEntity examEntity = mappingSelectJobResult(resultList);
+		return examEntity;
+	}
+
+	/**
+	 *  application_and_reportテーブルのデータを1件更新する
+	 * @param JobHuntingData 更新する就職活動申請・報告ID
+	 * @param examination_report_id 就職活動申請・報告ID
+	 * @param
+	 * @return rowNumber
+	 * @throws DataAccessException
+	 */
+	public int updatejobhunting(JobHuntingData JobHuntingData, int examination_report_id) throws DataAccessException {
+		int status = JobHuntingData.getExamination_status_id();
+		if(status <= 4) {
+			int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
+					JobHuntingData.getExamination_status_id(),
+					JobHuntingData.getAction_id(),
+					JobHuntingData.getAction_place(),
+					JobHuntingData.getAction_day(),
+					JobHuntingData.getAction_end_day(),
+					JobHuntingData.getCompany_name(),
+					JobHuntingData.getAction_status_id(),
+					JobHuntingData.getAttendance_id(),
+					JobHuntingData.getAttendance_day(),
+					JobHuntingData.getLodging_day_id(),
+					JobHuntingData.getInformation(),
+					JobHuntingData.getSchedule(),
+					examination_report_id
+
+					);
+			return rowNumber;
+		} else{
+			int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
+					JobHuntingData.getContents_report(),
+					examination_report_id
+					);
+			return rowNumber;
+		}
+	}
+
+	/**
+	 * application_and_reportテーブルのデータを1件追加する
+	 * @param data
+	 * @return eowNumber
+	 * @throws DataAccessException
+	 */
+	public int insertOne(JobHuntingData data) throws DataAccessException {
+		int cnt = String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString())).length();
+
+		String  examination_report_id = "0";
+
+		for(int i = 0;i<(9 - cnt); i++) {
+			examination_report_id += "0";
+		}
+		examination_report_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString()));
+
+		int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
+				examination_report_id,
+				data.getUser_id(),
+				data.getExamination_status_id(),
+				data.getAction_id(),
+				data.getAction_place(),
+				data.getAction_day(),
+				data.getAction_end_day(),
+				data.getCompany_name(),
+				data.getAction_status_id(),
+				data.getAttendance_id(),
+				data.getAttendance_day(),
+				data.getLodging_day_id(),
+				data.getInformation(),
+				data.getSchedule(),
+				"新規作成");
+
+		return rowNumber;
+	}
+
+
 
 }
