@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
+	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
 
 	/** SQL 教員、事務用全件取得(期限日昇順)*/
 	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id ORDER BY examination_report_id";
@@ -81,37 +81,37 @@ public class JobHuntingRepository {
 	 */
 	private JobHuntingEntity mappingSelectJobResult(List<Map<String, Object>> resultList) {
 		JobHuntingEntity entity = new JobHuntingEntity();
-
 		for (Map<String, Object> map : resultList) {
 			JobHuntingData data = new JobHuntingData();
-			data.setExamination_report_id((int) map.get("examination_report_id"));
+			data.setExamination_report_id(Integer.parseInt((String) map.get("examination_report_id")));
 			data.setUser_id((String) map.get("user_id"));
-			data.setExamination_status_id((int) map.get("examination_status_id"));
-			data.setAction_id((int) map.get("action_id"));
+			data.setExamination_status_id(Integer.parseInt((String) map.get("examination_status_id")));
+			data.setAction_id(Integer.parseInt((String) map.get("action_id")));
 			data.setAction_place((String) map.get("action_place"));
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
 			String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
+			data.setAction_day((String)map.get("action_day"));
+			data.setAction_end_day((String)map.get("action_end_day"));
 			data.setCompany_name((String) map.get("company_name"));
-			data.setAction_status_id((int) map.get("action_status_id"));
-			data.setAttendance_id((int) map.get("attendance_id"));
+			data.setAction_status_id(Integer.parseInt((String) map.get("action_status_id")));
+			data.setAttendance_id(Integer.parseInt((String) map.get("attendance_id")));
+			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
 			data.setAttendance_day((String) map.get("attendance_day"));
-			data.setLodging_day_id((int) map.get("lodging_day_id"));
+			data.setLodging_day_id(Integer.parseInt((String) map.get("lodging_day_id")));
 			data.setInformation((String) map.get("information"));
 			data.setSchedule((String) map.get("schedule"));
 			data.setContents_report((String) map.get("contents_report"));
 			data.setUser_name((String)map.get("user_name"));
 			data.setUser_class((String)map.get("user_class"));
 			data.setUser_student_no((String)map.get("user_student_no"));
-
 			entity.getJoblist().add(data);
 		}
 		return entity;
 	}
-
 	/**
 	 * application_and_reportテーブルから就職活動申請・報告状態、ユーザー名、活動開始日時、企業名をキーにデータを取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
-	 * @return data
+	 * @return data
 	 * @throws DataAccessException
 	 */
 	public JobHuntingData search(int examination_report_id) throws DataAccessException {
@@ -121,7 +121,6 @@ public class JobHuntingRepository {
 		JobHuntingData data = entity.getJoblist().get(0);
 		return data;
 	}
-
 	/**
 	 * examreportテーブルから一致するデータを検索する
 	 * @param search_application_id
@@ -141,7 +140,6 @@ public class JobHuntingRepository {
 		JobHuntingEntity jobEntity = mappingSelectJobResult(resultList);
 		return jobEntity;
 	}
-
 	/**
 	 *  application_and_reportテーブルのデータを1件更新する
 	 * @param JobHuntingData 更新する就職活動申請・報告ID
@@ -167,7 +165,6 @@ public class JobHuntingRepository {
 					JobHuntingData.getInformation(),
 					JobHuntingData.getSchedule(),
 					examination_report_id
-
 					);
 			return rowNumber;
 		} else{
@@ -178,7 +175,6 @@ public class JobHuntingRepository {
 			return rowNumber;
 		}
 	}
-
 	/**
 	 * application_and_reportテーブルのデータを1件追加する
 	 * @param data
@@ -187,14 +183,11 @@ public class JobHuntingRepository {
 	 */
 	public int insertOne(JobHuntingData data) throws DataAccessException {
 		int cnt = String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString())).length();
-
 		String  examination_report_id = "0";
-
 		for(int i = 0;i<(9 - cnt); i++) {
 			examination_report_id += "0";
 		}
 		examination_report_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString()));
-
 		int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 				examination_report_id,
 				data.getUser_id(),
@@ -211,10 +204,6 @@ public class JobHuntingRepository {
 				data.getInformation(),
 				data.getSchedule(),
 				"新規作成");
-
 		return rowNumber;
 	}
-
-
-
 }
