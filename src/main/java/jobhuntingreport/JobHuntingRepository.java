@@ -1,6 +1,5 @@
 package jobhuntingreport;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import jp.ac.hcs.white.examreport.CsvCallbackHandler;
-import jp.ac.hcs.white.examreport.ExamReportData;
-import jp.ac.hcs.white.examreport.ExamReportEntity;
 
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
@@ -41,7 +36,7 @@ public class JobHuntingRepository {
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 
 	/** SQL 就職活動申請・報告書検索*/
-	private static final String SQL_SEARCH_BY_EXAMINATION_REPORT_ID_AND_USER_ID_AND_COMPANY_NAME ="SELECT * FROM application_and_report WHERE examination_status_id LIKE ? AND action_day LIKE ? AND user_id LIKE ? and company_name LIKE ?";
+	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME ="SELECT app.examination_status_id,app.action_day,user.user_name,app.company_name FROM application_and_report app, m_user user WHERE app.user_id = user.user_id,app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ?";
 
 	/** SQL 就職活動申請更新*/
 	private static final String SQL_UPDATE_APPLICATION = "UPDATE application_and_report SET examination_status_id = ?,action_id = ?,action_place = ?,action_day = ?,action_end_day = ?,company_name = ?,action_status_id = ?,attendance_id = ?,attendance_day = ?,lodging_day_id = ?,information = ?,schedule = ? WHERE  examination_report_id = ?";
@@ -74,16 +69,16 @@ public class JobHuntingRepository {
 			resultList = jdbc.queryForList(SQL_SELECT_ALL);
 		}
 
-		JobHuntingEntity jobhuntingEntity = mappingSelectExamResult(resultList);
+		JobHuntingEntity jobhuntingEntity = mappingSelectJobResult(resultList);
 		return jobhuntingEntity;
 	}
 
 	/**
-	 * examreportテーブルから取得したデータをExamReportEntity形式にマッピングする.
+	 * examreportテーブルから取得したデータをJobReportEntity形式にマッピングする.
 	 * @param resultList
 	 * @return entity
 	 */
-	private JobHuntingEntity mappingSelectExamResult(List<Map<String, Object>> resultList) {
+	private JobHuntingEntity mappingSelectJobResult(List<Map<String, Object>> resultList) {
 		JobHuntingEntity entity = new JobHuntingEntity();
 
 		for (Map<String, Object> map : resultList) {
@@ -96,135 +91,34 @@ public class JobHuntingRepository {
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
 			String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
 			data.setCompany_name((String) map.get("company_name"));
-			data.setAction_status_id((Date) map.get("action_status_id"));
-			data.setAttendance_id((String) map.get("attendance_id"));
+			data.setAction_status_id((int) map.get("action_status_id"));
+			data.setAttendance_id((int) map.get("attendance_id"));
 			data.setAttendance_day((String) map.get("attendance_day"));
-			data.setLodging_day_id((String) map.get("lodging_day_id"));
+			data.setLodging_day_id((int) map.get("lodging_day_id"));
 			data.setInformation((String) map.get("information"));
 			data.setSchedule((String) map.get("schedule"));
 			data.setContents_report((String) map.get("contents_report"));
+			data.setUser_name((String)map.get("user_name"));
+			data.setUser_class((String)map.get("user_class"));
+			data.setUser_student_no((String)map.get("user_student_no"));
 
-			entity.getExamlist().add(data);
+			entity.getJoblist().add(data);
 		}
 		return entity;
 	}
 
 	/**
-	 * application_and_reportテーブルから就職活動申請・報告IDをキーにデータを一件取得
+	 * application_and_reportテーブルから就職活動申請・報告状態、ユーザー名、活動開始日時、企業名をキーにデータを一件取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
 	 * @return data
 	 * @throws DataAccessException
 	 */
-	public JobHuntingData selectOne(String examreport_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_ONE, examreport_id);
-		JobHuntingEntity entity = mappingSelectExamResult(resultList);
+	public JobHuntingData search(int examination_status_id,String action_day,String user_name,String company_name) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME, examination_status_id,action_day,user_name,company_name);
+		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
-		JobHuntingData data = entity.getExamlist().get(0);
+		JobHuntingData data = entity.getJoblist()
 		return data;
-	}
-
-	/**
-	 *  examreportテーブルのデータを1件更新する
-	 * @param ExamReportData 更新する受験報告情報
-	 * @param examreport_id 受験報告ID
-	 * @return rowNumber
-	 * @throws DataAccessException
-	 */
-	public int updatereport(ExamReportData ExamReportData, String examreport_id) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_REPORT,
-				ExamReportData.getDepartment(),
-				ExamReportData.getCompany_name_top(),
-				ExamReportData.getRecruitment_number(),
-				ExamReportData.getCompany_name(),
-				ExamReportData.getApplication_route(),
-				ExamReportData.getExam_date_time(),
-				ExamReportData.getExamination_location(),
-				ExamReportData.getContens_test(),
-				ExamReportData.getRemarks(),
-				examreport_id
-
-				);
-		return rowNumber;
-	}
-
-	/**
-	 * examreportテーブルのデータを1件追加する
-	 * @param data
-	 * @return eowNumber
-	 * @throws DataAccessException
-	 */
-	public int insertOne(ExamReportData data) throws DataAccessException {
-		int cnt = String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString())).length();
-
-		String  examreport_id = "0";
-
-		for(int i = 0;i<(9 - cnt); i++) {
-			examreport_id += "0";
-		}
-		examreport_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_REPORT_COUNT)).get("COUNT(*)")).toString()));
-
-		int rowNumber = jdbc.update(SQL_INSERT_ONE,
-				examreport_id,
-				data.getUser_id(),
-				data.getDepartment(),
-				data.getCompany_name_top(),
-				new Timestamp(System.currentTimeMillis()),
-				data.getRecruitment_number(),
-				data.getCompany_name(),
-				data.getApplication_route(),
-				data.getExam_date_time(),
-				data.getExamination_location(),
-				data.getContens_test(),
-				data.getRemarks(),
-				"新規作成");
-
-		return rowNumber;
-	}
-
-	/**
-	 * examreportテーブルから一致するデータを検索する
-	 * @param search_examreport_id
-	 * @param search_user_id
-	 * @param search_company_name
-	 * @return exaEntity
-	 * @throws DataAccessException
-	 */
-	public ExamReportEntity searchByExam_idAndUsernameANDCompanyname(String search_examreport_id,String search_user_id, String search_company_name)
-			throws DataAccessException {
-		String like_search_examreport_id = '%' + search_examreport_id + '%';
-		String like_search_user_id = '%' + search_user_id + '%';
-		String like_search_company_name = '%' + search_company_name + '%';
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMREPORT_ID_AND_USER_ID_AND_COMPANY_NAME,
-				like_search_examreport_id,like_search_user_id, like_search_company_name);
-		ExamReportEntity examEntity = mappingSelectExamResult(resultList);
-		return examEntity;
-	}
-
-	/**
-	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する
-	 * @throws DataAccessException
-	 */
-	public void saveCsv() throws DataAccessException {
-
-		// CSVファイル出力用設定
-		CsvCallbackHandler handler = new CsvCallbackHandler();
-
-		jdbc.query(SQL_SELECT_CSV, handler);
-	}
-
-	/**
-	 *
-	 * @param examreport_id 1承認変更する受験報告ID
-	 * @param exam_report_status 現在の受験報告ステータス
-	 * @return rowNumber
-	 * @throws DataAccessException
-	 */
-	public int statusOne(String examreport_id, String exam_report_status) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_STATUS,
-				exam_report_status,
-				examreport_id
-				);
-		return rowNumber;
 	}
 
 }
