@@ -1,4 +1,4 @@
-package jobhuntingreport;
+package jp.ac.hcs.white.jobhuntingreport;
 
 import javax.validation.constraints.NotBlank;
 

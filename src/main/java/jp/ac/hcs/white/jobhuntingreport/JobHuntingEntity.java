@@ -1,4 +1,4 @@
-package jobhuntingreport;
+package jp.ac.hcs.white.jobhuntingreport;
 
 import java.util.ArrayList;
 import java.util.List;

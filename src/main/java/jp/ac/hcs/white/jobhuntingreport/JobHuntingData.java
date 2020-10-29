@@ -1,6 +1,10 @@
-package jobhuntingreport;
+package jp.ac.hcs.white.jobhuntingreport;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class JobHuntingData {
 
 	/*

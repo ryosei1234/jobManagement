@@ -1,14 +1,11 @@
-package jobhuntingreport;
-
-import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+package jp.ac.hcs.white.jobhuntingreport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
+@Service
 public class JobHuntingService {
 	@Autowired
 	JobHuntingRepository jobRepository;
@@ -28,7 +25,7 @@ public class JobHuntingService {
 	 * @param examination_report_id  就職活動ID
 	 * @return JobHuntingData
 	 */
-	public JobHuntingData selectOne(String examination_report_id) {
+/*	public JobHuntingData selectOne(String examination_report_id) {
 		return jobRepository.selectOne(examination_report_id);
 
 	}
@@ -66,7 +63,7 @@ public class JobHuntingService {
 	 * 情報をCSVファイルとしてサーバに保存する.
 	 * @throws DataAccessException
 	 */
-	public void saveCsv() throws DataAccessException {
+/*	public void saveCsv() throws DataAccessException {
 
 		jobRepository.saveCsv();
 	}
@@ -77,7 +74,7 @@ public class JobHuntingService {
 	 * @return ファイルのbyte配列
 	 * @throws IOException ファイル取得エラー
 	 */
-	public byte[] loadCsv(String fileName) throws IOException {
+	/*public byte[] loadCsv(String fileName) throws IOException {
 
 		FileSystem fs = FileSystems.getDefault();
 		Path p = fs.getPath(fileName);
@@ -93,7 +90,7 @@ public class JobHuntingService {
 	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-	public boolean updateOne(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
+/*	public boolean updateOne(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
 
 		int rowNumber = jobRepository.updatereport(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
@@ -103,13 +100,13 @@ public class JobHuntingService {
 	/**
 	 * 就職活動を承認変更する
 	 * @param examination_report_id　就職活動ID
-	 * @param examination_status_id　状態内容
+	 * @param examination_status_id　
 	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-	public boolean examstatus(String examination_report_id, String examination_status_id) throws DataAccessException {
+/*	public boolean examstatus(String examination_report_id, String examination_status_id) throws DataAccessException {
 		int rowNumber = jobRepository.statusOne(examination_report_id, examination_status_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
-	}
+	}*/
 }

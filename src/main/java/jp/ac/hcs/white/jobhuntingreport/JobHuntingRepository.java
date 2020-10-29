@@ -1,4 +1,4 @@
-package jobhuntingreport;
+package jp.ac.hcs.white.jobhuntingreport;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import jp.ac.hcs.white.examreport.ExamReportEntity;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
 	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
@@ -131,7 +130,7 @@ public class JobHuntingRepository {
 	 * @return exaEntity
 	 * @throws DataAccessException
 	 */
-	public JobHuntingEntity searchByExam_idAndUsernameANDCompanyname(String search_application_id,String search_action_day,String search_user_id, String search_company_name)
+	public JobHuntingEntity jobSearch(String search_application_id,String search_action_day,String search_user_id, String search_company_name)
 			throws DataAccessException {
 		String like_search_application_id = '%' + search_application_id + '%';
 		String like_search_action_day = '%' + search_action_day + '%';
@@ -139,8 +138,8 @@ public class JobHuntingRepository {
 		String like_search_company_name = '%' + search_company_name + '%';
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME,
 				like_search_application_id,like_search_user_id, like_search_company_name);
-		ExamReportEntity examEntity = mappingSelectJobResult(resultList);
-		return examEntity;
+		JobHuntingEntity jobEntity = mappingSelectJobResult(resultList);
+		return jobEntity;
 	}
 
 	/**

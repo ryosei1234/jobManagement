@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS examreport (
 /*就職活動申請・報告テーブル*/
 CREATE TABLE IF NOT EXISTS application_and_report (
   examination_report_id VARCHAR(10) PRIMARY KEY, /*就職活動申請・報告ID*/
-  user_id VARCHAR(254),NOT NULL,/* ユーザID */
+  user_id VARCHAR(254) NOT NULL,/* ユーザID */
   examination_status_id CHAR(100) NOT NULL, /* 就職活動申請・報告状態ID */
   action_id CHAR(10) NOT NULL, /* 活動内容ID */
   action_place VARCHAR(50) NOT NULL, /* 活動場所 */
@@ -57,6 +57,5 @@ CREATE TABLE IF NOT EXISTS application_and_report (
   lodging_day_id VARCHAR(10), /* 宿泊ID */
   information VARCHAR(300), /* 連絡事項 */
   schedule VARCHAR(300),/* スケジュール */
-  contents_report VARCHAR(300),/* 報告内容 */
-  CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES m_user(user_id)
+  contents_report VARCHAR(300)/* 報告内容 */
 );
