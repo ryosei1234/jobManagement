@@ -66,10 +66,10 @@ public class JobHuntingRepository {
 		JobHuntingEntity entity = new JobHuntingEntity();
 		for (Map<String, Object> map : resultList) {
 			JobHuntingData data = new JobHuntingData();
-			data.setExamination_report_id(Integer.parseInt((String) map.get("examination_report_id")));
+			data.setExamination_report_id(((String) map.get("examination_report_id")));
 			data.setUser_id((String) map.get("user_id"));
-			data.setExamination_status_id(Integer.parseInt((String) map.get("examination_status_id")));
-			data.setAction_id(Integer.parseInt((String) map.get("action_id")));
+			data.setExamination_status_id(((String) map.get("examination_status_id")));
+			data.setAction_id(((String) map.get("action_id")));
 			data.setAction_place((String) map.get("action_place"));
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
 			String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
@@ -77,11 +77,11 @@ public class JobHuntingRepository {
 			data.setAction_end_day((String)action_end_day);
 			data.setCompany_name((String) map.get("company_name"));
 			System.out.println((String) map.get("action_status_id"));
-			data.setAction_status_id(Integer.parseInt((String) map.get("action_status_id")));
-			data.setAttendance_id(Integer.parseInt((String) map.get("attendance_id")));
+			data.setAction_status_id(((String) map.get("action_status_id")));
+			data.setAttendance_id(((String) map.get("attendance_id")));
 			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
 			data.setAttendance_day((String)attendance_day);
-			data.setLodging_day_id(Integer.parseInt((String) map.get("lodging_day_id")));
+			data.setLodging_day_id(((String) map.get("lodging_day_id")));
 			data.setInformation((String) map.get("information"));
 			data.setSchedule((String) map.get("schedule"));
 			data.setContents_report((String) map.get("contents_report"));
@@ -99,12 +99,20 @@ public class JobHuntingRepository {
 	 * @return data
 	 * @throws DataAccessException
 	 */
-	public JobHuntingData selectOne(int examination_report_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
-		JobHuntingEntity entity = mappingSelectJobResult(resultList);
-		// 必ず1件のみのため、最初のUserDataを取り出す
-		JobHuntingData data = entity.getJoblist().get(0);
-		return data;
+	public JobHuntingData selectOne(int examination_report_id,int examination_status_id) throws DataAccessException {
+		if(examination_status_id <= 4) {
+			List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
+			JobHuntingEntity entity = mappingSelectJobResult(resultList);
+			// 必ず1件のみのため、最初のUserDataを取り出す
+			JobHuntingData data = entity.getJoblist().get(0);
+			return data;
+		} else {
+			List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_REPORT_ONE, examination_report_id);
+			JobHuntingEntity entity = mappingSelectJobResult(resultList);
+			// 必ず1件のみのため、最初のUserDataを取り出す
+			JobHuntingData data = entity.getJoblist().get(0);
+			return data;
+		}
 	}
 	/**
 	 * application_and_reportテーブルから就職活動申請・報告IDをキーに報告データを一件取得
@@ -146,9 +154,10 @@ public class JobHuntingRepository {
 	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
-	public int updatejobhunting(JobHuntingData JobHuntingData, int examination_report_id) throws DataAccessException {
-		int status = JobHuntingData.getExamination_status_id();
-		if(status <= 4) {
+	public int updatejobhunting(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
+		String status = JobHuntingData.getExamination_status_id();
+		int comparison = Integer.parseInt(status);
+		if(comparison <= 4) {
 			int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
 					JobHuntingData.getExamination_status_id(),
 					JobHuntingData.getAction_id(),
@@ -186,8 +195,9 @@ public class JobHuntingRepository {
 			examination_report_id += "0";
 		}
 		examination_report_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString()));
-		int status = data.getExamination_status_id();
-		if(status <= 4) {
+		String status = data.getExamination_status_id();
+		int comparison = Integer.parseInt(status);
+		if(comparison <= 4) {
 			int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 					examination_report_id,
 					data.getUser_id(),
