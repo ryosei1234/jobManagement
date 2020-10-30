@@ -11,11 +11,11 @@ public class JobHuntingData {
 	 * 就職活動申請・報告ID
 	 * 必須入力
 	 */
-	private int examination_report_id;
-	public int getExamination_report_id(){
+	private String examination_report_id;
+	public String getExamination_report_id(){
 		return examination_report_id;
 	}
-	public void setExamination_report_id(int examination_report_id) {
+	public void setExamination_report_id(String examination_report_id) {
 		this.examination_report_id = examination_report_id;
 	}
 	/*
@@ -31,21 +31,21 @@ public class JobHuntingData {
 	/*
 	 * 就職活動申請・報告状態ID
 	 */
-	private int examination_status_id;
-	public int getExamination_status_id() {
+	private String examination_status_id;
+	public String getExamination_status_id() {
 		return examination_status_id;
 	}
-	public void setExamination_status_id(int examination_status_id) {
+	public void setExamination_status_id(String examination_status_id) {
 		this.examination_status_id = examination_status_id;
 	}
 	/*
 	 * 活動内容ID
 	 */
-	private int action_id;
-	public int getAction_id() {
+	private String action_id;
+	public String getAction_id() {
 		return action_id;
 	}
-	public void setAction_id(int action_id) {
+	public void setAction_id(String action_id) {
 		this.action_id = action_id;
 	}
 	/*
@@ -91,21 +91,21 @@ public class JobHuntingData {
 	/*
 	 * 就職活動続行ID
 	 */
-	private int action_status_id;
-	public int getAction_status_id() {
+	private String action_status_id;
+	public String getAction_status_id() {
 		return action_status_id;
 	}
-	public void setAction_status_id(int action_status_id) {
+	public void setAction_status_id(String action_status_id) {
 		this.action_status_id = action_status_id;
 	}
 	/*
 	 * 出欠ID
 	 */
-	private int attendance_id;
-	public int getAttendance_id() {
+	private String attendance_id;
+	public String getAttendance_id() {
 		return attendance_id;
 	}
-	public void setAttendance_id(int attendance_id) {
+	public void setAttendance_id(String attendance_id) {
 		this.attendance_id = attendance_id;
 	}
 	/*
@@ -121,11 +121,11 @@ public class JobHuntingData {
 	/*
 	 * 宿泊ID
 	 */
-	private int lodging_day_id;
-	public int getLodging_day_id() {
+	private String lodging_day_id;
+	public String getLodging_day_id() {
 		return lodging_day_id;
 	}
-	public void setLodging_day_id(int lodging_day_id) {
+	public void setLodging_day_id(String lodging_day_id) {
 		this.lodging_day_id = lodging_day_id;
 	}
 	/*
