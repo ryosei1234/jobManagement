@@ -59,12 +59,10 @@
 	<!-- コンテンツ -->
 	<div class="container">
 		<div class="content-box">
-			<h2>就職申請・報告更新画面</h2>
+			<h2>就職活動申請新規登録作成</h2>
 			<hr>
-			<form method="post"
-				th:action="@{'/exam/examUpdate/' + *{examreport_id}}"
-				th:object="${examFormForUpdate}">
-
+			<form method="post" th:action="@{/job/jobInsertS}"
+				th:object="${jobForm}">
 				<p>活動日時</p>
 				<p>活動開始日時</p>
 				<div class="form-group input-box"
@@ -141,14 +139,13 @@
 						placeholder="xxxxxxx" th:field="*{information}"> <span
 						class="text-danger" th:if="${#fields.hasErrors('information')}"
 						th:errors="*{information}">information error</span>
-
+				</div>
 				<span class="input-group-btn"> <input type="submit"
-					id="action" class="btn btn-warning" value="更新">
+					id="action" class="btn btn-warning" value="登録">
 				</span>
+
 			</form>
 		</div>
-
-
 	</div>
 	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
