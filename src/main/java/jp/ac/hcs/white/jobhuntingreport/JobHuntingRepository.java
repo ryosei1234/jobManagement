@@ -19,9 +19,9 @@ public class JobHuntingRepository {
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 	/** SQL 申請1件取得 */
-	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,u.user_id,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
+	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
 	/** SQL 報告1件取得 */
-	private static final String SQL_SELECT_REPORT_ONE = "SELECT app.examination_report_id,u.user_id,app.contents_report FROM application_and_report WHERE app.user_id = u.user_id AND examination_report_id = ?";
+	private static final String SQL_SELECT_REPORT_ONE = "SELECT app.examination_report_id,user.user_id,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = u.user_id AND examination_report_id = ?";
 	/** SQL 申請1件追加  */
 	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 報告1件追加 */
@@ -94,7 +94,7 @@ public class JobHuntingRepository {
 		return entity;
 	}
 	/**
-	 * application_and_reportテーブルから就職活動申請・報告状態、ユーザー名、活動開始日時、企業名をキーにデータを取得
+	 * application_and_reportテーブルから就職活動申請・報告IDをキーにデータを取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
 	 * @return data
 	 * @throws DataAccessException
