@@ -99,7 +99,7 @@ public class JobHuntingRepository {
 	 * @return data
 	 * @throws DataAccessException
 	 */
-	public JobHuntingData select_one(int examination_report_id) throws DataAccessException {
+	public JobHuntingData selectOne(int examination_report_id) throws DataAccessException {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
