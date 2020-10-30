@@ -18,10 +18,8 @@ public class JobHuntingRepository {
 	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id ORDER BY examination_report_id";
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
-	/** SQL 申請1件取得 */
-	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
-	/** SQL 報告1件取得 */
-	private static final String SQL_SELECT_REPORT_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = u.user_id AND examination_report_id = ?";
+	/** SQL 1件取得 */
+	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
 	/** SQL 申請1件追加  */
 	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 報告1件追加 */
@@ -94,39 +92,19 @@ public class JobHuntingRepository {
 		return entity;
 	}
 	/**
-	 * application_and_reportテーブルから就職活動申請・報告IDをキーにデータを取得
+	 * application_and_reportテーブルから就職活動申請・報告IDをキーにデータを一件取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
 	 * @return data
 	 * @throws DataAccessException
 	 */
-	public JobHuntingData selectOne(int examination_report_id,int examination_status_id) throws DataAccessException {
-		if(examination_status_id <= 4) {
-			List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
-			JobHuntingEntity entity = mappingSelectJobResult(resultList);
-			// 必ず1件のみのため、最初のUserDataを取り出す
-			JobHuntingData data = entity.getJoblist().get(0);
-			return data;
-		} else {
-			List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_REPORT_ONE, examination_report_id);
-			JobHuntingEntity entity = mappingSelectJobResult(resultList);
-			// 必ず1件のみのため、最初のUserDataを取り出す
-			JobHuntingData data = entity.getJoblist().get(0);
-			return data;
-		}
-	}
-	/**
-	 * application_and_reportテーブルから就職活動申請・報告IDをキーに報告データを一件取得
-	 * @param  examination_report_id 検索する就職活動申請・報告ID
-	 * @return data
-	 * @throws DataAccessException
-	 */
-	public JobHuntingData report_search(int examination_report_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_REPORT_ONE, examination_report_id);
+	public JobHuntingData selectOne(String examination_report_id) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
 		JobHuntingData data = entity.getJoblist().get(0);
 		return data;
 	}
+
 	/**
 	 * application_and_reportテーブルから一致するデータを検索する
 	 * @param search_application_id
