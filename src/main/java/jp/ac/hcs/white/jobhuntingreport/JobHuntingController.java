@@ -115,7 +115,7 @@ public class JobHuntingController {
 	 * @param model
 	 * @return 受験報告詳細画面
 	 */
-	@GetMapping("/exam/examDetail/{examination_report_id:.+}")
+	@GetMapping("/job/jobDetail/{examination_report_id:.+}")
 	public String getExamDetail(@PathVariable("examination_report_id") String examination_report_id, Principal principal, Model model) {
 
 		JobHuntingData data = jobService.selectOne(examination_report_id);
