@@ -25,7 +25,8 @@ public class JobHuntingService {
 	 * @param examination_report_id  就職活動ID
 	 * @return JobHuntingData
 	 */
-	public JobHuntingData selectOne(int examination_report_id) {
+	public JobHuntingData selectOne(String examination_report_id) {
+		System.out.println("サービス" + examination_report_id);
 		return jobRepository.selectOne(examination_report_id);
 
 	}
