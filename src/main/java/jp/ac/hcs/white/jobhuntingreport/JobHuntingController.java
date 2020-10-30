@@ -1,17 +1,25 @@
 package jp.ac.hcs.white.jobhuntingreport;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.ac.hcs.white.WebConfig;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -122,96 +130,95 @@ public class JobHuntingController {
 	 * @param model
 	 * @return CSVファイル
 	 */
-//	@PostMapping("/job/csv")
-//	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
-//
-//		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
-//
-//		// タスク情報のCSVファイルをサーバ上に保存
-//		//jobService.saveCsv();
-//
-//		// CSVファイルをサーバから読み込み
-//		byte[] bytes = null;
-//		try {
-//			bytes = jobService.loadCsv(WebConfig.FILENAME_CSV);
-//			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
-//		} catch (IOException e) {
-//			log.warn("[" + principal.getName() + "]CSVファイル読み込み失敗:" + WebConfig.FILENAME_CSV);
-//			e.printStackTrace();
-//		}
-//
-//		// CSVファイルのダウンロード用ヘッダー情報設定
-//		HttpHeaders header = new HttpHeaders();
-//		header.add("Content-Type", "text/csv; charset=UTF-8");
-//		header.setContentDispositionFormData("filename", WebConfig.FILENAME_CSV);
-//
-//		// CSVファイルを端末へ送信
-//		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
-//	}
-//
-//
-//	/**
-//	 * 一件分の就活情報新規作成画面を追加する
-//	 * @param form	追加する就職活動申請情報
-//	 * @param model
-//	 * @return	就職活動申請新規作成画面
-//	 */
-//	@GetMapping("/job/jobSInsert")
-//	public String getJobInsert(@ModelAttribute JobForm form, Model model) {
-//		// ラジオボタンの準備
-//		radioactivity = initRadioActivity();
-//		model.addAttribute("radioActivitycontent", radioactivity);
-//
-//		radioattendance = initRadioAttendance();
-//		model.addAttribute("radioAttendance", radioattendance);
-//
-//		return "job/jobSInsert";
-//	}
-//
-//
-//
-//
-//	/**
-//	 * 一件分の就職活動申請を追加する
-//	 * @param form	追加する就職活動申請情報
-//	 * @param bindingResult データバインド実施結果
-//	 * @param principal ログイン情報
-//	 * @param model
-//	 * @return 就職活動申請・報告一覧画面
-//	 */
-//	@PostMapping("/job/jobSInsert")
-//	public String postJobSInsert(@ModelAttribute @Validated JobForm form,
-//			BindingResult bindingResult,
-//			Principal principal,
-//			Model model) {
-//
-//		// 入力チェックに引っかかった場合、登録画面に戻る
-//		if (bindingResult.hasErrors()) {
-//			return getJobInsert(form, model);
-//		}
-//
-//		JobHuntingData data = new JobHuntingData();
-//		data.setAction_day(form.getAction_day());
-//		data.setAction_end_day(form.getAction_day());
-//		data.setAction_place(form.getAction_place());
-//		data.setAction_id(Integer.parseInt(form.getAction_id()));
-//		data.setCompany_name(form.getCompany_name());
-//		data.setAttendance_id(Integer.parseInt(form.getAttendance_id()));
-//		data.setSchedule(form.getSchedule());
-//		data.setInformation(form.getInformation());
-//
-//		boolean result = jobService.insertOne(data);
-//
-//		if (result) {
-//			log.info("[" + principal.getName() + "]就職活動申請登録成功");
-//		} else {
-//			log.warn("[" + principal.getName() + "]就職活動申請登録失敗");
-//		}
-//
-//		return getJobList(principal, model);
-//
-//	}
-//
+	@PostMapping("/job/csv")
+	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
+
+		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
+
+	// タスク情報のCSVファイルをサーバ上に保存
+	//jobService.saveCsv();
+
+		// CSVファイルをサーバから読み込み
+		byte[] bytes = null;
+		try {
+			bytes = jobService.loadCsv(WebConfig.FILENAME_CSV);
+			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
+		} catch (IOException e) {
+			log.warn("[" + principal.getName() + "]CSVファイル読み込み失敗:" + WebConfig.FILENAME_CSV);
+			e.printStackTrace();
+		}
+		// CSVファイルのダウンロード用ヘッダー情報設定
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv; charset=UTF-8");
+		header.setContentDispositionFormData("filename", WebConfig.FILENAME_CSV);
+
+		// CSVファイルを端末へ送信
+		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
+	}
+
+
+	/**
+	 * 一件分の就活情報新規作成画面を追加する
+	 * @param form	追加する就職活動申請情報
+	 * @param model
+	 * @return	就職活動申請新規作成画面
+	 * 	 */
+	@GetMapping("/job/jobInsertS")
+	public String getJobInsert(@ModelAttribute JobForm form, Model model) {
+		// ラジオボタンの準備
+		radioactivity = initRadioActivity();
+		model.addAttribute("radioActivitycontent", radioactivity);
+
+		radioattendance = initRadioAttendance();
+		model.addAttribute("radioAttendance", radioattendance);
+
+		return "job/jobInsertS";
+	}
+
+
+
+
+	/**
+	 * 一件分の就職活動申請を追加する
+	 * @param form	追加する就職活動申請情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 就職活動申請・報告一覧画面
+	 */
+	@PostMapping("/job/jobInsertS")
+	public String postJobSInsert(@ModelAttribute @Validated JobForm form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model) {
+
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getJobInsert(form, model);
+		}
+
+		JobHuntingData data = new JobHuntingData();
+		data.setAction_day(form.getAction_day());
+		data.setAction_end_day(form.getAction_day());
+		data.setAction_place(form.getAction_place());
+		data.setAction_id(form.getAction_id());
+		data.setCompany_name(form.getCompany_name());
+		data.setAttendance_id(form.getAttendance_id());
+		data.setSchedule(form.getSchedule());
+		data.setInformation(form.getInformation());
+
+		boolean result = jobService.insertOne(data);
+
+		if (result) {
+			log.info("[" + principal.getName() + "]就職活動申請登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]就職活動申請登録失敗");
+		}
+
+		return getJobList(principal, model);
+
+	}
+
 //	/**
 //	 * 一件分の就職活動申請を状態変更する画面を表示する
 //	 * @param form	状態変更する就職活動申請情報

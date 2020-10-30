@@ -102,6 +102,7 @@ public class ExamReportRepository {
 			data.setUser_name((String) map.get("user_name"));
 
 			entity.getExamlist().add(data);
+		System.out.println(entity);
 		}
 		return entity;
 	}
@@ -117,6 +118,7 @@ public class ExamReportRepository {
 		ExamReportEntity entity = mappingSelectExamResult(resultList);
 		// 必ず1件のみのため、最初のUserDataを取り出す
 		ExamReportData data = entity.getExamlist().get(0);
+		System.out.println("セレクトワン"+data);
 		return data;
 	}
 

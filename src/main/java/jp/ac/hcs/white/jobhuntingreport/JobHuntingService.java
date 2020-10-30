@@ -1,5 +1,11 @@
 package jp.ac.hcs.white.jobhuntingreport;
 
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -64,7 +70,7 @@ public class JobHuntingService {
 	 * 情報をCSVファイルとしてサーバに保存する.
 	 * @throws DataAccessException
 	 */
-/*	public void saveCsv() throws DataAccessException {
+	public void saveCsv() throws DataAccessException {
 
 		jobRepository.saveCsv();
 	}
@@ -75,7 +81,7 @@ public class JobHuntingService {
 	 * @return ファイルのbyte配列
 	 * @throws IOException ファイル取得エラー
 	 */
-	/*public byte[] loadCsv(String fileName) throws IOException {
+	public byte[] loadCsv(String fileName) throws IOException {
 
 		FileSystem fs = FileSystems.getDefault();
 		Path p = fs.getPath(fileName);
