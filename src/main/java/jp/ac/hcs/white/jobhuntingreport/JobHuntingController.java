@@ -1,19 +1,27 @@
 package jp.ac.hcs.white.jobhuntingreport;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.ac.hcs.white.WebConfig;
+import jp.ac.hcs.white.examreport.ExamFormForUpdate;
+import jp.ac.hcs.white.examreport.ExamReportData;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,6 +34,7 @@ public class JobHuntingController {
 	/** 権限のラジオボタン用変数 */
 	private Map<String, String> radioactivity;
 	private Map<String, String> radioattendance;
+	private Map<String, String> radiostatus;
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioActivity() {
@@ -46,6 +55,15 @@ public class JobHuntingController {
 		radioattendance.put("早退", "早退");
 		radioattendance.put("遅刻", "遅刻");
 		return radioattendance;
+	}
+
+	/** 権限のラジオボタンを初期化する処理 */
+	private Map<String, String> initRadioStatus() {
+		Map<String, String> radiostatus = new LinkedHashMap<>();
+		radiostatus.put("承認済", "承認済");
+		radiostatus.put("差戻", "差戻");
+		radiostatus.put("取消", "取消");
+		return radiostatus;
 	}
 
 	/**
@@ -97,15 +115,15 @@ public class JobHuntingController {
 	 * @param model
 	 * @return 受験報告詳細画面
 	 */
-//	@GetMapping("/exam/examDetail/{examination_report_id:.+}")
-//	public String getExamDetail(@PathVariable("examination_report_id") String examination_report_id, Principal principal, Model model) {
-//
-//		JobHuntingData data = jobService.selectOne(examination_report_id);
-//
-//		model.addAttribute("jobdata", data);
-//
-//		return "job/jobDetail";
-//	}
+	@GetMapping("/exam/examDetail/{examination_report_id:.+}")
+	public String getExamDetail(@PathVariable("examination_report_id") String examination_report_id, Principal principal, Model model) {
+
+		JobHuntingData data = jobService.selectOne(examination_report_id);
+
+		model.addAttribute("jobdata", data);
+
+		return "job/jobDetail";
+	}
 
 
 	/**
@@ -114,32 +132,32 @@ public class JobHuntingController {
 	 * @param model
 	 * @return CSVファイル
 	 */
-//	@PostMapping("/job/csv")
-//	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
-//
-//		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
+	@PostMapping("/job/csv")
+	public ResponseEntity<byte[]> getCsv(Principal principal, Model model) {
+
+		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
 
 		// タスク情報のCSVファイルをサーバ上に保存
 		//jobService.saveCsv();
 
 		// CSVファイルをサーバから読み込み
-//		byte[] bytes = null;
-//		try {
-//			bytes = jobService.loadCsv(WebConfig.FILENAME_CSV);
-//			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
-//		} catch (IOException e) {
-//			log.warn("[" + principal.getName() + "]CSVファイル読み込み失敗:" + WebConfig.FILENAME_CSV);
-//			e.printStackTrace();
-//		}
+		byte[] bytes = null;
+		try {
+			bytes = jobService.loadCsv(WebConfig.FILENAME_CSV);
+			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
+		} catch (IOException e) {
+			log.warn("[" + principal.getName() + "]CSVファイル読み込み失敗:" + WebConfig.FILENAME_CSV);
+			e.printStackTrace();
+		}
 
-//		// CSVファイルのダウンロード用ヘッダー情報設定
-//		HttpHeaders header = new HttpHeaders();
-//		header.add("Content-Type", "text/csv; charset=UTF-8");
-//		header.setContentDispositionFormData("filename", WebConfig.FILENAME_CSV);
-//
-//		// CSVファイルを端末へ送信
-//		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
-//	}
+		// CSVファイルのダウンロード用ヘッダー情報設定
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv; charset=UTF-8");
+		header.setContentDispositionFormData("filename", WebConfig.FILENAME_CSV);
+
+		// CSVファイルを端末へ送信
+		return new ResponseEntity<byte[]>(bytes, header, HttpStatus.OK);
+	}
 
 
 	/**
@@ -159,6 +177,9 @@ public class JobHuntingController {
 
 		return "job/jobSInsert";
 	}
+
+
+
 
 	/**
 	 * 一件分の就職活動申請を追加する
@@ -198,6 +219,139 @@ public class JobHuntingController {
 		}
 
 		return getJobList(principal, model);
+
+	}
+
+	/**
+	 * 一件分の就職活動申請を状態変更する画面を表示する
+	 * @param form	状態変更する就職活動申請情報
+	 * @param model
+	 * @return	画面
+	 */
+	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
+	public String getStatus(@ModelAttribute JobFormForStatus form, Model model, @PathVariable("examination_report_id") String examination_report_id) {
+		// ラジオボタンの準備
+		radiostatus = initRadioStatus();
+		model.addAttribute("radiostatus", radiostatus);
+		model.addAttribute("examination_report_id", examination_report_id);
+		log.warn(examination_report_id);
+
+
+		return "job/jobApproval";
+	}
+
+	/**
+	 *	一件分の受験報告を承認変更をする
+	 * @param form 承認変更する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @param examreport_id 受験報告ID
+	 * @return 受験報告一覧画面
+	 */
+	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
+	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model,
+			@PathVariable("examination_report_id") String examination_report_id) {
+
+		log.warn(form.getJob_report_status());
+		log.warn(examination_report_id);
+
+		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
+		if (result) {
+			log.info("[" + principal.getName() + "]	承認変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]承認変更失敗");
+		}
+
+		return getJobList(principal, model);
+	}
+
+
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param model
+	 * @param principal ログイン情報
+	 * @param examreport_id 受験報告ID
+	 * @return 受験報告変更画面
+	 */
+	@GetMapping("/exam/examUpdate/{examreport_id:.+}")
+	public String getExamUpdate(@ModelAttribute ExamFormForUpdate form,
+			Model model,
+			Principal principal,
+			@PathVariable("examreport_id")  String examreport_id
+			) {
+
+		// ラジオボタンの準備
+		radioroute = initRadioRoute();
+		model.addAttribute("radioRoute", radioroute);
+
+		radiotest = initRadioTest();
+		model.addAttribute("radioTest", radiotest);
+
+		ExamReportData data = examService.selectOne(examreport_id);
+		log.warn(data.toString());
+		form.setExamreport_id(data.getExamreport_id());
+		form.setDepartment(data.getDepartment());
+		form.setCompany_name_top(data.getCompany_name_top());
+		form.setRecruitment_number(String.valueOf(data.getRecruitment_number()));
+		form.setCompany_name(data.getCompany_name());
+		form.setApplication_route(data.getApplication_route());
+		form.setExam_date_time(data.getExam_date_time());
+		form.setExamination_location(data.getExamination_location());
+		form.setContens_test(data.getContens_test());
+		form.setRemarks(data.getRemarks());
+		model.addAttribute("examFormForUpdate", form);
+		model.addAttribute("examreport_id",examreport_id);
+
+
+		return "exam/examUpdate";
+	}
+
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
+	@PostMapping("/exam/examUpdate/{examreport_id:.+}")
+	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model) {
+
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getExamUpdate(form, model,principal,form.getExamreport_id());
+		}
+
+		ExamReportData data = new ExamReportData();
+		data.setExamreport_id(form.getExamreport_id());
+		data.setDepartment(form.getDepartment());
+		data.setUser_id(principal.getName());
+		data.setCompany_name_top(form.getCompany_name_top());
+		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
+		data.setCompany_name(form.getCompany_name());
+		data.setApplication_route(form.getApplication_route());
+		data.setExam_date_time(form.getExam_date_time());
+		data.setExamination_location(form.getExamination_location());
+		data.setContens_test(form.getContens_test());
+		data.setRemarks(form.getRemarks());
+
+		boolean result = examService.updateOne(data,form.getExamreport_id());
+
+		if (result) {
+			log.info("[" + principal.getName() + "]受験報告登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]受験報告登録失敗");
+		}
+
+		return getExamList(principal, model);
 
 	}
 
