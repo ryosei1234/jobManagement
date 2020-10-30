@@ -10,6 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+
+import jp.ac.hcs.white.examreport.CsvCallbackHandler;
 @Repository
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
@@ -202,5 +204,17 @@ public class JobHuntingRepository {
 					"新規作成");
 			return rowNumber;
 		}
+	}
+
+	/**
+	 * テーブルからデータを全件取得し、CSVファイルとしてサーバに保存する
+	 * @throws DataAccessException
+	 */
+	public void saveCsv() throws DataAccessException {
+
+		// CSVファイル出力用設定
+		CsvCallbackHandler handler = new CsvCallbackHandler();
+
+		jdbc.query(SQL_SELECT_CSV, handler);
 	}
 }
