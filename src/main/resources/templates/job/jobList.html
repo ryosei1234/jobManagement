@@ -96,7 +96,7 @@
 					<th class="text-nowrap">氏名</th>
 					<th class="text-nowrap">会社名</th>
 				</tr>
-				<tr th:each="job : ${jobEntity.joblist}" th:object="${job}">
+				<tr th:each="job : ${jobHuntingEntity.joblist}" th:object="${job}">
 					<td class="text-nowrap" th:text="*{examination_status_id}"></td>
 					<td class="text-nowrap" th:text="*{action_day}"></td>
 					<td class="text-nowrap" th:text="*{user_name}"></td>

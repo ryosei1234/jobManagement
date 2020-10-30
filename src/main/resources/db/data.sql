@@ -31,12 +31,12 @@ VALUES('0000000002','suzuki@xxx.co.jp','S','エイチ','2020-07-09 12:48:35','00
 
 /* 就職活動申請・報告のデータ(休日に実施した場合) */
 INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule,contents_report)
-VALUES('0000000010','yamada@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','0','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
+VALUES('0000000010','yamada@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','1','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
 
 /* 就職活動申請・報告のデータ(欠席する場合) */
 INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule,contents_report)
-VALUES('0000000011','suzuki@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','0','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
+VALUES('0000000011','suzuki@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','2','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
 
 /* 就職活動申請・報告のデータ(遅刻する場合) */
 INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule,contents_report)
-VALUES('0000000012','hashiya@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','0','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
+VALUES('0000000012','hashiya@xxx.co.jp','2','1','北海道情報専門学校','2020-11-01 10:30','2020-11-01 12:30','株式会社HCS','3','1','2020-11-01','1',null,'8:00発9:00着ANA128便を利用する','aaaaa');
