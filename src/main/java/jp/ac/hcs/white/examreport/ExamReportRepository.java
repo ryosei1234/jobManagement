@@ -56,7 +56,7 @@ public class ExamReportRepository {
 	/**
 	 * examreportテーブルから全件取得
 	 * @param user_id
-	 * @return examreportEntity
+	 * @return  examreportEntity
 	 * @throws DataAccessException
 	 */
 	public ExamReportEntity selectAll(String user_id) throws DataAccessException {
