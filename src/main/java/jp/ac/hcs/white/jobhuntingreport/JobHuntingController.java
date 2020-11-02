@@ -167,7 +167,7 @@ public class JobHuntingController {
 	public String getJobInsert(@ModelAttribute JobForm form, Model model) {
 		// ラジオボタンの準備
 		radioaction = initRadioAction();
-		model.addAttribute("radioaction", radioaction);
+		model.addAttribute("radioAction", radioaction);
 
 		radioattendance = initRadioAttendance();
 		model.addAttribute("radioAttendance", radioattendance);
