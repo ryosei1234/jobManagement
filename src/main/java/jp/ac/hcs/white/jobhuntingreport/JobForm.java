@@ -10,7 +10,7 @@ public class JobForm {
 @NotBlank(message = "{require_check}")
 private String action_day;
 
-@NotBlank(message = "{require_check}")
+
 private String action_end_day;
 
 @NotBlank(message = "{require_check}")

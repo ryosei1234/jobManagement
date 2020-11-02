@@ -23,9 +23,9 @@ public class JobHuntingRepository {
 	/** SQL 1件取得 */
 	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
 	/** SQL 申請1件追加  */
-	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,schedule) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	/** SQL 報告1件追加 */
-	private static final String SQL_INSERT_REPORT_ONE = "INSERT INTO application_and_report((examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,schedule,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//	/** SQL 報告1件追加 */
+//	private static final String SQL_INSERT_REPORT_ONE = "INSERT INTO application_and_report((examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 就職活動申請・報告IDをカウントアップ */
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 	/** SQL 就職活動申請・報告書検索*/
@@ -154,6 +154,7 @@ public class JobHuntingRepository {
 					JobHuntingData.getLodging_day_id(),
 					JobHuntingData.getInformation(),
 					JobHuntingData.getSchedule(),
+					JobHuntingData.getContents_report(),
 					examination_report_id
 					);
 			return rowNumber;
@@ -178,9 +179,6 @@ public class JobHuntingRepository {
 			examination_report_id += "0";
 		}
 		examination_report_id += String.valueOf(1 + Integer.parseInt(((jdbc.queryForMap(SQL_APPLICATION_AND_REPORT_COUNT)).get("COUNT(*)")).toString()));
-		String status = data.getExamination_status_id();
-		int comparison = Integer.parseInt(status);
-		if(comparison <= 4) {
 			int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 					examination_report_id,
 					data.getUser_id(),
@@ -197,17 +195,9 @@ public class JobHuntingRepository {
 					data.getLodging_day_id(),
 					data.getInformation(),
 					data.getSchedule(),
-					"新規作成");
-			return rowNumber;
-		}else {
-			int rowNumber = jdbc.update(SQL_INSERT_REPORT_ONE,
-					examination_report_id,
-					data.getUser_id(),
-					data.getExamination_status_id(),
 					data.getContents_report(),
 					"新規作成");
 			return rowNumber;
-		}
 	}
 
 	/**
