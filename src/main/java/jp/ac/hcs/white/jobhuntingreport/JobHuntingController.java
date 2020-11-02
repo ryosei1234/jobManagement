@@ -204,6 +204,8 @@ public class JobHuntingController {
 		data.setAction_id(form.getAction_id());
 		data.setCompany_name(form.getCompany_name());
 		data.setAttendance_id(form.getAttendance_id());
+		data.setCompany_name(form.getAttendance_day());
+		data.setAttendance_id(form.getAttendance_end_day());
 		data.setSchedule(form.getSchedule());
 		data.setInformation(form.getInformation());
 		data.setUser_id(principal.getName());
@@ -298,6 +300,8 @@ public class JobHuntingController {
 //		form.setCompany_name(data.getAction_id());
 //		form.setApplication_route(data.getCompany_name());
 //		form.setExam_date_time(data.getAttendance_id());
+//	    form.setExam_date_time(data.getAttendance_day());
+//		form.setExam_date_time(data.getAttendance_end_day());
 //		form.setExamination_location(data.getSchedule());
 //		form.setContens_test(data.getInformation());
 //		model.addAttribute("examFormForUpdate", form);
