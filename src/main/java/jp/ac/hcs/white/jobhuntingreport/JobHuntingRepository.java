@@ -183,7 +183,7 @@ public class JobHuntingRepository {
 			int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 					examination_report_id,
 					data.getUser_id(),
-					data.getExamination_status_id(),
+					"2",
 					data.getAction_id(),
 					data.getAction_place(),
 					data.getAction_day(),
@@ -196,8 +196,8 @@ public class JobHuntingRepository {
 					data.getLodging_day_id(),
 					data.getInformation(),
 					data.getSchedule(),
-					data.getContents_report(),
-					"新規作成");
+					data.getContents_report()
+					);
 			return rowNumber;
 	}
 
