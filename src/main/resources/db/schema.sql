@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS application_and_report (
   action_status_id CHAR(1), /* 就職活動続行ID */
   attendance_id VARCHAR(10), /* 出欠ID */
   attendance_day DATETIME, /* 出欠日時 */
+  attendance_end_day DATETIME, /* 出欠終了日時 */
   lodging_day_id VARCHAR(10), /* 宿泊ID */
   information VARCHAR(300), /* 連絡事項 */
   schedule VARCHAR(300),/* スケジュール */

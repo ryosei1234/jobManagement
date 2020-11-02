@@ -119,6 +119,16 @@ public class JobHuntingData {
 		this.attendance_day = attendance_day;
 	}
 	/*
+	 * 出欠終了日時
+	 */
+	private String attendance_end_day;
+	public String getAttendance_end_day() {
+		return attendance_end_day;
+	}
+	public void setAttendance_end_day(String attendance_end_day) {
+		this.attendance_end_day = attendance_end_day;
+	}
+	/*
 	 * 宿泊ID
 	 */
 	private String lodging_day_id;

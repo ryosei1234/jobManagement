@@ -15,17 +15,17 @@ import jp.ac.hcs.white.examreport.CsvCallbackHandler;
 @Repository
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
+	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? ORDER BY examination_report_id";
 	/** SQL 教員、事務用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id ORDER BY examination_report_id";
+	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id ORDER BY examination_report_id";
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 	/** SQL 1件取得 */
-	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
+	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
 	/** SQL 申請1件追加  */
-	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,schedule) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,schedule) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 報告1件追加 */
-	private static final String SQL_INSERT_REPORT_ONE = "INSERT INTO application_and_report((examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,lodging_day_id,information,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SQL_INSERT_REPORT_ONE = "INSERT INTO application_and_report((examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 就職活動申請・報告IDをカウントアップ */
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 	/** SQL 就職活動申請・報告書検索*/
@@ -80,7 +80,9 @@ public class JobHuntingRepository {
 			data.setAction_status_id(((String) map.get("action_status_id")));
 			data.setAttendance_id(((String) map.get("attendance_id")));
 			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
+			String attendance_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_end_day"));
 			data.setAttendance_day((String)attendance_day);
+			data.setAttendance_end_day((String)attendance_end_day);
 			data.setLodging_day_id(((String) map.get("lodging_day_id")));
 			data.setInformation((String) map.get("information"));
 			data.setSchedule((String) map.get("schedule"));
@@ -148,6 +150,7 @@ public class JobHuntingRepository {
 					JobHuntingData.getAction_status_id(),
 					JobHuntingData.getAttendance_id(),
 					JobHuntingData.getAttendance_day(),
+					JobHuntingData.getAttendance_end_day(),
 					JobHuntingData.getLodging_day_id(),
 					JobHuntingData.getInformation(),
 					JobHuntingData.getSchedule(),
@@ -190,6 +193,7 @@ public class JobHuntingRepository {
 					data.getAction_status_id(),
 					data.getAttendance_id(),
 					data.getAttendance_day(),
+					data.getAttendance_end_day(),
 					data.getLodging_day_id(),
 					data.getInformation(),
 					data.getSchedule(),
