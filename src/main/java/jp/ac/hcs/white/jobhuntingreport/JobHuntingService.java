@@ -44,6 +44,7 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public boolean insertOne(JobHuntingData jobdata) throws DataAccessException {
+		System.out.println(jobdata + "さーびすうう");
 		int rowNumber = jobRepository.insertOne(jobdata);
 		boolean result = (rowNumber> 0) ? true : false;
 		return result;

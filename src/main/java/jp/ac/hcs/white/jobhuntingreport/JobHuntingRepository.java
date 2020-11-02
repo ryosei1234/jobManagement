@@ -64,6 +64,7 @@ public class JobHuntingRepository {
 	 */
 	private JobHuntingEntity mappingSelectJobResult(List<Map<String, Object>> resultList) {
 		JobHuntingEntity entity = new JobHuntingEntity();
+
 		for (Map<String, Object> map : resultList) {
 			JobHuntingData data = new JobHuntingData();
 			data.setExamination_report_id(((String) map.get("examination_report_id")));
@@ -78,6 +79,7 @@ public class JobHuntingRepository {
 			data.setCompany_name((String) map.get("company_name"));
 			System.out.println((String) map.get("action_status_id"));
 			data.setAction_status_id(((String) map.get("action_status_id")));
+			System.out.println(map.get("attendance_id"));
 			data.setAttendance_id(((String) map.get("attendance_id")));
 			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
 			String attendance_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_end_day"));
@@ -190,7 +192,7 @@ public class JobHuntingRepository {
 					data.getAction_end_day(),
 					data.getCompany_name(),
 					data.getAction_status_id(),
-					data.getAttendance_id(),
+					"1",
 					data.getAttendance_day(),
 					data.getAttendance_end_day(),
 					data.getLodging_day_id(),
@@ -198,6 +200,7 @@ public class JobHuntingRepository {
 					data.getSchedule(),
 					data.getContents_report()
 					);
+			System.out.println(rowNumber + "ああああ");
 			return rowNumber;
 	}
 
