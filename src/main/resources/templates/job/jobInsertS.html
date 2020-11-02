@@ -93,7 +93,7 @@
 
 				<label for="action_id">活動内容</label>
 				<div class="form-group input-box">
-					<div th:each="item : ${radioAcution}">
+					<div th:each="item : ${radioAction}">
 						<input type="radio" name="action_id" th:text="${item.key}"
 							th:value="${item.value}" th:field="*{action_id}">
 					</div>
