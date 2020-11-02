@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.ac.hcs.white.WebConfig;
+import jp.ac.hcs.white.examreport.ExamReportData;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -199,7 +200,7 @@ public class JobHuntingController {
 
 		JobHuntingData data = new JobHuntingData();
 		data.setAction_day(form.getAction_day());
-		data.setAction_end_day(form.getAction_day());
+		data.setAction_end_day(form.getAction_end_day());
 		data.setAction_place(form.getAction_place());
 		data.setAction_id(form.getAction_id());
 		data.setCompany_name(form.getCompany_name());
@@ -246,111 +247,109 @@ public class JobHuntingController {
 	 * @param examreport_id 受験報告ID
 	 * @return 受験報告一覧画面
 	 */
-//	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
-//	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
-//			BindingResult bindingResult,
-//			Principal principal,
-//			Model model,
-//			@PathVariable("examination_report_id") String examination_report_id) {
-//
-//		log.warn(form.getJob_report_status());
-//		log.warn(examination_report_id);
-//
-//		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
-//		if (result) {
-//			log.info("[" + principal.getName() + "]	承認変更成功");
-//		} else {
-//			log.warn("[" + principal.getName() + "]承認変更失敗");
-//		}
-//
-//		return getJobList(principal, model);
-//	}
-//
-//
-//	/**
-//	 * 一件分の受験報告を変更する
-//	 * @param form 変更する受験報告情報
-//	 * @param model
-//	 * @param principal ログイン情報
-//	 * @param examreport_id 受験報告ID
-//	 * @return 受験報告変更画面
-//	 */
-//	@GetMapping("/job/jobUpdate/{examination_report_id:.+}")
-//	public String getJobUpdate(@ModelAttribute JobFormForUpdate form,
-//			Model model,
-//			Principal principal,
-//			@PathVariable("examination_report_id")  String examination_report_id
-//			) {
-//
-//		// ラジオボタンの準備
-//				radioactivity = initRadioActivity();
-//				model.addAttribute("radioActivitycontent", radioactivity);
-//
-//				radioattendance = initRadioAttendance();
-//				model.addAttribute("radioAttendance", radioattendance);
-//
-//		ExamReportData data = examService.selectOne(examreport_id);
-//		log.warn(data.toString());
-//		form.setExamreport_id(data.getExamreport_id());
-//		form.setDepartment(data.getDepartment());
-//		form.setCompany_name_top(data.getCompany_name_top());
-//		form.setRecruitment_number(String.valueOf(data.getRecruitment_number()));
-//		form.setCompany_name(data.getCompany_name());
-//		form.setApplication_route(data.getApplication_route());
-//		form.setExam_date_time(data.getExam_date_time());
-//		form.setExamination_location(data.getExamination_location());
-//		form.setContens_test(data.getContens_test());
-//		form.setRemarks(data.getRemarks());
-//		model.addAttribute("examFormForUpdate", form);
-//		model.addAttribute("examreport_id",examreport_id);
-//
-//
-//		return "exam/examUpdate";
-//	}
-//
-//	/**
-//	 * 一件分の受験報告を変更する
-//	 * @param form 変更する受験報告情報
-//	 * @param bindingResult データバインド実施結果
-//	 * @param principal ログイン情報
-//	 * @param model
-//	 * @return 受験報告一覧画面
-//	 */
-//	@PostMapping("/exam/examUpdate/{examreport_id:.+}")
-//	public String postExamUpdate(@ModelAttribute @Validated ExamFormForUpdate form,
-//			BindingResult bindingResult,
-//			Principal principal,
-//			Model model) {
-//
-//		// 入力チェックに引っかかった場合、登録画面に戻る
-//		if (bindingResult.hasErrors()) {
-//			return getExamUpdate(form, model,principal,form.getExamreport_id());
-//		}
-//
-//		ExamReportData data = new ExamReportData();
-//		data.setExamreport_id(form.getExamreport_id());
-//		data.setDepartment(form.getDepartment());
-//		data.setUser_id(principal.getName());
-//		data.setCompany_name_top(form.getCompany_name_top());
-//		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
-//		data.setCompany_name(form.getCompany_name());
-//		data.setApplication_route(form.getApplication_route());
-//		data.setExam_date_time(form.getExam_date_time());
-//		data.setExamination_location(form.getExamination_location());
-//		data.setContens_test(form.getContens_test());
-//		data.setRemarks(form.getRemarks());
-//
-//		boolean result = examService.updateOne(data,form.getExamreport_id());
-//
-//		if (result) {
-//			log.info("[" + principal.getName() + "]受験報告登録成功");
-//		} else {
-//			log.warn("[" + principal.getName() + "]受験報告登録失敗");
-//		}
-//
-//		return getExamList(principal, model);
-//
-//	}
+	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
+	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model,
+			@PathVariable("examination_report_id") String examination_report_id) {
+
+		log.warn(form.getJob_report_status());
+		log.warn(examination_report_id);
+
+		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
+		if (result) {
+			log.info("[" + principal.getName() + "]	承認変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]承認変更失敗");
+		}
+
+		return getJobList(principal, model);
+	}
+
+
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param model
+	 * @param principal ログイン情報
+	 * @param examreport_id 受験報告ID
+	 * @return 就職活動申請変更画面
+	 */
+	@GetMapping("/job/jobUpdate/{examination_report_id:.+}")
+	public String getJobUpdate(@ModelAttribute JobFormForUpdate form,
+			Model model,
+			Principal principal,
+			@PathVariable("examination_report_id")  String examination_report_id
+			) {
+
+		// ラジオボタンの準備
+		radioaction = initRadioAction();
+		model.addAttribute("radioAction", radioaction);
+
+		radioattendance = initRadioAttendance();
+		model.addAttribute("radioAttendance", radioattendance);
+
+		JobHuntingData data = examService.selectOne(examination_report_id);
+		log.warn(data.toString());
+		form.setExamreport_id(data.getAction_day());
+		form.setDepartment(data.getAction_end_day());
+		form.setCompany_name_top(data.getAction_place());
+		form.setCompany_name(data.getAction_id());
+		form.setApplication_route(data.getCompany_name());
+		form.setExam_date_time(data.getAttendance_id());
+		form.setExamination_location(data.getSchedule());
+		form.setContens_test(data.getInformation());
+		model.addAttribute("examFormForUpdate", form);
+		model.addAttribute("examination_report_id",examination_report_id);
+
+
+		return "job/jobUpdate";
+	}
+
+	/**
+	 * 一件分の受験報告を変更する
+	 * @param form 変更する受験報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 受験報告一覧画面
+	 */
+	@PostMapping("/job/jobUpdate/{examination_report_id:.+}")
+	public String postJobUpdate(@ModelAttribute @Validated JobFormForUpdate form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model) {
+
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getJobUpdate(form, model,principal,form.getExamreport_id());
+		}
+
+		ExamReportData data = new ExamReportData();
+		data.setExamreport_id(form.getExamreport_id());
+		data.setDepartment(form.getDepartment());
+		data.setUser_id(principal.getName());
+		data.setCompany_name_top(form.getCompany_name_top());
+		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
+		data.setCompany_name(form.getCompany_name());
+		data.setApplication_route(form.getApplication_route());
+		data.setExam_date_time(form.getExam_date_time());
+		data.setExamination_location(form.getExamination_location());
+		data.setContens_test(form.getContens_test());
+		data.setRemarks(form.getRemarks());
+
+		boolean result = examService.updateOne(data,form.getExamreport_id());
+
+		if (result) {
+			log.info("[" + principal.getName() + "]受験報告登録成功");
+		} else {
+			log.warn("[" + principal.getName() + "]受験報告登録失敗");
+		}
+
+		return getExamList(principal, model);
+
+	}
 
 
 }
