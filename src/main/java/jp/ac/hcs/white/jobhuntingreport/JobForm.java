@@ -26,6 +26,12 @@ private String company_name;
 private String attendance_id;
 
 @NotBlank(message = "{require_check}")
+private String attendance_day;
+
+@NotBlank(message = "{require_check}")
+private String attendance_end_day;
+
+@NotBlank(message = "{require_check}")
 private String schedule;
 
 @NotBlank(message = "{require_check}")
