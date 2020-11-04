@@ -254,12 +254,12 @@ public class JobHuntingController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model,
-			@PathVariable("examination_report_id") String examination_report_id) {
+			@PathVariable("examination_status_id") String examination_report_id) {
 
-		log.warn(form.getJob_report_status());
+		log.warn(form.getExamination_status_id());
 		log.warn(examination_report_id);
 
-		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
+		boolean result = jobService.jobstatus(examination_report_id,form.getExamination_status_id());
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
 		} else {
