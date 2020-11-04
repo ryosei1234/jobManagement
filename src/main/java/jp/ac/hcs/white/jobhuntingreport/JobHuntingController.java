@@ -241,13 +241,13 @@ public class JobHuntingController {
 	}
 
 	/**
-	 *	一件分の受験報告を承認変更をする
-	 * @param form 承認変更する受験報告情報
+	 *	一件分の就職活動申請を承認変更をする
+	 * @param form 承認変更する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
 	 * @param examreport_id 受験報告ID
-	 * @return 受験報告一覧画面
+	 * @return 就職活動申請・報告一覧画面
 	 */
 //	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
 //	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
@@ -271,11 +271,10 @@ public class JobHuntingController {
 //
 //
 //	/**
-//	 * 一件分の受験報告を変更する
-//	 * @param form 変更する受験報告情報
+//	 * 一件分の就職活動申請内容を変更する
+//	 * @param form 変更する就職活動申請情報
 //	 * @param model
 //	 * @param principal ログイン情報
-//	 * @param examreport_id 受験報告ID
 //	 * @return 就職活動申請変更画面
 //	 */
 //	@GetMapping("/job/jobUpdate/{examination_report_id:.+}")
@@ -294,17 +293,17 @@ public class JobHuntingController {
 //
 //		JobHuntingData data = examService.selectOne(examination_report_id);
 //		log.warn(data.toString());
-//		form.setExamreport_id(data.getAction_day());
-//		form.setDepartment(data.getAction_end_day());
-//		form.setCompany_name_top(data.getAction_place());
-//		form.setCompany_name(data.getAction_id());
-//		form.setApplication_route(data.getCompany_name());
-//		form.setExam_date_time(data.getAttendance_id());
-//	    form.setExam_date_time(data.getAttendance_day());
-//		form.setExam_date_time(data.getAttendance_end_day());
-//		form.setExamination_location(data.getSchedule());
-//		form.setContens_test(data.getInformation());
-//		model.addAttribute("examFormForUpdate", form);
+//		form.setAction_day(data.getAction_day());
+//		form.setAction_end_day(data.getAction_end_day());
+//		form.setAction_place(data.getAction_place());
+//		form.setAction_id(data.getAction_id());
+//		form.setCompany_name(data.getCompany_name());
+//		form.setAttendance_id(data.getAttendance_id());
+//	    form.setAttendance_day(data.getAttendance_day());
+//		form.setAttendance_end_day(data.getAttendance_end_day());
+//		form.setSchedule(data.getSchedule());
+//		form.setInformation(data.getInformation());
+//		model.addAttribute("JobFormForUpdate", form);
 //		model.addAttribute("examination_report_id",examination_report_id);
 //
 //
@@ -312,12 +311,12 @@ public class JobHuntingController {
 //	}
 //
 //	/**
-//	 * 一件分の受験報告を変更する
-//	 * @param form 変更する受験報告情報
+//	 * 一件分の就職活動申請内容を変更する
+//	 * @param form 変更する就職活動申請情報
 //	 * @param bindingResult データバインド実施結果
 //	 * @param principal ログイン情報
 //	 * @param model
-//	 * @return 受験報告一覧画面
+//	 * @return 就職活動申請変更画面
 //	 */
 //	@PostMapping("/job/jobUpdate/{examination_report_id:.+}")
 //	public String postJobUpdate(@ModelAttribute @Validated JobFormForUpdate form,
@@ -330,20 +329,19 @@ public class JobHuntingController {
 //			return getJobUpdate(form, model,principal,form.getExamreport_id());
 //		}
 //
-//		ExamReportData data = new ExamReportData();
-//		data.setExamreport_id(form.getExamreport_id());
-//		data.setDepartment(form.getDepartment());
-//		data.setUser_id(principal.getName());
-//		data.setCompany_name_top(form.getCompany_name_top());
-//		data.setRecruitment_number(Integer.parseInt(form.getRecruitment_number()));
-//		data.setCompany_name(form.getCompany_name());
-//		data.setApplication_route(form.getApplication_route());
-//		data.setExam_date_time(form.getExam_date_time());
-//		data.setExamination_location(form.getExamination_location());
-//		data.setContens_test(form.getContens_test());
-//		data.setRemarks(form.getRemarks());
+//		JobHuntingData data = new JobHuntingData();
+//		data.setAction_day(form.getAction_day());
+//		data.setAction_end_day(form.getAction_end_day());
+//		data.setAction_place(principal.getAction_place());
+//		data.setAction_id(form.getAction_id());
+//		data.setCompany_name(Integer.parseInt(form.getCompany_name()));
+//		data.setAttendance_id(form.getAttendance_id());
+//		data.setAttendance_day(form.getAttendance_day());
+//		data.setAttendance_end_day(form.getAttendance_end_day());
+//		data.setSchedule(form.getSchedule());
+//		data.setInformation(form.getInformation());
 //
-//		boolean result = examService.updateOne(data,form.getExamreport_id());
+//		boolean result = jobService.updateOne(data,form.getExamreport_id());
 //
 //		if (result) {
 //			log.info("[" + principal.getName() + "]受験報告登録成功");
@@ -351,9 +349,8 @@ public class JobHuntingController {
 //			log.warn("[" + principal.getName() + "]受験報告登録失敗");
 //		}
 //
-//		return getExamList(principal, model);
+//		return getJobList(principal, model);
 //
 //	}
-
 
 }
