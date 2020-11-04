@@ -7,6 +7,6 @@ public class JobFormForStatus {
 
 	private String job_report_status;
 
-	private String examination_report_ids;
+	private String examination_report_id;
 
 }
