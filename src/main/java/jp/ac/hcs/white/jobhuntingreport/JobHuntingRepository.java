@@ -31,7 +31,7 @@ public class JobHuntingRepository {
 	/** SQL 就職活動申請・報告書検索*/
 	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME ="SELECT * FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ?";
 	/** SQL 就職活動申請更新*/
-	private static final String SQL_UPDATE_APPLICATION = "UPDATE application_and_report SET examination_status_id = ?,action_id = ?,action_place = ?,action_day = ?,action_end_day = ?,company_name = ?,action_status_id = ?,attendance_id = ?,attendance_day = ?,lodging_day_id = ?,information = ?,schedule = ?,contents_report = ? WHERE  examination_report_id = ?";
+	private static final String SQL_UPDATE_APPLICATION = "UPDATE application_and_report SET examination_report_id = ?,examination_status_id = ?,action_id = ?,action_place = ?,action_day = ?,action_end_day = ?,company_name = ?,action_status_id = ?,attendance_id = ?,attendance_day = ?,lodging_day_id = ?,information = ?,schedule = ?,contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動報告更新*/
 	private static final String SQL_UPDATE_AND_REPORT = "UPDATE application_and_report SET contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動状態変更 */
