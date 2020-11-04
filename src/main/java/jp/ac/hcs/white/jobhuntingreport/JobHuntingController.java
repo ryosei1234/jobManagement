@@ -254,7 +254,7 @@ public class JobHuntingController {
 			BindingResult bindingResult,
 			Principal principal,
 			Model model,
-			@PathVariable("examination_status_id") String examination_report_id) {
+			@PathVariable("examination_report_id") String examination_report_id) {
 
 		log.warn(form.getExamination_status_id());
 		log.warn(examination_report_id);
