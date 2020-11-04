@@ -98,7 +98,7 @@ public class JobHuntingService {
 	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-/*	public boolean updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
+	public boolean updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
 
 		int rowNumber = jobRepository.updateReportS(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
@@ -119,7 +119,7 @@ public class JobHuntingService {
 	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-/*	public boolean examstatus(String examination_report_id, String examination_status_id) throws DataAccessException {
+	public boolean examstatus(String examination_report_id, String examination_status_id) throws DataAccessException {
 		int rowNumber = jobRepository.statusOne(examination_report_id, examination_status_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
