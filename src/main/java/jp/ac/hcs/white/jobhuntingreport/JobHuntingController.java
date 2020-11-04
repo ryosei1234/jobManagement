@@ -204,8 +204,8 @@ public class JobHuntingController {
 		data.setAction_id(form.getAction_id());
 		data.setCompany_name(form.getCompany_name());
 		data.setAttendance_id(form.getAttendance_id());
-		data.setCompany_name(form.getAttendance_day());
-		data.setAttendance_id(form.getAttendance_end_day());
+		data.setAttendance_day(form.getAttendance_day());
+		data.setAttendance_end_day(form.getAttendance_end_day());
 		data.setSchedule(form.getSchedule());
 		data.setInformation(form.getInformation());
 		data.setUser_id(principal.getName());
