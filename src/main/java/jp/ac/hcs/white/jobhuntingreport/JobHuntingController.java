@@ -303,9 +303,9 @@ public class JobHuntingController {
 		form.setAttendance_end_day(data.getAttendance_end_day());
 		form.setSchedule(data.getSchedule());
 		form.setInformation(data.getInformation());
+		form.setContents_report(data.getContents_report());
 		model.addAttribute("JobFormForUpdate", form);
 		model.addAttribute("examination_report_id",examination_report_id);
-
 
 		return "job/jobUpdate";
 	}
@@ -340,6 +340,8 @@ public class JobHuntingController {
 		data.setAttendance_end_day(form.getAttendance_end_day());
 		data.setSchedule(form.getSchedule());
 		data.setInformation(form.getInformation());
+		data.setContents_report(form.getContents_report());
+
 
 		boolean result = jobService.updateOneS(data,form.getExamination_report_id());
 
