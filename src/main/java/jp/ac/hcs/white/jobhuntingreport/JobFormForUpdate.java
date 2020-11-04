@@ -40,4 +40,7 @@ public class JobFormForUpdate {
 	@NotBlank(message = "{require_check}")
 	private String information;
 
+	@NotBlank(message = "{require_check}")
+	private String contents_report;
+
 	}
