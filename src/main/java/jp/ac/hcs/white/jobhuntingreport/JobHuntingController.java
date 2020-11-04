@@ -249,27 +249,27 @@ public class JobHuntingController {
 	 * @param examreport_id 受験報告ID
 	 * @return 就職活動申請・報告一覧画面
 	 */
-//	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
-//	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
-//			BindingResult bindingResult,
-//			Principal principal,
-//			Model model,
-//			@PathVariable("examination_report_id") String examination_report_id) {
-//
-//		log.warn(form.getJob_report_status());
-//		log.warn(examination_report_id);
-//
-//		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
-//		if (result) {
-//			log.info("[" + principal.getName() + "]	承認変更成功");
-//		} else {
-//			log.warn("[" + principal.getName() + "]承認変更失敗");
-//		}
-//
-//		return getJobList(principal, model);
-//	}
-//
-//
+	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
+	public String postStatus(@ModelAttribute @Validated JobFormForStatus form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model,
+			@PathVariable("examination_report_id") String examination_report_id) {
+
+		log.warn(form.getJob_report_status());
+		log.warn(examination_report_id);
+
+		boolean result = jobService.jobstatus(examination_report_id,form.getJob_report_status());
+		if (result) {
+			log.info("[" + principal.getName() + "]	承認変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]承認変更失敗");
+		}
+
+		return getJobList(principal, model);
+	}
+
+
 //	/**
 //	 * 一件分の就職活動申請内容を変更する
 //	 * @param form 変更する就職活動申請情報
