@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 public class JobFormForUpdate {
 
+	@NotBlank
+	private String examination_report_id;
+
 	@NotBlank(message = "{require_check}")
 	private String action_day;
 
