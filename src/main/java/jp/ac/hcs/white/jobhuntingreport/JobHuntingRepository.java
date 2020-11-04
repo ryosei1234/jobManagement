@@ -196,9 +196,9 @@ public class JobHuntingRepository {
 	 *
 	 */
 	public int statusOne(String examination_report_id, String examination_status_id) throws DataAccessException {
-		JobHuntingData JobHuntingData = new JobHuntingData();
+
 		int rowNumber = jdbc.update(SQL_UPDATE_ID,
-				JobHuntingData.getExamination_status_id(),
+				examination_status_id,
 				examination_report_id
 				);
 			return rowNumber;

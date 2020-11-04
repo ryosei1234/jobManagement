@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS application_and_report (
   action_day DATETIME NOT NULL, /* 活動開始日時 */
   action_end_day DATETIME, /* 活動終了日時 */
   company_name VARCHAR(50) NOT NULL, /* 企業名 */
-  action_status_id CHAR(1), /* 就職活動続行ID */
+  action_status_id CHAR(10), /* 就職活動続行ID */
   attendance_id VARCHAR(100), /* 出欠ID */
   attendance_day DATETIME, /* 出欠日時 */
   attendance_end_day DATETIME, /* 出欠終了日時 */
