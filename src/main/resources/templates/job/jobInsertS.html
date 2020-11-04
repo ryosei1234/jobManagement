@@ -73,13 +73,12 @@
 						th:errors="*{exam_date_time}">action_day error</span>
 				</div>
 
+
+
 				<p>活動終了日時</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('action_end_day')} ? 'has-error'">
+				<div class="form-group input-box">
 					<input type="datetime-local" class="form-control"
-						name="exam_date_time" th:field="*{action_end_day}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('action_end_day')}"
-						th:errors="*{exam_date_time}">action_end_day error</span>
+						name="exam_date_time" th:field="*{action_end_day}">
 				</div>
 
 				<p>活動場所</p>
@@ -133,12 +132,9 @@
 				</div>
 				<p>～</p>
 				<p>出欠終了日時</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('attendance_end_day')} ? 'has-error'">
+				<div class="form-group input-box">
 					<input type="datetime-local" class="form-control"
-						name="attendance_end_day" th:field="*{attendance_end_day}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('attendance_end_day')}"
-						th:errors="*{attendance_end_day}">attendance_end_day error</span>
+						name="attendance_end_day" th:field="*{attendance_end_day}">
 				</div>
 
 
