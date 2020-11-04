@@ -147,34 +147,28 @@ public class JobHuntingRepository {
 	 * @throws DataAccessException
 	 */
 	public int updatejobhunting(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
-		String status = JobHuntingData.getExamination_status_id();
-		int comparison = Integer.parseInt(status);
-		if(comparison <= 4) {
-			int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
-					JobHuntingData.getExamination_status_id(),
-					JobHuntingData.getAction_id(),
-					JobHuntingData.getAction_place(),
-					JobHuntingData.getAction_day(),
-					JobHuntingData.getAction_end_day(),
-					JobHuntingData.getCompany_name(),
-					JobHuntingData.getAction_status_id(),
-					JobHuntingData.getAttendance_id(),
-					JobHuntingData.getAttendance_day(),
-					JobHuntingData.getAttendance_end_day(),
-					JobHuntingData.getLodging_day_id(),
-					JobHuntingData.getInformation(),
-					JobHuntingData.getSchedule(),
-					JobHuntingData.getContents_report(),
-					examination_report_id
-					);
-			return rowNumber;
-		} else{
-			int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
-					JobHuntingData.getContents_report(),
-					examination_report_id
-					);
-			return rowNumber;
+		String dt = JobHuntingData.getAction_end_day();
+		if(dt == "") {
+			JobHuntingData.setAction_end_day(null);
 		}
+		int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
+				JobHuntingData.getExamination_status_id(),
+				JobHuntingData.getAction_id(),
+				JobHuntingData.getAction_place(),
+				JobHuntingData.getAction_day(),
+				JobHuntingData.getAction_end_day(),
+				JobHuntingData.getCompany_name(),
+				JobHuntingData.getAction_status_id(),
+				JobHuntingData.getAttendance_id(),
+				JobHuntingData.getAttendance_day(),
+				JobHuntingData.getAttendance_end_day(),
+				JobHuntingData.getLodging_day_id(),
+				JobHuntingData.getInformation(),
+				JobHuntingData.getSchedule(),
+				JobHuntingData.getContents_report(),
+				examination_report_id
+				);
+			return rowNumber;
 	}
 	/**
 	 * application_and_reportテーブルのデータを1件追加する
