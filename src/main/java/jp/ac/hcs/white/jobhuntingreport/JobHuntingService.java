@@ -105,12 +105,12 @@ public class JobHuntingService {
 		return result;
 	}
 
-//	public boolean updateOneH(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
-//
-//		int rowNumber = jobRepository.updateReportH(jobdata, examination_report_id);
-//		boolean result = (rowNumber > 0) ? true : false;
-//		return result;
-//	}
+	public boolean updateOneH(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
+
+		int rowNumber = jobRepository.updateReportH(jobdata, examination_report_id);
+		boolean result = (rowNumber > 0) ? true : false;
+		return result;
+	}
 
 	/**
 	 * 就職活動を承認変更する
