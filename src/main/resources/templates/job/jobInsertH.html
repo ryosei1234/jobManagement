@@ -125,6 +125,21 @@
 						th:errors="*{attendance_id}">attendance_id error</span>
 				</div>
 
+				<p>出欠日時</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('attendance_day')} ? 'has-error'">
+					<input type="datetime-local" class="form-control"
+						name="attendance_day" th:field="*{attendance_day}" readonly> <span
+						class="text-danger" th:if="${#fields.hasErrors('attendance_day')}"
+						th:errors="*{attendance_day}">attendance_day error</span>
+				</div>
+				<p>～</p>
+				<p>出欠終了日時</p>
+				<div class="form-group input-box">
+					<input type="datetime-local" class="form-control"
+						name="attendance_end_day" th:field="*{attendance_end_day}" readonly>
+				</div>
+
 				<p>スケジュール</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('schedule')} ? 'has-error'">

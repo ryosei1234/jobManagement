@@ -124,6 +124,9 @@
 
 			<p class="form-group input-box" th:text="*{attendance_day}"></p>
 			<input type="hidden" name="attendance_day" th:value="*{attendance_day}">
+			<p>～</p>
+			<p class="form-group input-box" th:text="*{attendance_end_day}"></p>
+			<input type="hidden" name="attendance_end_day" th:value="*{attendance_end_day}">
 
 			<label for="schedule">スケジュール</label>
 			<p class="form-group input-box" th:text="*{schedule}"></p>
@@ -147,10 +150,10 @@
 				th:href="@{'/job/jobInsertH/' + *{examination_report_id}}">報告作成</a></td>
 
 			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/job/jobUpdate/' + *{examination_report_id}}">コース確認</a></td>
+				th:href="@{'/job/jobList/' + *{examination_report_id}}">コース確認</a></td>
 
 			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/job/jobUpdate/' + *{examination_report_id}}">取消</a></td>
+				th:href="@{'/job/jobList/' + *{examination_report_id}}">取消</a></td>
 
 		</div>
 
