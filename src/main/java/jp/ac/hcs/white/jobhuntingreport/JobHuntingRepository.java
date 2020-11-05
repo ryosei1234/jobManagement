@@ -213,8 +213,12 @@ public class JobHuntingRepository {
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		JobHuntingData data = entity.getJoblist().get(0);
 		String search = "報告承認待";
+		System.out.println(data.getExamination_status_id() + "すてーたす");
+		System.out.println(examination_status_id);
 		if(data.getExamination_status_id() == search) {
+			if(examination_status_id == "承認済") {
 			examination_status_id = "報告完了";
+			}
 			System.out.println(examination_status_id + "aaa");
 		}
 		int rowNumber = jdbc.update(SQL_UPDATE_ID,
