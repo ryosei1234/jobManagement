@@ -28,6 +28,8 @@ public class JobHuntingRepository {
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 	/** SQL 就職活動申請・報告書検索*/
 	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME ="SELECT * FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ?";
+	/** SQL 報告承認待状態検索 */
+	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID ="SELECT examination_status_id FROM application_and_report WHERE examination_status_id LIKE ?";
 	/** SQL 就職活動申請更新*/
 	private static final String SQL_UPDATE_APPLICATION = "UPDATE application_and_report SET examination_status_id = ?,action_id = ?,action_place = ?,action_day = ?,action_end_day = ?,company_name = ?,action_status_id = ?,attendance_id = ?,attendance_day = ?,attendance_end_day = ?,lodging_day_id = ?,information = ?,schedule = ?,contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動報告更新*/
@@ -81,10 +83,11 @@ public class JobHuntingRepository {
 				sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				data.setAction_end_day(sdf.format((Date)map.get("action_end_day")));
 			}else {
-				data.setAction_end_day(null);;
+				data.setAction_end_day(null);
 			}
 			data.setAction_day((String)action_day);
 			data.setAction_end_day((String)action_end_day);
+			System.out.println();
 			data.setCompany_name((String) map.get("company_name"));
 			System.out.println((String) map.get("action_status_id"));
 			data.setAction_status_id(((String) map.get("action_status_id")));
@@ -197,15 +200,25 @@ public class JobHuntingRepository {
 	}
 
 	/**
+	 * 就職活動申請・報告状態のIDを取得する
+	 */
+
+
+	/**
 	 * application_and_reportテーブルの状態変更をする
 	 *
 	 */
-	public int statusOne(String examination_report_id, String examination_status_id) throws DataAccessException {
-
+	public int statusOne(JobHuntingData data,String examination_report_id, String examination_status_id) throws DataAccessException {
+		String search = "報告承認待";
+		if(data.getExamination_status_id() == search) {
+			examination_status_id = "報告完了";
+			System.out.println(examination_status_id + "aaa");
+		}
 		int rowNumber = jdbc.update(SQL_UPDATE_ID,
 				examination_status_id,
 				examination_report_id
 				);
+		System.out.println(examination_status_id + "iiii");
 			return rowNumber;
 	}
 
