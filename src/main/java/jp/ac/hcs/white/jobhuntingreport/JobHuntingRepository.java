@@ -68,6 +68,7 @@ public class JobHuntingRepository {
 		JobHuntingEntity entity = new JobHuntingEntity();
 
 		for (Map<String, Object> map : resultList) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			JobHuntingData data = new JobHuntingData();
 			data.setExamination_report_id(((String) map.get("examination_report_id")));
 			data.setUser_id((String) map.get("user_id"));
@@ -75,11 +76,7 @@ public class JobHuntingRepository {
 			data.setAction_id(((String) map.get("action_id")));
 			data.setAction_place((String) map.get("action_place"));
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
-			String action_end_day = new String();
-			if(data.getAction_end_day() != null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				action_end_day = sdf.format((Date) map.get("action_end_day"));
-			}
+			String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
 			data.setAction_day((String)action_day);
 			data.setAction_end_day((String)action_end_day);
 			data.setCompany_name((String) map.get("company_name"));
@@ -88,11 +85,7 @@ public class JobHuntingRepository {
 			System.out.println(map.get("attendance_id"));
 			data.setAttendance_id(((String) map.get("attendance_id")));
 			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
-			String attendance_end_day = new String();
-			if(data.getAction_end_day() != null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				action_end_day = sdf.format((Date) map.get("attendance_end_day"));
-			}
+			String attendance_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_end_day"));
 			data.setAttendance_day((String)attendance_day);
 			data.setAttendance_end_day((String)attendance_end_day);
 			data.setLodging_day_id(((String) map.get("lodging_day_id")));
@@ -150,8 +143,11 @@ public class JobHuntingRepository {
 	 */
 	public int updateOneS(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
 		String dt = JobHuntingData.getAction_end_day();
+		System.out.println(dt + "出力確認");
 		if(dt == "") {
 			JobHuntingData.setAction_end_day(null);
+			dt = JobHuntingData.getAction_end_day();
+			System.out.println(dt + "出力確認");
 		}
 		System.out.println(examination_report_id + "うｐ");
 		System.out.println(JobHuntingData + "うんち！ｗ");
@@ -184,6 +180,7 @@ public class JobHuntingRepository {
 	 */
 	public int updateOneH(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
 		String dt = JobHuntingData.getAction_end_day();
+		System.out.println(dt + "出力確認");
 		if(dt == "") {
 			JobHuntingData.setAction_end_day(null);
 		}
@@ -232,13 +229,13 @@ public class JobHuntingRepository {
 			int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 						examination_report_id,
 						data.getUser_id(),
-						"2",
+						"申請承認待",
 						data.getAction_id(),
 						data.getAction_place(),
 						data.getAction_day(),
 						data.getAction_end_day(),
 						data.getCompany_name(),
-						"1",
+						"進める",
 						data.getAttendance_id(),
 						data.getAttendance_day(),
 						data.getAttendance_end_day(),

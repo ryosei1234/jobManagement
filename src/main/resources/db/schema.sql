@@ -46,16 +46,16 @@ CREATE TABLE IF NOT EXISTS application_and_report (
   examination_report_id VARCHAR(10) PRIMARY KEY, /*就職活動申請・報告ID*/
   user_id VARCHAR(254) NOT NULL,/* ユーザID */
   examination_status_id CHAR(100) NOT NULL, /* 就職活動申請・報告状態ID */
-  action_id CHAR(10) NOT NULL, /* 活動内容ID */
+  action_id CHAR(50) NOT NULL, /* 活動内容ID */
   action_place VARCHAR(50) NOT NULL, /* 活動場所 */
   action_day DATETIME NOT NULL, /* 活動開始日時 */
   action_end_day DATETIME, /* 活動終了日時 */
   company_name VARCHAR(50) NOT NULL, /* 企業名 */
-  action_status_id CHAR(10), /* 就職活動続行ID */
+  action_status_id CHAR(50), /* 就職活動続行ID */
   attendance_id VARCHAR(100), /* 出欠ID */
   attendance_day DATETIME, /* 出欠日時 */
   attendance_end_day DATETIME, /* 出欠終了日時 */
-  lodging_day_id VARCHAR(10), /* 宿泊ID */
+  lodging_day_id VARCHAR(50), /* 宿泊ID */
   information VARCHAR(300), /* 連絡事項 */
   schedule VARCHAR(300),/* スケジュール */
   contents_report VARCHAR(300)/* 報告内容 */
