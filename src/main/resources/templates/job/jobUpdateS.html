@@ -72,7 +72,7 @@
 					<input type="datetime-local" class="form-control"
 						name="action_day" th:field="*{action_day}"> <span
 						class="text-danger" th:if="${#fields.hasErrors('action_day')}"
-						th:errors="*{job_date_time}">action_day error</span>
+						th:errors="*{action_day}">action_day error</span>
 				</div>
 
 				<p>活動終了日時</p>
@@ -81,7 +81,7 @@
 					<input type="datetime-local" class="form-control"
 						name="exam_date_time" th:field="*{action_end_day}"> <span
 						class="text-danger" th:if="${#fields.hasErrors('action_end_day')}"
-						th:errors="*{job_date_time}">action_end_day error</span>
+						th:errors="*{action_end_day}">action_end_day error</span>
 				</div>
 
 				<p>活動場所</p>
@@ -156,15 +156,6 @@
 						placeholder="xxxxxxx" th:field="*{information}"> <span
 						class="text-danger" th:if="${#fields.hasErrors('information')}"
 						th:errors="*{information}">information error</span>
-
-				<p>報告内容</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('contents_report')} ? 'has-error'">
-					<input type="text" class="form-control" name="contents_report"
-						placeholder="xxxxxxx" th:field="*{contents_report}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
-						th:errors="*{contents_report}">contents_report error</span>
-				</div>
 
 				<span class="input-group-btn"> <input type="submit"
 					id="action" class="btn btn-warning" value="更新">

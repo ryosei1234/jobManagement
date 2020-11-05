@@ -65,97 +65,49 @@
 				th:action="@{'/job/jobUpdate/' + *{examination_report_id}}"
 				th:object="${jobForm}">
 
-				<p>活動日時</p>
-				<p>活動開始日時</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('action_day')} ? 'has-error'">
-					<input type="datetime-local" class="form-control"
-						name="action_day" th:field="*{action_day}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('action_day')}"
-						th:errors="*{exam_date_time}">action_day  error</span>
-				</div>
+				<label for="action_day">活動日時</label>
+			<p class="form-group input-box" th:text="*{action_day}"></p>
+			<input type="hidden" name="action_day" th:value="*{action_day}">
 
-				<p>活動終了日時</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('action_end_day')} ? 'has-error'">
-					<input type="datetime-local" class="form-control"
-						name="exam_date_time" th:field="*{action_end_day}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('action_end_day')}"
-						th:errors="*{exam_date_time}">action_end_day error</span>
-				</div>
+			<p class="form-group input-box" th:text="*{action_end_day}"></p>
+			<input type="hidden" name="action_end_day" th:value="*{action_end_day}">
 
-				<p>活動場所</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('action_place')} ? 'has-error'">
-					<input type="text" class="form-control" name="action_place"
-						placeholder="x" th:field="*{action_place}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('action_place')}"
-						th:errors="*{action_place}">action_place error</span>
-				</div>
+			<label for="action_place">活動場所</label>
+			<p class="form-group input-box" th:text="*{action_place}"></p>
+			<input type="hidden" name="action_place"
+				th:value="*{action_place}">
 
-				<label for="action_id">活動内容</label>
-				<div class="form-group input-box">
-					<div th:each="item : ${radioAcutivity}">
-						<input type="radio" name="action_id" th:text="${item.key}"
-							th:value="${item.value}" th:field="*{action_id}" readonly>
-					</div>
-					<span class="text-danger"
-						th:if="${#fields.hasErrors('action_id')}"
-						th:errors="*{action_id}">action_id error</span>
-				</div>
+			<label for="action_id">活動内容</label>
+			<p class="form-group input-box" th:text="*{action_id}"></p>
+			<input type="hidden" name="action_id" th:value="*{action_id}">
 
-				<p>会社名</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('company_name')} ? 'has-error'">
-					<input type="text" class="form-control" name="company_name"
-						placeholder="xxx" th:field="*{company_name}" readonly> <span
-						class="text-danger"
-						th:if="${#fields.hasErrors('company_name')}"
-						th:errors="*{company_name}">company_name error</span>
-				</div>
+			<label for="company_name">企業名</label>
+			<p class="form-group input-box" th:text="*{company_name}"></p>
+			<input type="hidden" name="company_name" th:value="*{company_name}">
 
-				<label for="attendance_id">出欠予定</label>
-				<div class="form-group input-box">
-					<div th:each="item : ${radioAttendance}">
-						<input type="radio" name="attendance_id" th:text="${item.key}"
-							th:value="${item.value}" th:field="*{attendance_id}" readonly>
-					</div>
-					<span class="text-danger"
-						th:if="${#fields.hasErrors('attendance_id')}"
-						th:errors="*{attendance_id}">attendance_id error</span>
-				</div>
+			<label for="action_status_id">就職活動続行情報</label>
+			<p class="form-group input-box" th:text="*{action_status_id}"></p>
+			<input type="hidden" name="action_status_id"
+				th:value="*{action_status_id}">
 
-				<p>出欠日時</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('attendance_day')} ? 'has-error'">
-					<input type="datetime-local" class="form-control"
-						name="attendance_day" th:field="*{attendance_day}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('attendance_day')}"
-						th:errors="*{attendance_day}">attendance_day error</span>
-				</div>
-				<p>～</p>
-				<p>出欠終了日時</p>
-				<div class="form-group input-box">
-					<input type="datetime-local" class="form-control"
-						name="attendance_end_day" th:field="*{attendance_end_day}" readonly>
-				</div>
+			<label for="attendance_id">出欠予定</label>
+			<p class="form-group input-box" th:text="*{attendance_id}"></p>
+			<input type="hidden" name="attendance_id"
+				th:value="*{attendance_id}">
 
-				<p>スケジュール</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('schedule')} ? 'has-error'">
-					<input type="text" class="form-control" name="schedule"
-						placeholder="xxxxxxx" th:field="*{schedule}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('schedule')}"
-						th:errors="*{schedule}">schedule error</span>
-				</div>
+			<p class="form-group input-box" th:text="*{attendance_day}"></p>
+			<input type="hidden" name="attendance_day" th:value="*{attendance_day}">
+			<p>～</p>
+			<p class="form-group input-box" th:text="*{attendance_end_day}"></p>
+			<input type="hidden" name="attendance_end_day" th:value="*{attendance_end_day}">
 
-				<p>連絡事項</p>
-				<div class="form-group input-box"
-					th:classappend="${#fields.hasErrors('information')} ? 'has-error'">
-					<input type="text" class="form-control" name="information"
-						placeholder="xxxxxxx" th:field="*{information}" readonly> <span
-						class="text-danger" th:if="${#fields.hasErrors('information')}"
-						th:errors="*{information}">information error</span>
+			<label for="schedule">スケジュール</label>
+			<p class="form-group input-box" th:text="*{schedule}"></p>
+			<input type="hidden" name="schedule" th:value="*{schedule}">
+
+			<label for="information">連絡事項</label>
+			<p class="form-group input-box" th:text="*{information}"></p>
+			<input type="hidden" name="information" th:value="*{information}">
 
 				<p>報告内容</p>
 				<div class="form-group input-box"
