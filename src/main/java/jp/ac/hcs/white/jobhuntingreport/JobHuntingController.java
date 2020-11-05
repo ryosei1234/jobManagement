@@ -33,6 +33,7 @@ public class JobHuntingController {
 	private Map<String, String> radioaction;
 	private Map<String, String> radioattendance;
 	private Map<String, String> radiostatus;
+	private Map<String, String> radioactionstatus;
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioAction() {
@@ -62,6 +63,13 @@ public class JobHuntingController {
 		radiostatus.put("差戻", "差戻");
 		radiostatus.put("取消", "取消");
 		return radiostatus;
+	}
+
+	/** 権限のラジオボタンを初期化する処理 */
+	private Map<String, String> initRadioActionStatus() {
+		Map<String, String> radioactionstatus = new LinkedHashMap<>();
+		radiostatus.put("続行", "続行");
+		return radioactionstatus;
 	}
 
 	/**
@@ -356,13 +364,19 @@ public class JobHuntingController {
 	}
 
 	/**
-	 * 一件分の就活活動報告新規作成画面を追加する
-	 * @param form	追加する就職活動報告情報
+	 * 一件分の就職活動報告内容を登録する
+	 * @param form 登録する就職活動報告情報
 	 * @param model
-	 * @return	就職活動報告新規作成画面
-	 * 	 */
-	@GetMapping("/job/jobInsertH")
-	public String getJobInsertH(@ModelAttribute JobForm form, Model model) {
+	 * @param principal ログイン情報
+	 * @return 就職活動申請・一覧画面
+	 */
+	@GetMapping("/job/jobInsertH/{examination_report_id:.+}")
+	public String getJobInsertH(@ModelAttribute JobForm form,
+			Model model,
+			Principal principal,
+			@PathVariable("examination_report_id")  String examination_report_id
+			) {
+
 		// ラジオボタンの準備
 		radioaction = initRadioAction();
 		model.addAttribute("radioAction", radioaction);
@@ -370,18 +384,37 @@ public class JobHuntingController {
 		radioattendance = initRadioAttendance();
 		model.addAttribute("radioAttendance", radioattendance);
 
+		radioactionstatus = initRadioActionStatus();
+		model.addAttribute("radioActionStatus", radioactionstatus);
+
+		JobHuntingData data = jobService.selectOne(examination_report_id);
+		log.warn(data.toString());
+		form.setAction_day(data.getAction_day());
+		form.setAction_end_day(data.getAction_end_day());
+		form.setAction_place(data.getAction_place());
+		form.setAction_id(data.getAction_id());
+		form.setCompany_name(data.getCompany_name());
+		form.setAttendance_id(data.getAttendance_id());
+	    form.setAttendance_day(data.getAttendance_day());
+		form.setAttendance_end_day(data.getAttendance_end_day());
+		form.setSchedule(data.getSchedule());
+		form.setInformation(data.getInformation());
+		form.setContents_report(data.getContents_report());
+		model.addAttribute("JobFormForUpdate", form);
+		model.addAttribute("examination_report_id",examination_report_id);
+
 		return "job/jobInsertH";
 	}
 
 	/**
-	 * 一件分の就職活動報告を追加する
-	 * @param form	追加する就職活動報告情報
+	 * 一件分の就職活動報告内容を変更する
+	 * @param form 変更する就職活動報告情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 就職活動申請・報告一覧画面
+	 * @return 就職活動報告変更画面
 	 */
-	@PostMapping("/job/jobInsertH")
+	@PostMapping("/job/jobInsertH/{examination_report_id:.+}")
 	public String postJobInsertH(@ModelAttribute @Validated JobForm form,
 			BindingResult bindingResult,
 			Principal principal,
@@ -389,7 +422,7 @@ public class JobHuntingController {
 
 		// 入力チェックに引っかかった場合、登録画面に戻る
 		if (bindingResult.hasErrors()) {
-			return getJobInsert(form, model);
+			return getJobInsertH(form, model,principal,form.getExamination_report_id());
 		}
 
 		JobHuntingData data = new JobHuntingData();
@@ -403,14 +436,16 @@ public class JobHuntingController {
 		data.setAttendance_end_day(form.getAttendance_end_day());
 		data.setSchedule(form.getSchedule());
 		data.setInformation(form.getInformation());
-		data.setUser_id(principal.getName());
+		data.setContents_report(form.getContents_report());
+		data.setAction_status_id(form.getAction_status_id());
 
-		boolean result = jobService.insertOne(data);
+
+		boolean result = jobService.updateOneS(data,form.getExamination_report_id());
 
 		if (result) {
-			log.info("[" + principal.getName() + "]就職活動申請登録成功");
+			log.info("[" + principal.getName() + "]就職活動報告登録成功");
 		} else {
-			log.warn("[" + principal.getName() + "]就職活動申請登録失敗");
+			log.warn("[" + principal.getName() + "]就職活動報告登録失敗");
 		}
 
 		return getJobList(principal, model);

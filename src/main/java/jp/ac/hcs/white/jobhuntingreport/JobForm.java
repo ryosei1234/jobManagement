@@ -9,6 +9,9 @@ import lombok.Data;
 public class JobForm {
 
 @NotNull(message = "{require_check}")
+private String examination_report_id;
+
+@NotNull(message = "{require_check}")
 private String action_day;
 
 private String action_end_day;
@@ -36,5 +39,11 @@ private String schedule;
 
 @NotBlank(message = "{require_check}")
 private String information;
+
+@NotNull(message = "{require_check}")
+private String action_status_id;
+
+@NotNull(message = "{require_check}")
+private String contents_report;
 
 }

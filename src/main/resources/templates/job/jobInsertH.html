@@ -63,7 +63,7 @@
 			<hr>
 			<form method="post"
 				th:action="@{'/job/jobUpdate/' + *{examination_report_id}}"
-				th:object="${jobFormForUpdate}">
+				th:object="${jobForm}">
 
 				<p>活動日時</p>
 				<p>活動開始日時</p>
@@ -169,7 +169,7 @@
 				<p>就職活動続行</p>
 				<div class="form-group input-box">
 					<div th:each="item : ${radioActionStatus}">
-						<input type="radio" name="attendance_id" th:text="${item.key}"
+						<input type="radio" name="action_status_id" th:text="${item.key}"
 							th:value="${item.value}" th:field="*{action_status_id}" readonly>
 					</div>
 					<span class="text-danger"
