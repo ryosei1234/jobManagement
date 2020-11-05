@@ -24,8 +24,6 @@ public class JobHuntingRepository {
 	private static final String SQL_SELECT_APPLICATION_ONE = "SELECT app.examination_report_id,user.user_id,user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app,m_user user WHERE app.user_id = user.user_id AND examination_report_id = ?";
 	/** SQL 申請1件追加  */
 	private static final String SQL_INSERT_APPLICATION_ONE = "INSERT INTO application_and_report(examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,schedule,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//	/** SQL 報告1件追加 */
-//	private static final String SQL_INSERT_REPORT_ONE = "INSERT INTO application_and_report((examination_report_id,user_id,examination_status_id,action_id,action_place,action_day,action_end_day,company_name,action_status_id,attendance_id,attendance_day,attendance_end_day,lodging_day_id,information,contents_report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	/** SQL 就職活動申請・報告IDをカウントアップ */
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 	/** SQL 就職活動申請・報告書検索*/
@@ -42,6 +40,7 @@ public class JobHuntingRepository {
 	private JdbcTemplate jdbc;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
 	/**
 	 * application_and_reportテーブルから全件取得
 	 * @param user_id
@@ -59,6 +58,7 @@ public class JobHuntingRepository {
 		JobHuntingEntity jobhuntingEntity = mappingSelectJobResult(resultList);
 		return jobhuntingEntity;
 	}
+
 	/**
 	 * examreportテーブルから取得したデータをJobReportEntity形式にマッピングする.
 	 * @param resultList
@@ -76,7 +76,13 @@ public class JobHuntingRepository {
 			data.setAction_id(((String) map.get("action_id")));
 			data.setAction_place((String) map.get("action_place"));
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
-			String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
+			String action_end_day = new String();
+			if(data.getAction_end_day() != null) {
+				sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				data.setAction_end_day(sdf.format((Date)map.get("action_end_day")));
+			}else {
+				data.setAction_end_day(null);;
+			}
 			data.setAction_day((String)action_day);
 			data.setAction_end_day((String)action_end_day);
 			data.setCompany_name((String) map.get("company_name"));
@@ -100,6 +106,7 @@ public class JobHuntingRepository {
 		}
 		return entity;
 	}
+
 	/**
 	 * application_and_reportテーブルから就職活動申請・報告IDをキーにデータを一件取得
 	 * @param  examination_report_id 検索する就職活動申請・報告ID
@@ -133,6 +140,7 @@ public class JobHuntingRepository {
 		JobHuntingEntity jobEntity = mappingSelectJobResult(resultList);
 		return jobEntity;
 	}
+
 	/**
 	 *  application_and_reportテーブルのデータを申請を1件更新する
 	 * @param JobHuntingData 更新する就職活動申請・報告ID
@@ -170,6 +178,7 @@ public class JobHuntingRepository {
 				);
 			return rowNumber;
 	}
+
 	/**
 	 *  application_and_reportテーブルのデータを報告を1件更新する
 	 * @param JobHuntingData 更新する就職活動申請・報告ID
@@ -179,11 +188,6 @@ public class JobHuntingRepository {
 	 * @throws DataAccessException
 	 */
 	public int updateOneH(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
-		String dt = JobHuntingData.getAction_end_day();
-		System.out.println(dt + "出力確認");
-		if(dt == "") {
-			JobHuntingData.setAction_end_day(null);
-		}
 		int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
 				"報告承認待",
 				JobHuntingData.getContents_report(),
@@ -191,6 +195,7 @@ public class JobHuntingRepository {
 				);
 			return rowNumber;
 	}
+
 	/**
 	 * application_and_reportテーブルの状態変更をする
 	 *
@@ -205,7 +210,7 @@ public class JobHuntingRepository {
 	}
 
 	/**
-	 * application_and_reportテーブルのデータを1件追加する
+	 * application_and_reportテーブルの申請データを1件追加する
 	 * @param data
 	 * @return eowNumber
 	 * @throws DataAccessException
