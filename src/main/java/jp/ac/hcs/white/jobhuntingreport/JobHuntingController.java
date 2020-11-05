@@ -68,7 +68,7 @@ public class JobHuntingController {
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioActionStatus() {
 		Map<String, String> radioactionstatus = new LinkedHashMap<>();
-		radiostatus.put("続行", "続行");
+		radioactionstatus.put("続行", "続行");
 		return radioactionstatus;
 	}
 
@@ -400,7 +400,7 @@ public class JobHuntingController {
 		form.setSchedule(data.getSchedule());
 		form.setInformation(data.getInformation());
 		form.setContents_report(data.getContents_report());
-		model.addAttribute("JobFormForUpdate", form);
+		model.addAttribute("JobForm", form);
 		model.addAttribute("examination_report_id",examination_report_id);
 
 		return "job/jobInsertH";
@@ -440,7 +440,7 @@ public class JobHuntingController {
 		data.setAction_status_id(form.getAction_status_id());
 
 
-		boolean result = jobService.updateOneS(data,form.getExamination_report_id());
+		boolean result = jobService.updateOneH(data,form.getExamination_report_id());
 
 		if (result) {
 			log.info("[" + principal.getName() + "]就職活動報告登録成功");
