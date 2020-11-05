@@ -440,6 +440,7 @@ public class JobHuntingController {
 		data.setAction_status_id(form.getAction_status_id());
 
 
+
 		boolean result = jobService.updateOneH(data,form.getExamination_report_id());
 
 		if (result) {
