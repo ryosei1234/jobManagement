@@ -107,7 +107,7 @@ public class JobHuntingService {
 
 	public boolean updateOneH(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
 
-		int rowNumber = jobRepository.updateReportH(jobdata, examination_report_id);
+		int rowNumber = jobRepository.updateOneH(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
 	}

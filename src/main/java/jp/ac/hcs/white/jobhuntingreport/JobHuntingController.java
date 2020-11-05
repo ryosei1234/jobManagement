@@ -407,7 +407,7 @@ public class JobHuntingController {
 	}
 
 	/**
-	 * 一件分の就職活動報告内容を変更する
+	 * 一件分の就職活動報告内容を登録する
 	 * @param form 変更する就職活動報告情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
@@ -447,6 +447,22 @@ public class JobHuntingController {
 			log.info("[" + principal.getName() + "]就職活動報告登録成功");
 		} else {
 			log.warn("[" + principal.getName() + "]就職活動報告登録失敗");
+		}
+
+		return getJobList(principal, model);
+
+	}
+
+	@GetMapping("/job/jobsyonin/{examination_report_id:.+}")
+	public String getJobList(Model model,Principal principal,
+			@PathVariable("examination_report_id")  String examination_report_id
+			) {
+		System.out.println(examination_report_id);
+		boolean result = jobService.jobstatus(examination_report_id,"申請完了");
+		if (result) {
+			log.info("[" + principal.getName() + "]	承認変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]承認変更失敗");
 		}
 
 		return getJobList(principal, model);

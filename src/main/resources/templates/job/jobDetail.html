@@ -149,8 +149,8 @@
 			<td class="text-nowrap"><a class="btn btn-success"
 				th:href="@{'/job/jobInsertH/' + *{examination_report_id}}">報告作成</a></td>
 
-			<td class="text-nowrap"><a class="btn btn-success" type="submit" value="申請完了"
-				th:href="@{'/job/jobList/' + *{examination_report_id}}">コース確認</a></td>
+			<td class="text-nowrap"><a class="btn btn-success" type="submit" name ="status_id" value="申請完了"
+				th:href="@{'/job/jobsyonin/' + *{examination_report_id}}">コース確認</a></td>
 
 			<td class="text-nowrap"><a class="btn btn-success"
 				th:href="@{'/job/jobList/' + *{examination_report_id}}">取消</a></td>

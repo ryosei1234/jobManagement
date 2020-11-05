@@ -62,7 +62,7 @@
 			<h2>就職活動報告新規登録作成</h2>
 			<hr>
 			<form method="post"
-				th:action="@{'/job/jobUpdate/' + *{examination_report_id}}"
+				th:action="@{'/job/jobInsertH/' + *{examination_report_id}}"
 				th:object="${jobForm}">
 
 				<label for="action_day">活動日時</label>
