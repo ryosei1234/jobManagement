@@ -469,4 +469,69 @@ public class JobHuntingController {
 
 	}
 
+	/**
+	 * 一件分の就活情報報告変更画面を変更する
+	 * @param form	追加する就職活動報告情報
+	 * @param model
+	 * @return	就職活動申請・報告一覧画面
+	 * 	 */
+	@GetMapping("/job/jobUpdateH")
+	public String getJobUpdate(@ModelAttribute JobForm form, Model model) {
+		// ラジオボタンの準備
+		radioaction = initRadioAction();
+		model.addAttribute("radioAction", radioaction);
+
+		radioattendance = initRadioAttendance();
+		model.addAttribute("radioAttendance", radioattendance);
+
+		return "job/jobUpdateH";
+	}
+
+
+
+
+	/**
+	 * 一件分の就職活動報告を変更する
+	 * @param form	追加する就職活動報告情報
+	 * @param bindingResult データバインド実施結果
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 就職活動申請・報告一覧画面
+	 */
+	@PostMapping("/job/jobUpdateH")
+	public String postJobUpdateH(@ModelAttribute @Validated JobForm form,
+			BindingResult bindingResult,
+			Principal principal,
+			Model model) {
+
+		// 入力チェックに引っかかった場合、登録画面に戻る
+		if (bindingResult.hasErrors()) {
+			return getJobInsert(form, model);
+		}
+
+		JobHuntingData data = new JobHuntingData();
+		data.setAction_day(form.getAction_day());
+		data.setAction_end_day(form.getAction_end_day());
+		data.setAction_place(form.getAction_place());
+		data.setAction_id(form.getAction_id());
+		data.setCompany_name(form.getCompany_name());
+		data.setAttendance_id(form.getAttendance_id());
+		data.setAttendance_day(form.getAttendance_day());
+		data.setAttendance_end_day(form.getAttendance_end_day());
+		data.setSchedule(form.getSchedule());
+		data.setInformation(form.getInformation());
+		data.setUser_id(principal.getName());
+
+		boolean result = jobService.insertOne(data);
+
+		if (result) {
+			log.info("[" + principal.getName() + "]就職活動報告変更成功");
+		} else {
+			log.warn("[" + principal.getName() + "]就職活動報告変更失敗");
+		}
+
+		return getJobList(principal, model);
+
+	}
+
 }
