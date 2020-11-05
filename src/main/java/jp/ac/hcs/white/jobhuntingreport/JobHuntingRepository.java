@@ -33,7 +33,7 @@ public class JobHuntingRepository {
 	/** SQL 就職活動申請更新*/
 	private static final String SQL_UPDATE_APPLICATION = "UPDATE application_and_report SET examination_status_id = ?,action_id = ?,action_place = ?,action_day = ?,action_end_day = ?,company_name = ?,action_status_id = ?,attendance_id = ?,attendance_day = ?,attendance_end_day = ?,lodging_day_id = ?,information = ?,schedule = ?,contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動報告更新*/
-	private static final String SQL_UPDATE_AND_REPORT = "UPDATE application_and_report SET contents_report = ? WHERE  examination_report_id = ?";
+	private static final String SQL_UPDATE_AND_REPORT = "UPDATE application_and_report SET examination_status_id = ?,contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動状態変更 */
 	private static final String SQL_UPDATE_ID = "UPDATE application_and_report SET examination_status_id = ? WHERE  examination_report_id = ?";
 	/** SQL CSV出力*/
@@ -156,7 +156,7 @@ public class JobHuntingRepository {
 		System.out.println(examination_report_id + "うｐ");
 		System.out.println(JobHuntingData + "うんち！ｗ");
 		int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
-				"承認待",
+				"申請承認待",
 				JobHuntingData.getAction_id(),
 				JobHuntingData.getAction_place(),
 				JobHuntingData.getAction_day(),
@@ -175,7 +175,7 @@ public class JobHuntingRepository {
 			return rowNumber;
 	}
 	/**
-	 *  application_and_reportテーブルのデータを申請を1件更新する
+	 *  application_and_reportテーブルのデータを報告を1件更新する
 	 * @param JobHuntingData 更新する就職活動申請・報告ID
 	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param
@@ -188,6 +188,7 @@ public class JobHuntingRepository {
 			JobHuntingData.setAction_end_day(null);
 		}
 		int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
+				"報告承認待",
 				JobHuntingData.getContents_report(),
 				examination_report_id
 				);
