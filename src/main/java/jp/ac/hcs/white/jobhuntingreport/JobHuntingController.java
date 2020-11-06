@@ -96,7 +96,7 @@ public class JobHuntingController {
 	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/search")
-	public String search(@RequestParam("search_job_id") String search_job_id,
+	public String search(@RequestParam("search_status_id") String search_job_id,
 			@RequestParam("search_action_day") String search_action_day,
 			@RequestParam("search_user_name") String search_user_name,
 			@RequestParam("search_company_name") String search_company_name,
