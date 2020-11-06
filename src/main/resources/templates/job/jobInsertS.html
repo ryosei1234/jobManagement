@@ -150,13 +150,13 @@
 				<p>連絡事項</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('information')} ? 'has-error'">
-					<input type="text" class="form-control" name="information"
-						placeholder="xxxxxxx" th:field="*{information}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('information')}"
+					<textarea class="form-control" name="information"
+						placeholder="xxxxxxx" th:field="*{information}"></textarea>
+					 <span class="text-danger" th:if="${#fields.hasErrors('information')}"
 						th:errors="*{information}">information error</span>
 				</div>
-				<span class="input-group-btn"> <input type="submit"
-					id="action" class="btn btn-warning" value="登録">
+				<span class="input-group-btn">
+				<button type="button" id="action" class="btn btn-warning" onclick="submit();">登録</button>
 				</span>
 
 			</form>

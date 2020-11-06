@@ -112,9 +112,9 @@
 				<p>報告内容</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('contents_report')} ? 'has-error'">
-					<input type="text" class="form-control" name="contents_report"
-						placeholder="xxxxxxx" th:field="*{contents_report}"> <span
-						class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
+					<textarea class="form-control" name="contents_report"
+					placeholder="xxxxxxx" th:field="*{contents_report}"></textarea>
+					 <span class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
 						th:errors="*{contents_report}">contents_report error</span>
 				</div>
 
@@ -129,8 +129,8 @@
 						th:errors="*{action_status_id}">action_status_id error</span>
 				</div>
 
-				<span class="input-group-btn"> <input type="submit"
-					id="action" class="btn btn-warning" value="登録">
+				<span class="input-group-btn">
+				<button type="button" id="action" class="btn btn-warning" onclick="submit();">登録</button>
 				</span>
 
 			</form>
