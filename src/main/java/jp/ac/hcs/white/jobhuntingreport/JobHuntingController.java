@@ -106,9 +106,9 @@ public class JobHuntingController {
 		model.addAttribute("jobHuntingEntity", jobHuntingEntity);
 
 		// 検索ワードの連携
-		model.addAttribute("search_examreport_id", search_job_id);
+		model.addAttribute("search_status_id", search_job_id);
 		model.addAttribute("search_action_day", search_action_day);
-		model.addAttribute("search_user_id", search_user_name);
+		model.addAttribute("search_user_name", search_user_name);
 		model.addAttribute("search_company_name", search_company_name);
 
 		return "job/joblist";
