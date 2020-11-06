@@ -33,7 +33,6 @@ private String attendance_day;
 
 private String attendance_end_day;
 
-@NotBlank(message = "{require_check}")
 private String schedule;
 
 private String information;
