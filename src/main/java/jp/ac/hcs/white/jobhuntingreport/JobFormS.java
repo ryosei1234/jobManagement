@@ -6,10 +6,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class JobForm {
+public class JobFormS {
 
-@NotNull(message = "{require_check}")
-private String examination_report_id;
+
 
 @NotNull(message = "{require_check}")
 private String action_day;
@@ -39,10 +38,6 @@ private String schedule;
 
 private String information;
 
-@NotNull(message = "{require_check}")
-private String action_status_id;
 
-@NotNull(message = "{require_check}")
-private String contents_report;
 
 }
