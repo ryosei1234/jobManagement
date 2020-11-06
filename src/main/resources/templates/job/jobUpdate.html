@@ -152,16 +152,16 @@
 				<p>連絡事項</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('information')} ? 'has-error'">
-					<input type="text" class="form-control" name="information"
-						placeholder="xxxxxxx" th:field="*{information}"> <span
+					<textarea class="form-control" name="information"
+						placeholder="xxxxxxx" th:field="*{information}"></textarea> <span
 						class="text-danger" th:if="${#fields.hasErrors('information')}"
 						th:errors="*{information}">information error</span>
 
 				<p>報告内容</p>
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('contents_report')} ? 'has-error'">
-					<input type="text" class="form-control" name="contents_report"
-						placeholder="xxxxxxx" th:field="*{contents_report}"> <span
+					<textarea class="form-control" name="contents_report"
+					placeholder="xxxxxxx" th:field="*{contents_report}"></textarea> <span
 						class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
 						th:errors="*{contents_report}">contents_report error</span>
 				</div>
