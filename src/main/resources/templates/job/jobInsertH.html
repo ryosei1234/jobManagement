@@ -63,7 +63,7 @@
 			<hr>
 			<form method="post"
 				th:action="@{'/job/jobInsertH/' + *{examination_report_id}}"
-				th:object="${jobForm}">
+				th:object="${jobFormH}">
 
 				<label for="action_day">活動日時</label>
 			<p class="form-group input-box" th:text="*{action_day}"></p>
