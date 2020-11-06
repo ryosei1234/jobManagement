@@ -61,6 +61,8 @@ public class ExamReportController {
 		radiotest.put("最終試験", "最終試験");
 		return radiotest;
 	}
+
+	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioStatus() {
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("差し戻し中", "差し戻し中");
