@@ -36,6 +36,8 @@ public class JobHuntingRepository {
 	private static final String SQL_UPDATE_AND_REPORT = "UPDATE application_and_report SET examination_status_id = ?,contents_report = ? WHERE  examination_report_id = ?";
 	/** SQL 就職活動状態変更 */
 	private static final String SQL_UPDATE_ID = "UPDATE application_and_report SET examination_status_id = ? WHERE  examination_report_id = ?";
+	/** SQL 就職活動申請・報告削除 */
+	private static final String SQL_DELETE_ONE = "DLETE FROM application_and_report WHERE examination_report_id = ?";
 	/** SQL CSV出力*/
 	private static final String SQL_SELECT_CSV = "SELECT * FROM application_and_report JOIN m_user ON application_and_report.user_id = m_user.user_id order by company_name_top";
 	@Autowired
@@ -79,15 +81,25 @@ public class JobHuntingRepository {
 			data.setAction_place((String) map.get("action_place"));
 			String action_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_day"));
 			data.setAction_day(action_day);
-			String action_end_day = sdf.format((Date) map.get("action_day"));
-			data.setAction_end_day(action_end_day);
+			try {
+				//date型をString型に変換
+				String action_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("action_end_day"));
+				data.setAction_end_day(action_end_day);
+			} catch (Exception e) {
+				data.setAction_end_day(null);
+			}
 			data.setCompany_name((String) map.get("company_name"));
 			data.setAction_status_id(((String) map.get("action_status_id")));
 			data.setAttendance_id(((String) map.get("attendance_id")));
 			String attendance_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_day"));
-			String attendance_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_end_day"));
 			data.setAttendance_day((String)attendance_day);
-			data.setAttendance_end_day((String)attendance_end_day);
+			try {
+				//date型をString型に変換
+				String attendance_end_day = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format((Date) map.get("attendance_end_day"));
+				data.setAttendance_end_day((String)attendance_end_day);
+			} catch (Exception e) {
+				data.setAttendance_end_day(null);
+			}
 			data.setLodging_day_id(((String) map.get("lodging_day_id")));
 			data.setInformation((String) map.get("information"));
 			data.setSchedule((String) map.get("schedule"));
@@ -149,6 +161,10 @@ public class JobHuntingRepository {
 			JobHuntingData.setAction_end_day(null);
 			dt = JobHuntingData.getAction_end_day();
 		}
+		if(JobHuntingData.getAttendance_end_day() == "") {
+			JobHuntingData.setAttendance_end_day(null);
+			dt = JobHuntingData.getAttendance_end_day();
+		}
 		System.out.println(examination_report_id + "うｐ");
 		System.out.println(JobHuntingData + "うんち！ｗ");
 		int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
@@ -204,7 +220,7 @@ public class JobHuntingRepository {
 		String search = "報告承認待";
 		if(data.getExamination_status_id() == search) {
 			if(examination_status_id == "承認済") {
-			examination_status_id = "報告完了";
+				examination_status_id = "報告完了";
 			}
 		}
 		int rowNumber = jdbc.update(SQL_UPDATE_ID,
@@ -231,6 +247,9 @@ public class JobHuntingRepository {
 			if(data.getAction_end_day() == "") {
 				data.setAction_end_day(null);
 			}
+			if(data.getAttendance_end_day() == "") {
+				data.setAttendance_end_day(null);
+			}
 			int rowNumber = jdbc.update(SQL_INSERT_APPLICATION_ONE,
 						examination_report_id,
 						data.getUser_id(),
@@ -251,6 +270,13 @@ public class JobHuntingRepository {
 			);
 			System.out.println(rowNumber + "ああああ");
 			return rowNumber;
+	}
+
+	/**
+	 * テーブルから削除したいデータを一件取得し、削除する
+	 */
+	public void deleteOne(JobHuntingData data,String examination_report_id) throws DataAccessException {
+
 	}
 
 	/**
