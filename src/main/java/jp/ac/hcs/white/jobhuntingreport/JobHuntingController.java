@@ -91,7 +91,9 @@ public class JobHuntingController {
 	/**
 	 * 就職活動申請を検索する
 	 * @param search_job_id 検索したい報告状況
-	 * @param search_user_name 検索したい氏名
+	 * @param search_action_day 検索したい日付
+	 * * @param search_user_name 検索したい氏名
+	 * * @param search_company_name 検索したい会社名
 	 * @param model
 	 * @return 就職活動申請・報告一覧画面
 	 */
@@ -106,17 +108,17 @@ public class JobHuntingController {
 		model.addAttribute("jobHuntingEntity", jobHuntingEntity);
 
 		// 検索ワードの連携
-		model.addAttribute("search_status_id", search_job_id);
+		model.addAttribute("search_examreport_id", search_job_id);
 		model.addAttribute("search_action_day", search_action_day);
-		model.addAttribute("search_user_name", search_user_name);
+		model.addAttribute("search_user_id", search_user_name);
 		model.addAttribute("search_company_name", search_company_name);
 
 		return "job/joblist";
 	}
 
 	/**
-	 * 受験報告の詳細画面を表示する
-	 * @param examreport_id 受験報告ID
+	 * 就職活動新規報告作成の詳細画面を表示する
+	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param principal ログイン情報
 	 * @param model
 	 * @return 受験報告詳細画面
@@ -232,9 +234,10 @@ public class JobHuntingController {
 
 	/**
 	 * 一件分の就職活動申請を状態変更する画面を表示する
+	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param form	状態変更する就職活動申請情報
 	 * @param model
-	 * @return	画面
+	 * @return	就職活動申請変更画面
 	 */
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
 	public String getStatus(@ModelAttribute JobFormForStatus form, Model model, @PathVariable("examination_report_id") String examination_report_id) {
@@ -249,11 +252,11 @@ public class JobHuntingController {
 	}
 
 	/**
-	 *	一件分の就職活動申請を承認変更をする
+	 *	一件分の就職活動申請の承認変更をする
 	 * @param form 承認変更する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
-	 * @param model
+ * @param model
 	 * @param examreport_id 受験報告ID
 	 * @return 就職活動申請・報告一覧画面
 	 */
