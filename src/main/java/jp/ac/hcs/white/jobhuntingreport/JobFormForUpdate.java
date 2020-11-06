@@ -31,13 +31,12 @@ public class JobFormForUpdate {
 	@NotBlank(message = "{require_check}")
 	private String attendance_day;
 
-	@NotBlank(message = "{require_check}")
+
 	private String attendance_end_day;
 
 	@NotBlank(message = "{require_check}")
 	private String schedule;
 
-	@NotBlank(message = "{require_check}")
 	private String information;
 
 	@NotBlank(message = "{require_check}")
