@@ -27,12 +27,11 @@ public class JobHuntingService {
 	}
 
 	/**
-	 * 指定した 就職活動IDの受験報告情報を取得する
+	 * 指定した就職活動IDの申請・報告情報を取得する
 	 * @param examination_report_id  就職活動ID
 	 * @return JobHuntingData
 	 */
 	public JobHuntingData selectOne(String examination_report_id) {
-		System.out.println("サービス" + examination_report_id);
 		return jobRepository.selectOne(examination_report_id);
 
 	}
@@ -44,7 +43,6 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public boolean insertOne(JobHuntingData jobdata) throws DataAccessException {
-		System.out.println(jobdata + "さーびすうう");
 		int rowNumber = jobRepository.insertOne(jobdata);
 		boolean result = (rowNumber> 0) ? true : false;
 		return result;
@@ -92,7 +90,7 @@ public class JobHuntingService {
 	}
 
 	/**
-	 * 就職活動を一件分変更する
+	 * 就職活動申請書を一件分変更する
 	 * @param jobdata 就職活動情報
 	 * @param examination_report_id 就職活動ID
 	 * @return 処理結果(成功:true, 失敗:false)
@@ -105,6 +103,13 @@ public class JobHuntingService {
 		return result;
 	}
 
+	/**
+	 * 就職活動報告書を作成・変更する
+	 * @param jobdata 就職活動情報
+	 * @param examination_report_id 就職活動ID
+	 * @return 処理結果(成功:true, 失敗:false)
+	 * @throws DataAccessException
+	 */
 	public boolean updateOneH(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
 
 		int rowNumber = jobRepository.updateOneH(jobdata, examination_report_id);
@@ -113,7 +118,7 @@ public class JobHuntingService {
 	}
 
 	/**
-	 * 就職活動を承認変更する
+	 * 就職活動書を承認変更する
 	 * @param examination_report_id　就職活動ID
 	 * @param examination_status_id　
 	 * @return 処理結果(成功:true, 失敗:false)
