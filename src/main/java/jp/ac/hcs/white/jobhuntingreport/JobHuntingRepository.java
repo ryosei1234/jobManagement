@@ -217,9 +217,12 @@ public class JobHuntingRepository {
 		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		JobHuntingData data = entity.getJoblist().get(0);
+		System.out.println(data.getExamination_status_id() + "でーた");
+		System.out.println(examination_status_id);
 		String search = "報告承認待";
-		if(data.getExamination_status_id() == search) {
-			if(examination_status_id == "承認済") {
+		String status = "申請完了";
+		if(data.getExamination_status_id().equals(search)) {
+			if(examination_status_id.equals(status)) {
 				examination_status_id = "報告完了";
 			}
 		}

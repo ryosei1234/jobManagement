@@ -59,7 +59,7 @@ public class JobHuntingController {
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioStatus() {
 		Map<String, String> radiostatus = new LinkedHashMap<>();
-		radiostatus.put("承認済", "承認済");
+		radiostatus.put("承認", "申請完了");
 		radiostatus.put("差戻", "差戻");
 		radiostatus.put("取消", "取消");
 		return radiostatus;
@@ -461,7 +461,7 @@ public class JobHuntingController {
 			@PathVariable("examination_report_id")  String examination_report_id
 			) {
 		System.out.println(examination_report_id);
-		boolean result = jobService.jobstatus(examination_report_id,"申請完了");
+		boolean result = jobService.jobstatus(examination_report_id,"申請承認済");
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
 		} else {
