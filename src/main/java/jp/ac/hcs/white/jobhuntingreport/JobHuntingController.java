@@ -102,11 +102,12 @@ public class JobHuntingController {
 			@RequestParam("search_action_day") String search_action_day,
 			@RequestParam("search_user_name") String search_user_name,
 			@RequestParam("search_company_name") String search_company_name,
+			Principal principal,
 			Model model) {
-
-		JobHuntingEntity jobHuntingEntity = jobService.search(search_job_id, search_action_day, search_user_name, search_company_name);
+		System.out.println(principal.getName() + "にゃー");
+		JobHuntingEntity jobHuntingEntity = jobService.search(search_job_id, search_action_day, search_user_name, search_company_name, principal.getName());
 		model.addAttribute("jobHuntingEntity", jobHuntingEntity);
-
+		System.out.print(jobHuntingEntity);
 		// 検索ワードの連携
 		model.addAttribute("search_examreport_id", search_job_id);
 		model.addAttribute("search_action_day", search_action_day);

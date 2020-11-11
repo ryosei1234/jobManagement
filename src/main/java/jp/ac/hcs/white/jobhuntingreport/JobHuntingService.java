@@ -56,11 +56,11 @@ public class JobHuntingService {
 	 * @param search_company_name 検索したい企業名
 	 * @return ExamReportEntity
 	 */
-	public JobHuntingEntity search(String search_examination_report_id,String serch_action_day, String search_user_name, String search_company_name) {
+	public JobHuntingEntity search(String search_examination_report_id,String serch_action_day, String search_user_name, String search_company_name, String user_id) {
 
 		JobHuntingEntity jobEntity = null;
 
-		jobEntity = jobRepository.jobSearch(search_examination_report_id, serch_action_day, search_user_name, search_company_name);
+		jobEntity = jobRepository.jobSearch(search_examination_report_id, serch_action_day, search_user_name, search_company_name, user_id);
 
 		return jobEntity;
 	}
