@@ -241,7 +241,7 @@ public class JobHuntingController {
 	 * @return	就職活動申請変更画面
 	 */
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
-	public String getStatus(@ModelAttribute JobFormForStatus form, Model model, @PathVariable("examination_report_id") String examination_report_id) {
+	public String getStatus(@ModelAttribute JobFormForStatus form, Model model,Principal principal,@PathVariable("examination_report_id") String examination_report_id) {
 		// ラジオボタンの準備
 		radiostatus = initRadioStatus();
 		model.addAttribute("radiostatus", radiostatus);
@@ -268,9 +268,11 @@ public class JobHuntingController {
 			Model model,
 			@PathVariable("examination_report_id") String examination_report_id) {
 
-		if (examination_report_id == null) {
+		// 入力チェックに引っかかった場合、登録画面に戻る
+				if (bindingResult.hasErrors()) {
+					return getStatus(form, model,principal,form.getExamination_report_id());
+				}
 
-		}
 		log.warn(form.getExamination_status_id());
 		log.warn(examination_report_id);
 
