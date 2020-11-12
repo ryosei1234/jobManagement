@@ -1,16 +1,16 @@
 package jp.ac.hcs.white.jobhuntingreport;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
 @Data
 public class JobFormForStatus {
 
-	@NotNull(message = "{require_check}")
+	@NotBlank(message = "{require_check}")
 	private String examination_report_id;
 
-	@NotNull(message = "{require_check}")
+	@NotBlank(message = "{require_check}")
 	private String examination_status_id;
 
 }
