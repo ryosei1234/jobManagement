@@ -268,6 +268,9 @@ public class JobHuntingController {
 			Model model,
 			@PathVariable("examination_report_id") String examination_report_id) {
 
+		if (examination_report_id == null) {
+
+		}
 		log.warn(form.getExamination_status_id());
 		log.warn(examination_report_id);
 
