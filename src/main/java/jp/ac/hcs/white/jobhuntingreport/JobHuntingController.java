@@ -65,6 +65,13 @@ public class JobHuntingController {
 		return radiostatus;
 	}
 
+	private Map<String, String> apRadioStatus() {
+		Map<String, String> radiostatus = new LinkedHashMap<>();
+		radiostatus.put("差戻", "差戻");
+		radiostatus.put("取消", "取消");
+		return radiostatus;
+	}
+
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioActionStatus() {
 		Map<String, String> radioactionstatus = new LinkedHashMap<>();
@@ -242,8 +249,13 @@ public class JobHuntingController {
 	 */
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
 	public String getStatus(@ModelAttribute JobFormForStatus form, Model model,Principal principal,@PathVariable("examination_report_id") String examination_report_id) {
+		JobHuntingData data = jobService.selectOne(examination_report_id);
+		if (data.getExamination_status_id().equals("申請承認済")) {
+			radiostatus = initRadioStatus();
+		}else {
 		// ラジオボタンの準備
-		radiostatus = initRadioStatus();
+			radiostatus = apRadioStatus();
+		}
 		model.addAttribute("radiostatus", radiostatus);
 		model.addAttribute("examination_report_id", examination_report_id);
 		log.warn(examination_report_id);
@@ -251,7 +263,6 @@ public class JobHuntingController {
 
 		return "job/jobApproval";
 	}
-
 	/**
 	 *	一件分の就職活動申請の承認変更をする
 	 * @param form 承認変更する就職活動申請情報
