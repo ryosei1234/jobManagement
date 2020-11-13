@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="UTF-8">
-<title>WebPortal Main</title>
-
-<!-- モバイル設定 -->
+<title>WebPortal UserDetail</title>
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="manifest" th:href="@{/css/manifest.json}"
 	crossorigin="use-credentials">
+
 <meta name="application-name" content="WebPortal">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="WebPortal">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-<!-- アイコン設定 -->
-<link rel="icon" th:href="@{/img/icon.png}" sizes="128x128"
-	href="../static/img/icon.png">
-<link rel="shortcut icon" th:href="@{/img/icon.png}">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}" sizes="192x192">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}" sizes="58x58">
+<link rel="icon" th:href="@{/css/WP.png}" sizes="192x192"
+	href="../static/css/WP.png">
+<link rel="shortcut icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="58x58">
 
-<!-- スタイル設定 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -34,11 +30,17 @@
 	href="../static/css/ress.css">
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
+
+<style>
+.view-mail {
+	font-size: 1.5rem;
+}
+</style>
+
 </head>
 
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-
-	<!-- 共通ヘッダ -->
+	<!-- common header bg-danger managed-link -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
 			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
@@ -63,60 +65,37 @@
 		</div>
 	</nav>
 
-	<!-- コンテンツ -->
+	<!-- contents -->
 	<div class="container">
-		<div class="row">
+		<div class="content-box">
+		<h2>受験申請・報告承認画面</h2>
+		<form method="post" th:action="@{'/job/jobApproval/' + *{examination_report_id}}"
+				th:object="${jobFormForStatus}">
 
-			<div class="col-sm-6">
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STUDENT')">
-					<h2>受験報告一覧</h2>
-					<form method="post" th:action="@{/exam/examlist}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">受験報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
+				<input type="hidden" name="examination_report_id" th:value=${examination_report_id}>
 
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
-					<h2>証明書発行一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>
-					</form>
+			<label for="examination_status_id">承認状態</label>
+				<div class="form-group input-box">
+					<div th:each="item : ${radiostatus}">
+						<input type="radio" name="examination_status_id" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{examination_status_id}">
+					</div>
+					<span class="text-danger"
+						th:if="${#fields.hasErrors('examination_status_id')}"
+						th:errors="*{examination_status_id}">examination_status_id error</span>
 				</div>
-			</div>
 
-			<div class="col-sm-6">
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STUDENT')">
-					<h2>就職活動申請・報告一覧</h2>
-					<form method="post" th:action="@{/job/jobList}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">就職活動申請・報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
+				<span class="input-group-btn"> <input type="submit"
+					id="action" class="btn btn-warning" value="承認">
+				</span>
+			</form>
 
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STAFF')">
-					<h2>ユーザ一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">ユーザ一覧画面へ</button>
-					</form>
-				</div>
-			</div>
 
 		</div>
+
 	</div>
 
-	<!-- 共通スクリプト -->
+	<!-- common js -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>

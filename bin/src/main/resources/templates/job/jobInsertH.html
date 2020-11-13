@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 <meta charset="UTF-8">
-<title>WebPortal JobDetail</title>
+<title>WebPortal Main</title>
+<!-- モバイル設定 -->
 <meta id="viewport" name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="manifest" th:href="@{/css/manifest.json}"
 	crossorigin="use-credentials">
-
 <meta name="application-name" content="WebPortal">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="WebPortal">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<link rel="icon" th:href="@{/css/WP.png}" sizes="192x192"
-	href="../static/css/WP.png">
-<link rel="shortcut icon" th:href="@{/css/WP.png}">
-<link rel="apple-touch-icon" th:href="@{/css/WP.png}">
-<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="192x192">
-<link rel="apple-touch-icon" th:href="@{/css/WP.png}" sizes="58x58">
-
+<!-- アイコン設定 -->
+<link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
+	href="../static/img/XXX.png">
+<link rel="shortcut icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
+<!-- スタイル設定 -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -30,17 +30,9 @@
 	href="../static/css/ress.css">
 <link rel="stylesheet" th:href="@{/css/home.css}"
 	href="../static/css/home.css">
-
-<style>
-.view-mail {
-	font-size: 1.5rem;
-}
-</style>
-
 </head>
-
 <body th:classappend="${session.isDarkmode} ? 'mode-dark'">
-	<!-- common header bg-danger managed-link -->
+	<!-- 共通ヘッダ -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<h1>
 			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
@@ -64,35 +56,16 @@
 			</ul>
 		</div>
 	</nav>
-
-	<!-- contents -->
+	<!-- コンテンツ -->
 	<div class="container">
-		<div class="content-box" th:object="${jobdata}">
-			<h2>就職活動申請・報告詳細画面</h2>
+		<div class="content-box">
+			<h2>就職活動報告新規登録作成</h2>
+			<hr>
+			<form method="post"
+				th:action="@{'/job/jobInsertH/' + *{examination_report_id}}"
+				th:object="${jobFormH}">
 
-			<label for="examination_report_id">就職活動申請・報告ID</label>
-			<p class="form-group input-box" th:text="*{examination_report_id}"></p>
-			<input type="hidden" name="examination_report_id" th:value="*{examination_report_id}">
-
-			<label for="user_class">クラス</label>
-			<p class="form-group input-box" th:text="*{user_class}"></p>
-			<input type="hidden" name="user_class" th:value="*{user_class}">
-
-			<label for="user_student_no">番号</label>
-			<p class="form-group input-box" th:text="*{user_student_no}"></p>
-			<input type="hidden" name="user_student_no"
-				th:value="*{user_student_no}">
-
-			<label for="user_name">氏名</label>
-			<p class="form-group input-box" th:text="*{user_name}"></p>
-			<input type="hidden" name="user_name" th:value="*{user_name}">
-
-			<label for="examination_status_id">就職申請・報告状態</label>
-			<p class="form-group input-box" th:text="*{examination_status_id}"></p>
-			<input type="hidden" name="examination_status_id"
-				th:value="*{examination_status_id}">
-
-			<label for="action_day">活動日時</label>
+				<label for="action_day">活動日時</label>
 			<p class="form-group input-box" th:text="*{action_day}"></p>
 			<input type="hidden" name="action_day" th:value="*{action_day}">
 
@@ -136,33 +109,34 @@
 			<p class="form-group input-box" th:text="*{information}"></p>
 			<input type="hidden" name="information" th:value="*{information}">
 
-			<label for="contents_report">報告内容</label>
-			<p class="form-group input-box" th:text="*{contents_report}"></p>
-			<input type="hidden" name="contents_report" th:value="*{contents_report}">
+				<p>報告内容</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('contents_report')} ? 'has-error'">
+					<textarea class="form-control" name="contents_report"
+					placeholder="xxxxxxx" th:field="*{contents_report}"></textarea>
+					 <span class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
+						th:errors="*{contents_report}">contents_report error</span>
+				</div>
 
-			<td class="text-nowrap" sec:authorize="hasRole('ROLE_TEACHER')"><a class="btn btn-success"
-				th:href="@{'/job/jobApproval/' + *{examination_report_id}}">承認確認</a></td>
+				<p>就職活動続行</p>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioActionStatus}">
+						<input type="radio" name="action_status_id" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{action_status_id}" readonly>
+					</div>
+					<span class="text-danger"
+						th:if="${#fields.hasErrors('action_status_id')}"
+						th:errors="*{action_status_id}">action_status_id error</span>
+				</div>
 
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/job/jobUpdate/' + *{examination_report_id}}">変更</a></td>
+				<span class="input-group-btn">
+				<button type="button" id="action" class="btn btn-warning" onclick="submit();">登録</button>
+				</span>
 
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/job/jobInsertH/' + *{examination_report_id}}">報告作成</a></td>
-
-			<td class="text-nowrap"><a class="btn btn-success"
-				th:href="@{'/job/jobList/' + *{examination_report_id}}">取消</a></td>
-
-			<div th:if="*{examination_status_id}=='申請承認待'">
-			<td class="text-nowrap"><a class="btn btn-success" type="submit" name ="status_id" value="申請完了"
-				th:href="@{'/job/jobsyonin/' + *{examination_report_id}}">コース確認</a></td>
-			</div>
-
-
+			</form>
 		</div>
-
 	</div>
-
-	<!-- common js -->
+	<!-- 共通スクリプト -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>

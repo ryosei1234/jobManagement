@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>WebPortal Main</title>
+<!-- モバイル設定 -->
+<meta id="viewport" name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="manifest" th:href="@{/css/manifest.json}"
+	crossorigin="use-credentials">
+<meta name="application-name" content="WebPortal">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WebPortal">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- アイコン設定 -->
+<link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
+	href="../static/img/XXX.png">
+<link rel="shortcut icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
+<!-- スタイル設定 -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/ress.css}"
+	href="../static/css/ress.css">
+<link rel="stylesheet" th:href="@{/css/home.css}"
+	href="../static/css/home.css">
+</head>
+<body th:classappend="${session.isDarkmode} ? 'mode-dark'">
+	<!-- 共通ヘッダ -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<h1>
+			<a class="navbar-brand title-font" th:href="@{/}">就活ポータル.com</a>
+		</h1>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarToggler" aria-controls="navbarToggler"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarToggler">
+			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/user/profileUpdate}"> <img class="config-img"
+						th:src="@{/css/config.png}" src="../static/css/config.png">
+				</a></li>
+				<li>
+					<form class="my-2 my-lg-0" method="post" th:action="@{/logout}">
+						<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- コンテンツ -->
+	<div class="container">
+		<div class="content-box">
+			<h2>就職申請・報告更新画面</h2>
+			<hr>
+			<form method="post"
+				th:action="@{'/job/jobUpdate/' + *{examination_report_id}}"
+				th:object="${jobFormForUpdate}">
+
+				<p>活動日時</p>
+				<p>活動開始日時</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('action_day')} ? 'has-error'">
+					<input type="datetime-local" class="form-control"
+						name="action_day" th:field="*{action_day}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('action_day')}"
+						th:errors="*{action_day}">action_day error</span>
+				</div>
+
+				<p>活動終了日時</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('action_end_day')} ? 'has-error'">
+					<input type="datetime-local" class="form-control"
+						name="action_end_day" th:field="*{action_end_day}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('action_end_day')}"
+						th:errors="*{action_end_day}">action_end_day error</span>
+				</div>
+
+				<p>活動場所</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('action_place')} ? 'has-error'">
+					<input type="text" class="form-control" name="action_place"
+						placeholder="x" th:field="*{action_place}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('action_place')}"
+						th:errors="*{action_place}">action_place error</span>
+				</div>
+
+				<label for="action_id">活動内容</label>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioAction}">
+						<input type="radio" name="action_id" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{action_id}">
+					</div>
+					<span class="text-danger"
+						th:if="${#fields.hasErrors('action_id')}"
+						th:errors="*{action_id}">action_id error</span>
+				</div>
+
+				<p>会社名</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('company_name')} ? 'has-error'">
+					<input type="text" class="form-control" name="company_name"
+						placeholder="xxx" th:field="*{company_name}"> <span
+						class="text-danger"
+						th:if="${#fields.hasErrors('company_name')}"
+						th:errors="*{company_name}">company_name error</span>
+				</div>
+
+				<label for="attendance_id">出欠予定</label>
+				<div class="form-group input-box">
+					<div th:each="item : ${radioAttendance}">
+						<input type="radio" name="attendance_id" th:text="${item.key}"
+							th:value="${item.value}" th:field="*{attendance_id}">
+					</div>
+					<span class="text-danger"
+						th:if="${#fields.hasErrors('attendance_id')}"
+						th:errors="*{attendance_id}">attendance_id error</span>
+				</div>
+
+				<p>出欠日時</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('attendance_day')} ? 'has-error'">
+					<input type="datetime-local" class="form-control"
+						name="attendance_day" th:field="*{attendance_day}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('attendance_day')}"
+						th:errors="*{attendance_day}">attendance_day error</span>
+				</div>
+				<p>～</p>
+				<p>出欠終了日時</p>
+				<div class="form-group input-box">
+					<input type="datetime-local" class="form-control"
+						name="attendance_end_day" th:field="*{attendance_end_day}">
+				</div>
+
+				<p>スケジュール</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('schedule')} ? 'has-error'">
+					<input type="text" class="form-control" name="schedule"
+						placeholder="xxxxxxx" th:field="*{schedule}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('schedule')}"
+						th:errors="*{schedule}">schedule error</span>
+				</div>
+
+				<p>連絡事項</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('information')} ? 'has-error'">
+							<textarea class="form-control" name="information"
+						placeholder="xxxxxxx" th:field="*{information}"></textarea> <span
+						class="text-danger" th:if="${#fields.hasErrors('information')}"
+						th:errors="*{information}">information error</span>
+				</div>
+
+				<p>報告内容</p>
+				<div class="form-group input-box"
+					th:classappend="${#fields.hasErrors('contents_report')} ? 'has-error'">
+					<textarea class="form-control" name="contents_report"
+					placeholder="xxxxxxx" th:field="*{contents_report}"></textarea> <span
+						class="text-danger" th:if="${#fields.hasErrors('contents_report')}"
+						th:errors="*{contents_report}">contents_report error</span>
+				</div>
+
+				<span class="input-group-btn"> <input type="submit"
+					id="action" class="btn btn-warning" value="更新">
+				</span>
+			</form>
+		</div>
+
+
+	</div>
+	<!-- 共通スクリプト -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+</html>

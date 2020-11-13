@@ -10,4 +10,3 @@ function check(){
 }
 window.onload = changeDisabled;
 
-}

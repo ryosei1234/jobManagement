@@ -18,12 +18,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <!-- アイコン設定 -->
-<link rel="icon" th:href="@{/img/icon.png}" sizes="128x128"
-	href="../static/img/icon.png">
-<link rel="shortcut icon" th:href="@{/img/icon.png}">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}" sizes="192x192">
-<link rel="apple-touch-icon" th:href="@{/img/icon.png}" sizes="58x58">
+<link rel="icon" th:href="@{/img/XXX.png}" sizes="192x192"
+	href="../static/img/XXX.png">
+<link rel="shortcut icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="192x192">
+<link rel="apple-touch-icon" th:href="@{/img/XXX.png}" sizes="58x58">
 
 <!-- スタイル設定 -->
 <link rel="stylesheet"
@@ -64,54 +64,52 @@
 	</nav>
 
 	<!-- コンテンツ -->
-	<div class="container">
-		<div class="row">
+	<div class="container text-left">
+		<div class="content-box">
 
-			<div class="col-sm-6">
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STUDENT')">
-					<h2>受験報告一覧</h2>
-					<form method="post" th:action="@{/exam/examlist}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">受験報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
+			<h2>就職活動申請・報告一覧画面</h2>
 
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box">
-					<h2>証明書発行一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">証明書発行一覧画面へ</button>
-					</form>
-				</div>
-			</div>
+			<td class="text-nowrap"><a class="btn btn-success"
+				th:href="@{'/job/jobInsertS'}">作成</a></td>
 
-			<div class="col-sm-6">
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STUDENT')">
-					<h2>就職活動申請・報告一覧</h2>
-					<form method="post" th:action="@{/job/jobList}">
-						<div class="input-button">
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-success">就職活動申請・報告一覧画面へ</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
+			<h2>就職活動申請書検索</h2>
+			<form class="form-inline" method="post" th:action="@{/job/search}">
+					<input type="text" class="form-control" name="search_status_id"
+					th:value="${search_status_id}" placeholder="報告状況 : あいまい検索" size=30>
+					<input type="text" class="form-control"
+					name="search_action_day" th:value="${search_action_day}"
+					placeholder="日時 : あいまい検索" size=30>
+					<input type="text" class="form-control"
+					name="search_user_name" th:value="${search_user_name}"
+					placeholder="氏名 : あいまい検索" size=30>
+					<input type="text" class="form-control"
+					name="search_company_name" th:value="${search_company_name}"
+					placeholder="会社名 : あいまい検索" size=30>
+				<button type="submit" class="btn btn-success">検索</button>
+			</form>
+			<hr>
 
-			<div class="col-sm-6">
-				<!-- 管理者のみのコンテンツ -->
-				<div class="content-box" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_STAFF')">
-					<h2>ユーザ一覧</h2>
-					<form method="get" th:action="@{/user/userList}">
-						<button type="submit" class="btn btn-success">ユーザ一覧画面へ</button>
-					</form>
-				</div>
-			</div>
+			<table class="table table-hover table-striped table-responsive">
+				<tr>
+					<th class="text-nowrap">報告状況</th>
+					<th class="text-nowrap">日時</th>
+					<th class="text-nowrap">氏名</th>
+					<th class="text-nowrap">会社名</th>
+				</tr>
+				<tr th:each="job : ${jobHuntingEntity.joblist}" th:object="${job}">
+					<td class="text-nowrap" th:text="*{examination_status_id}"></td>
+					<td class="text-nowrap" th:text="*{action_day}"></td>
+					<td class="text-nowrap" th:text="*{user_name}"></td>
+					<td class="text-nowrap" th:text="*{company_name}"></td>
+					<td class="text-nowrap"><a class="btn btn-success"
+						th:href="@{'/job/jobDetail/' + *{examination_report_id}}">詳細</a></td>
+				</tr>
+			</table>
+
+			<form method="post" th:action="@{/job/csv}">
+				<button type="submit" class="btn btn-info" sec:authorize="hasRole('ROLE_TEACHER')">CSV出力</button>
+			</form>
+
 
 		</div>
 	</div>
