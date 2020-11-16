@@ -47,8 +47,8 @@ public class JobHuntingRepository {
 
 	/**
 	 * application_and_reportテーブルから全件取得
-	 * @param user_id
-	 * @return examreportEntity
+	 * @param user_id ユーザID
+	 * @return examreportEntity 全件分の就職申請・報告書
 	 * @throws DataAccessException
 	 */
 	public JobHuntingEntity selectAll(String user_id) throws DataAccessException {
@@ -65,7 +65,7 @@ public class JobHuntingRepository {
 
 	/**
 	 * examreportテーブルから取得したデータをJobReportEntity形式にマッピングする.
-	 * @param resultList
+	 * @param resultList examreportから取得した一件分のデータ
 	 * @return entity
 	 */
 	private JobHuntingEntity mappingSelectJobResult(List<Map<String, Object>> resultList) {
@@ -129,10 +129,12 @@ public class JobHuntingRepository {
 
 	/**
 	 * application_and_reportテーブルから一致するデータを検索する
-	 * @param search_application_id
-	 * @param search_user_id
-	 * @param search_company_name
-	 * @return exaEntity
+	 * @param search_application_id 検索したい就職報告状態ID
+	 * @param search_action_day 検索したい開始日時
+	 * @param search_user_id 検索したいユーザID
+	 * @param search_company_name 検索した会社名
+	 * @param user_id 現在ログインしているユーザID
+	 * @return
 	 * @throws DataAccessException
 	 */
 	public JobHuntingEntity jobSearch(String search_application_id,String search_action_day,String search_user_id, String search_company_name, String user_id)
@@ -162,85 +164,9 @@ public class JobHuntingRepository {
 	}
 
 	/**
-	 *  application_and_reportテーブルのデータを申請を1件更新する
-	 * @param JobHuntingData 更新する就職活動申請・報告ID
-	 * @param examination_report_id 就職活動申請・報告ID
-	 * @param
-	 * @return rowNumber
-	 * @throws DataAccessException
-	 */
-	public int updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
-		if(jobdata.getAction_end_day() == "") {
-			jobdata.setAction_end_day(null);
-		}
-		int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
-				"申請承認待",
-				jobdata.getAction_id(),
-				jobdata.getAction_place(),
-				jobdata.getAction_day(),
-				jobdata.getAction_end_day(),
-				jobdata.getCompany_name(),
-				jobdata.getAction_status_id(),
-				jobdata.getAttendance_id(),
-				jobdata.getAttendance_day(),
-				jobdata.getAttendance_end_day(),
-				jobdata.getLodging_day_id(),
-				jobdata.getInformation(),
-				jobdata.getSchedule(),
-				jobdata.getContents_report(),
-				examination_report_id
-				);
-			return rowNumber;
-	}
-
-	/**
-	 *  application_and_reportテーブルのデータを報告を1件更新する
-	 * @param JobHuntingData 更新する就職活動申請・報告ID
-	 * @param examination_report_id 就職活動申請・報告ID
-	 * @param
-	 * @return rowNumber
-	 * @throws DataAccessException
-	 */
-	public int updateOneH(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
-		int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
-				"報告承認待",
-				JobHuntingData.getContents_report(),
-				examination_report_id
-				);
-			return rowNumber;
-	}
-
-	/**
-	 * 就職活動申請・報告状態のIDを取得する
-	 */
-
-
-	/**
-	 * application_and_reportテーブルの状態変更をする
-	 *
-	 */
-	public int statusOne(String examination_report_id, String examination_status_id) throws DataAccessException {
-		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
-		JobHuntingEntity entity = mappingSelectJobResult(resultList);
-		JobHuntingData data = entity.getJoblist().get(0);
-		String search = "報告承認待";
-		String status = "申請完了";
-		if(data.getExamination_status_id().equals(search)) {
-			if(examination_status_id.equals(status)) {
-				examination_status_id = "報告完了";
-			}
-		}
-		int rowNumber = jdbc.update(SQL_UPDATE_ID,
-				examination_status_id,
-				examination_report_id
-				);
-			return rowNumber;
-	}
-
-	/**
 	 * application_and_reportテーブルの申請データを1件追加する
-	 * @param data
-	 * @return eowNumber
+	 * @param data 追加する一件分の就職申請書のデータ
+	 * @return rowNumber
 	 * @throws DataAccessException
 	 */
 	public int insertOne(JobHuntingData data) throws DataAccessException {
@@ -278,10 +204,75 @@ public class JobHuntingRepository {
 	}
 
 	/**
-	 * テーブルから削除したいデータを一件取得し、削除する
+	 *  application_and_reportテーブルのデータを申請を1件更新する
+	 * @param JobHuntingData 更新する就職活動申請・報告ID
+	 * @param examination_report_id 就職活動申請・報告ID
+	 * @return rowNumber
+	 * @throws DataAccessException
 	 */
-	public void deleteOne(JobHuntingData data,String examination_report_id) throws DataAccessException {
+	public int updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
+		if(jobdata.getAction_end_day() == "") {
+			jobdata.setAction_end_day(null);
+		}
+		int rowNumber = jdbc.update(SQL_UPDATE_APPLICATION,
+				"申請承認待",
+				jobdata.getAction_id(),
+				jobdata.getAction_place(),
+				jobdata.getAction_day(),
+				jobdata.getAction_end_day(),
+				jobdata.getCompany_name(),
+				jobdata.getAction_status_id(),
+				jobdata.getAttendance_id(),
+				jobdata.getAttendance_day(),
+				jobdata.getAttendance_end_day(),
+				jobdata.getLodging_day_id(),
+				jobdata.getInformation(),
+				jobdata.getSchedule(),
+				jobdata.getContents_report(),
+				examination_report_id
+				);
+			return rowNumber;
+	}
 
+	/**
+	 *  application_and_reportテーブルのデータを報告を1件作成・更新する
+	 * @param JobHuntingData 更新する就職活動申請・報告ID
+	 * @param examination_report_id 就職活動申請・報告ID
+	 * @return rowNumber
+	 * @throws DataAccessException
+	 */
+	public int updateOneH(JobHuntingData JobHuntingData, String examination_report_id) throws DataAccessException {
+		int rowNumber = jdbc.update(SQL_UPDATE_AND_REPORT,
+				"報告承認待",
+				JobHuntingData.getContents_report(),
+				examination_report_id
+				);
+			return rowNumber;
+	}
+
+	/**
+	 *  就職報告書の承認機能にて報告承認待の状態を変更する機能
+	 * @param examination_report_id 就職活動申請・報告ID
+	 * @param examination_status_id 就職報告状態ID
+	 * @return rowNumber
+	 * @throws DataAccessException
+	 */
+	public int statusOne(String examination_report_id, String examination_status_id) throws DataAccessException {
+		List<Map<String, Object>> resultList = jdbc.queryForList(SQL_SELECT_APPLICATION_ONE, examination_report_id);
+		JobHuntingEntity entity = mappingSelectJobResult(resultList);
+		JobHuntingData data = entity.getJoblist().get(0);
+		String search = "報告承認待";
+		String status = "申請完了";
+		if(data.getExamination_status_id().equals(search)) {
+			if(examination_status_id.equals(status)) {
+				examination_status_id = "報告完了";
+			}
+		}
+		int rowNumber = jdbc.update(SQL_UPDATE_ID,
+				examination_status_id,
+				examination_report_id
+				);
+			return rowNumber;
 	}
 
 	/**
