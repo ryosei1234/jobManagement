@@ -65,6 +65,7 @@ public class JobHuntingController {
 		return radiostatus;
 	}
 
+	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> apRadioStatus() {
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("差戻", "差戻");
@@ -125,11 +126,11 @@ public class JobHuntingController {
 	}
 
 	/**
-	 * 就職活動新規報告作成の詳細画面を表示する
+	 * 就職活動申請・報告の詳細画面を表示する
 	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 受験報告詳細画面
+	 * @return 就職活動申請・報告画面
 	 */
 	@GetMapping("/job/jobDetail/{examination_report_id:.+}")
 	public String getExamDetail(@PathVariable("examination_report_id") String examination_report_id, Principal principal, Model model) {
@@ -176,7 +177,7 @@ public class JobHuntingController {
 
 
 	/**
-	 * 一件分の就活情報新規作成画面を追加する
+	 * 一件分の就活情報新規作成画面を表示する
 	 * @param form	追加する就職活動申請情報
 	 * @param model
 	 * @return	就職活動申請新規作成画面
@@ -197,7 +198,7 @@ public class JobHuntingController {
 
 
 	/**
-	 * 一件分の就職活動申請を追加する
+	 * 一件分の就職活動申請を作成する
 	 * @param form	追加する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
@@ -245,7 +246,7 @@ public class JobHuntingController {
 	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param form	状態変更する就職活動申請情報
 	 * @param model
-	 * @return	就職活動申請変更画面
+	 * @return	就職活動承認画面
 	 */
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
 	public String getStatus(@ModelAttribute JobFormForStatus form, Model model,Principal principal,@PathVariable("examination_report_id") String examination_report_id) {
@@ -267,8 +268,8 @@ public class JobHuntingController {
 	 * @param form 承認変更する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
- * @param model
-	 * @param examreport_id 受験報告ID
+	 * @param model
+	 * @param examination_report_id 就職活動申請・報告ID
 	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
@@ -389,7 +390,7 @@ public class JobHuntingController {
 	 * @param form 登録する就職活動報告情報
 	 * @param model
 	 * @param principal ログイン情報
-	 * @return 就職活動申請・一覧画面
+	 * @return 就職活動報告新規作成画面
 	 */
 	@GetMapping("/job/jobInsertH/{examination_report_id:.+}")
 	public String getJobInsertH(@ModelAttribute JobFormH form,
@@ -433,7 +434,7 @@ public class JobHuntingController {
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 就職活動報告変更画面
+	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/jobInsertH/{examination_report_id:.+}")
 	public String postJobInsertH(@ModelAttribute @Validated JobFormH form,
@@ -474,6 +475,14 @@ public class JobHuntingController {
 
 	}
 
+	/**
+	 * 一件分の就職活動申請を申請承認済みに変更する
+	 * @param form 変更する就職活動申請情報
+	 * @param principal ログイン情報
+	 * @param model
+	 * @param examination_report_id 就職活動申請・報告ID
+	 * @return 就職活動申請・報告一覧画面
+	 */
 	@GetMapping("/job/jobsyonin/{examination_report_id:.+}")
 	public String getJobList(Model model,Principal principal,
 			@PathVariable("examination_report_id")  String examination_report_id
