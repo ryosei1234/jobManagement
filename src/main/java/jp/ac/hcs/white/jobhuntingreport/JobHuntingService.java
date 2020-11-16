@@ -23,6 +23,7 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public JobHuntingEntity selectAll(String user_id) throws DataAccessException {
+
 		return jobRepository.selectAll(user_id);
 	}
 
@@ -32,20 +33,8 @@ public class JobHuntingService {
 	 * @return JobHuntingData
 	 */
 	public JobHuntingData selectOne(String examination_report_id) {
+
 		return jobRepository.selectOne(examination_report_id);
-
-	}
-
-	/**
-	 *  就職活動申請を一件追加する
-	 * @param jobdata 追加する 就職活動情報
-	 * @return 処理結果(成功:true, 失敗:false)
-	 * @throws DataAccessException
-	 */
-	public boolean insertOne(JobHuntingData jobdata) throws DataAccessException {
-		int rowNumber = jobRepository.insertOne(jobdata);
-		boolean result = (rowNumber> 0) ? true : false;
-		return result;
 	}
 
 	/**
@@ -59,34 +48,21 @@ public class JobHuntingService {
 	public JobHuntingEntity search(String search_examination_report_id,String serch_action_day, String search_user_name, String search_company_name, String user_id) {
 
 		JobHuntingEntity jobEntity = null;
-
 		jobEntity = jobRepository.jobSearch(search_examination_report_id, serch_action_day, search_user_name, search_company_name, user_id);
-
 		return jobEntity;
 	}
 
 	/**
-	 * 情報をCSVファイルとしてサーバに保存する.
+	 *  就職活動申請を一件追加する
+	 * @param jobdata 追加する 就職活動情報
+	 * @return 処理結果(成功:true, 失敗:false)
 	 * @throws DataAccessException
 	 */
-	public void saveCsv() throws DataAccessException {
+	public boolean insertOne(JobHuntingData jobdata) throws DataAccessException {
 
-		jobRepository.saveCsv();
-	}
-
-	/**
-	 * サーバーに保存されているファイルを取得して、byte配列に変換する.
-	 * @param fileName ファイル名
-	 * @return ファイルのbyte配列
-	 * @throws IOException ファイル取得エラー
-	 */
-	public byte[] loadCsv(String fileName) throws IOException {
-
-		FileSystem fs = FileSystems.getDefault();
-		Path p = fs.getPath(fileName);
-		byte[] bytes = Files.readAllBytes(p);
-
-		return bytes;
+		int rowNumber = jobRepository.insertOne(jobdata);
+		boolean result = (rowNumber> 0) ? true : false;
+		return result;
 	}
 
 	/**
@@ -97,6 +73,7 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public boolean updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
+
 		int rowNumber = jobRepository.updateOneS(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
@@ -124,8 +101,32 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public boolean jobstatus(String examination_report_id, String examination_status_id) throws DataAccessException {
+
 		int rowNumber = jobRepository.statusOne(examination_report_id, examination_status_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;
+	}
+
+	/**
+	 * 情報をCSVファイルとしてサーバに保存する.
+	 * @throws DataAccessException
+	 */
+	public void saveCsv() throws DataAccessException {
+
+		jobRepository.saveCsv();
+	}
+
+	/**
+	 * サーバーに保存されているファイルを取得して、byte配列に変換する.
+	 * @param fileName ファイル名
+	 * @return ファイルのbyte配列
+	 * @throws IOException ファイル取得エラー
+	 */
+	public byte[] loadCsv(String fileName) throws IOException {
+
+		FileSystem fs = FileSystems.getDefault();
+		Path p = fs.getPath(fileName);
+		byte[] bytes = Files.readAllBytes(p);
+		return bytes;
 	}
 }
