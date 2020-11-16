@@ -111,10 +111,8 @@ public class JobHuntingController {
 			@RequestParam("search_company_name") String search_company_name,
 			Principal principal,
 			Model model) {
-		System.out.println(principal.getName() + "コントローラー");
 		JobHuntingEntity jobHuntingEntity = jobService.search(search_job_id, search_action_day, search_user_name, search_company_name, principal.getName());
 		model.addAttribute("jobHuntingEntity", jobHuntingEntity);
-		System.out.println(jobHuntingEntity + "帰ってきた");
 		// 検索ワードの連携
 		model.addAttribute("search_examreport_id", search_job_id);
 		model.addAttribute("search_action_day", search_action_day);
@@ -129,7 +127,7 @@ public class JobHuntingController {
 	 * @param examination_report_id 就職活動申請・報告ID
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 受験報告詳細画面
+	 * @return 就職活動申請・報告詳細画面
 	 */
 	@GetMapping("/job/jobDetail/{examination_report_id:.+}")
 	public String getExamDetail(@PathVariable("examination_report_id") String examination_report_id, Principal principal, Model model) {
@@ -153,8 +151,8 @@ public class JobHuntingController {
 
 		log.info("[" + principal.getName() + "]CSVファイル作成:" + WebConfig.FILENAME_CSV);
 
-	// タスク情報のCSVファイルをサーバ上に保存
-	//jobService.saveCsv();
+		// タスク情報のCSVファイルをサーバ上に保存
+		jobService.saveCsv();
 
 		// CSVファイルをサーバから読み込み
 		byte[] bytes = null;
@@ -176,7 +174,7 @@ public class JobHuntingController {
 
 
 	/**
-	 * 一件分の就活情報新規作成画面を追加する
+	 * 一件分の就活情報申請新規作成画面を表示する
 	 * @param form	追加する就職活動申請情報
 	 * @param model
 	 * @return	就職活動申請新規作成画面
@@ -192,8 +190,6 @@ public class JobHuntingController {
 
 		return "job/jobInsertS";
 	}
-
-
 
 
 	/**
@@ -267,8 +263,8 @@ public class JobHuntingController {
 	 * @param form 承認変更する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
- * @param model
-	 * @param examreport_id 受験報告ID
+	 * @param model
+	 * @param examination_report_id 就職活動申請・報告ID
 	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/jobApproval/{examination_report_id:.+}")
@@ -298,11 +294,11 @@ public class JobHuntingController {
 
 
 	/**
-	 * 一件分の就職活動申請内容を変更する
+	 * 一件分の就職活動申請・報告内容を更新する
 	 * @param form 変更する就職活動申請情報
 	 * @param model
 	 * @param principal ログイン情報
-	 * @return 就職活動申請変更画面
+	 * @return 就職活動申請・報告更新画面
 	 */
 	@GetMapping("/job/jobUpdate/{examination_report_id:.+}")
 	public String getJobUpdate(@ModelAttribute JobFormForUpdate form,
@@ -321,8 +317,6 @@ public class JobHuntingController {
 		JobHuntingData data = jobService.selectOne(examination_report_id);
 		log.warn(data.toString());
 		form.setAction_day((data.getAction_day()!= null) ? data.getAction_day().replace(" ", "T") : null);
-
-		System.out.println(data.getAction_day().replace(" ", "T"));
 		form.setAction_end_day((data.getAction_end_day()!= null) ? data.getAction_end_day().replace(" ", "T") : null);
 		form.setAction_place(data.getAction_place());
 		form.setAction_id(data.getAction_id());
@@ -340,12 +334,12 @@ public class JobHuntingController {
 	}
 
 	/**
-	 * 一件分の就職活動申請内容を変更する
+	 * 一件分の就職活動申請・報告内容を更新する
 	 * @param form 変更する就職活動申請情報
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 就職活動申請変更画面
+	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/jobUpdate/{examination_report_id:.+}")
 	public String postJobUpdate(@ModelAttribute @Validated JobFormForUpdate form,
@@ -385,11 +379,11 @@ public class JobHuntingController {
 	}
 
 	/**
-	 * 一件分の就職活動報告内容を登録する
+	 * 一件分の就職活動報告新規作成画面を登表示する
 	 * @param form 登録する就職活動報告情報
 	 * @param model
 	 * @param principal ログイン情報
-	 * @return 就職活動申請・一覧画面
+	 * @return 就職活動報告新規作成画面
 	 */
 	@GetMapping("/job/jobInsertH/{examination_report_id:.+}")
 	public String getJobInsertH(@ModelAttribute JobFormH form,
@@ -433,7 +427,7 @@ public class JobHuntingController {
 	 * @param bindingResult データバインド実施結果
 	 * @param principal ログイン情報
 	 * @param model
-	 * @return 就職活動報告変更画面
+	 * @return 就職活動申請・報告一覧画面
 	 */
 	@PostMapping("/job/jobInsertH/{examination_report_id:.+}")
 	public String postJobInsertH(@ModelAttribute @Validated JobFormH form,
@@ -474,11 +468,16 @@ public class JobHuntingController {
 
 	}
 
+	/**
+	 * 一件分の就職活動申請を申請承認済みに変更する
+	 * @param principal ログイン情報
+	 * @param model
+	 * @return 就職活動申請・報告一覧画面
+	 */
 	@GetMapping("/job/jobsyonin/{examination_report_id:.+}")
 	public String getJobList(Model model,Principal principal,
 			@PathVariable("examination_report_id")  String examination_report_id
 			) {
-		System.out.println(examination_report_id);
 		boolean result = jobService.jobstatus(examination_report_id,"申請承認済");
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
