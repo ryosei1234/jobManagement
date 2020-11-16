@@ -250,7 +250,7 @@ public class JobHuntingController {
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
 	public String getStatus(@ModelAttribute JobFormForStatus form, Model model,Principal principal,@PathVariable("examination_report_id") String examination_report_id) {
 		JobHuntingData data = jobService.selectOne(examination_report_id);
-		if (data.getExamination_status_id().equals("申請承認済")) {
+		if (data.getExamination_status_id().equals("申請承認済") || data.getExamination_status_id().equals("報告承認待")) {
 			radiostatus = initRadioStatus();
 		}else {
 		// ラジオボタンの準備
@@ -259,7 +259,6 @@ public class JobHuntingController {
 		model.addAttribute("radiostatus", radiostatus);
 		model.addAttribute("examination_report_id", examination_report_id);
 		log.warn(examination_report_id);
-
 
 		return "job/jobApproval";
 	}
