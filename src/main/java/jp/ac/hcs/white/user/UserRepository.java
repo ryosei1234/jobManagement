@@ -28,10 +28,10 @@ public class UserRepository {
 									+ "VALUES(?, ?, ?, ?, ?, ?, false, 'VALID', ?, ?, ?, ?)";
 
 	/** SQL 1件更新 パスワード更新有 */
-	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? WHERE user_id = ?";
+	private static final String SQL_UPDATE_ONE_WITH_PASSWORD = "UPDATE m_user SET encrypted_password = ?, user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?,update_user_id = ? password_error_count = ? WHERE user_id = ?";
 
 	/** SQL 1件更新  パスワード更新無 */
-	private static final String SQL_UPDATE_ONE = "UPDATE m_user SET user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?, update_user_id = ? WHERE user_id = ?";
+	private static final String SQL_UPDATE_ONE = "UPDATE m_user SET user_name = ?, user_role = ?, User_class = ?, User_student_no = ? ,update_at = ?, update_user_id = ?, password_error_count = ?,user_status = ? WHERE user_id = ?";
 
 	/** SQL 1件削除 */
 	private static final String SQL_DELETE_ONE = "DELETE FROM m_user WHERE user_id = ?";
@@ -74,11 +74,13 @@ public class UserRepository {
 			data.setUser_darkmode((boolean) map.get("user_darkmode"));
 			data.setRole((String) map.get("user_role"));
 			data.setUser_student_no((String)map.get("user_student_no"));
-			data.setUser_status((String)map.get("user_status"));
+			data.setUser_status((int)map.get("user_status"));
 			data.setCreated_at((Timestamp) map.get("created_at"));
 			data.setCreated_user_id((String)map.get("created_user_id"));
 			data.setUpdate_at((Timestamp) map.get("update_at"));
 			data.setUpdate_user_id((String)map.get("Update_user_id"));
+
+			data.setPassword_error_count((int) map.get("password_error_count"));
 			entity.getUserlist().add(data);
 		}
 		return entity;
@@ -113,6 +115,7 @@ public class UserRepository {
 				data.getUser_student_no(),
 				new Timestamp(System.currentTimeMillis()),
 				data.getUpdate_user_id(),
+				data.getPassword_error_count(),
 				data.getUser_id());
 		return rowNumber;
 	}
@@ -131,6 +134,8 @@ public class UserRepository {
 				data.getUser_student_no(),
 				new Timestamp(System.currentTimeMillis()),
 				data.getUpdate_user_id(),
+				data.getPassword_error_count(),
+				data.getUser_status(),
 				data.getUser_id());
 		return rowNumber;
 	}

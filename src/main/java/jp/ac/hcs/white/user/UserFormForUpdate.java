@@ -1,6 +1,7 @@
 package jp.ac.hcs.white.user;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -40,5 +41,8 @@ public class UserFormForUpdate {
 	@NotBlank(message="{require_check}")
 	private String user_student_no;
 
+	/** ユーザ状態 */
+	@Min(value=1, message = "{user_status_check}")
+	private int user_status;
 
 }

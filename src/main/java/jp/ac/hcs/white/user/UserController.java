@@ -39,6 +39,24 @@ public class UserController {
 		return radio;
 	}
 
+	/** ユーザ状態のラジオボタンを初期化する処理 */
+	private Map<String, String> initUserStatus() {
+		Map<String, String> radio = new LinkedHashMap<>();
+		radio.put("有効", String.valueOf(UserStatus.VALID.getCode()));
+		// ロック中はユーザは個別に設定できない
+		radio.put("無効", String.valueOf(UserStatus.INVALID.getCode()));
+		return radio;
+	}
+
+	/** ユーザ状態の表示を文字で行うための処理 */
+	private Map<Integer, String> viewUserStatus() {
+		Map<Integer, String> viewString = new LinkedHashMap<>();
+		viewString.put(UserStatus.VALID.getCode(), "有効");
+		viewString.put(UserStatus.LOCKED.getCode(), "ロック中");
+		viewString.put(UserStatus.INVALID.getCode(), "無効");
+		return viewString;
+	}
+
 	/**
 	 * ユーザ一覧画面を表示する.
 	 * @param model
@@ -48,6 +66,7 @@ public class UserController {
 	public String getUserList(Model model) {
 
 		UserEntity userEntity = userService.selectAll();
+		model.addAttribute("viewUserStatus", viewUserStatus());
 		model.addAttribute("userEntity", userEntity);
 		return "user/userList";
 	}
@@ -69,6 +88,7 @@ public class UserController {
 		// ラジオボタンの準備
 		radioRole = initRadioRole();
 		model.addAttribute("radioRole", radioRole);
+		model.addAttribute("userStatus",initUserStatus());
 
 		// 検索するユーザーIDのチェック
 		if (user_id != null && user_id.length() > 0) {
@@ -120,7 +140,11 @@ public class UserController {
 		data.setUser_class(form.getUser_class());
 		data.setUser_student_no(form.getUser_student_no());
 		data.setUpdate_user_id(principal.getName());
+		data.setUser_status(form.getUser_status());
 
+		// ロック設定（更新時にパスワードエラー回数を初期化）
+		data.setUser_status(form.getUser_status());
+		data.setPassword_error_count(0);
 		boolean result = false;
 
 		if (form.getPassword() == null || form.getPassword().equals("")) {

@@ -83,6 +83,8 @@
 					<th class="text-nowrap">ユーザ名</th>
 					<th class="text-nowrap">ダークモード</th>
 					<th class="text-nowrap">権限</th>
+					<th class="text-nowrap">ユーザ状態</th>
+					<th class="text-nowrap">エラー回数</th>
 					<th class="text-nowrap"></th>
 				</tr>
 				<tr th:each="user : ${userEntity.userlist}" th:object="${user}">
@@ -90,6 +92,8 @@
 					<td class="text-nowrap" th:text="*{user_name}"></td>
 					<td class="text-nowrap" th:text="*{user_darkmode}"></td>
 					<td class="text-nowrap" th:text="*{role}"></td>
+					<td class="text-nowrap" th:text="${viewUserStatus.get(user.user_status)}"></td>
+					<td class="text-nowrap" th:text="*{password_error_count}"></td>
 					<td class="text-nowrap"><a class="btn btn-success"
 						th:href="@{'/user/userDetail/' + *{user_id}}">詳細</a></td>
 

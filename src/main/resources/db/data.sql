@@ -2,24 +2,24 @@
 /*DELETE FROM m_user;
 */
 /* ユーザマスタのデータ（TEACHER権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('yamada@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '山田太郎', 'ROLE_TEACHER', 'S3A1', '00',false, 'VALID', '2019-05-02 12:48:35', 'yamada@xxx.co.jp', '2019-05-02 12:48:35', 'yamada@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id, password_error_count)
+VALUES('yamada@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '山田太郎', 'ROLE_TEACHER', 'S3A1', '00',false, '2019-05-02 12:48:35', 'yamada@xxx.co.jp', '2019-05-02 12:48:35', 'yamada@xxx.co.jp',0 );
 /* ユーザマスタのデータ（STUDENT権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('suzuki@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '鈴木太郎', 'ROLE_STUDENT','S3A1','00',false,'VALID','2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id, password_error_count)
+VALUES('suzuki@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '鈴木太郎', 'ROLE_STUDENT','S3A1','00',false,'2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp',0 );
 /* ユーザマスタのデータ（STAFF権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('hashiya@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '橋谷太郎', 'ROLE_STAFF','S3A1','00',false,'VALID','2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id, password_error_count)
+VALUES('hashiya@xxx.co.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '橋谷太郎', 'ROLE_STAFF','S3A1','00',false,'2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp',0);
 
 /* ユーザマスタのテストデータ（TEACHER権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('t-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入先生', 'ROLE_TEACHER', 'S3A3', '',true, 'VALID', '2019-05-02 12:48:35', 'yamada@xxx.co.jp', '2019-05-02 12:48:35', 'yamada@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id)
+VALUES('t-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入先生', 'ROLE_TEACHER', 'S3A3', '',true,  '2019-05-02 12:48:35', 'yamada@xxx.co.jp', '2019-05-02 12:48:35', 'yamada@xxx.co.jp' );
 /* ユーザマスタのテストデータ（STUDENT権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('s-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入太郎', 'ROLE_STUDENT','S3A3','01',false,'VALID','2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id)
+VALUES('s-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入太郎', 'ROLE_STUDENT','S3A3','01',false,'2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
 /* ユーザマスタのテストデータ（STAFF権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode, user_status,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('j-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入事務', 'ROLE_STAFF','','',true,'VALID','2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
+INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id)
+VALUES('j-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入事務', 'ROLE_STAFF','','',true,'2019-05-02 12:48:35','suzuki@xxx.co.jp','2019-05-02 12:48:35','suzuki@xxx.co.jp' );
 
 /* タスクテーブルのデータ*/
 INSERT INTO  examreport (examreport_id,user_id,department,company_name_top,report_day,recruitment_number,company_name,application_route,exam_date_time,examination_location,contens_test ,remarks,Exam_report_status)

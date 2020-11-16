@@ -12,12 +12,13 @@ CREATE TABLE IF NOT EXISTS m_user (
     user_class CHAR(4),
     user_student_no VARCHAR(2),
     user_darkmode BOOLEAN NOT NULL,
-    user_status VARCHAR(7) NOT NULL,
+    user_status int DEFAULT 1,
     created_at TIMESTAMP NOT NULL,
     created_user_id VARCHAR(254) NOT NULL ,
     update_at TIMESTAMP,
     update_user_id VARCHAR(254),
-    CONSTRAINT user_id FOREIGN KEY (created_user_id) REFERENCES m_user(user_id)
+    CONSTRAINT user_id FOREIGN KEY (created_user_id) REFERENCES m_user(user_id),
+    password_error_count int DEFAULT 0
 );
 
 

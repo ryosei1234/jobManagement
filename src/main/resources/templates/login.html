@@ -55,6 +55,9 @@
 				<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
 					th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 					class="text-danger">ログインエラーメッセージ</p>
+				<p th:if="${session['UserLocked']} != null"
+					th:text="${session['UserLocked']}"
+					class="text-danger">ユーザロックエラーメッセージ</p>
 
 				<button type="submit" class="btn btn-primary">ログイン</button>
 			</form>

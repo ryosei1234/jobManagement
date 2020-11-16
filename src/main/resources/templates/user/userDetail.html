@@ -126,6 +126,16 @@
 							th:errors="*{user_student_no}">user_student_no error</span>
 					</div>
 
+					<label for="user_status">ユーザ状態</label>
+					<div class="form-group input-box">
+						<div th:each="item : ${userStatus}">
+							<input type="radio" name="userStatus" th:text="${item.key}"
+								th:value="${item.value}" th:field="*{user_status}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('user_status')}"
+							th:errors="*{user_status}">user_status error</span>
+					</div>
+
 					<button class="btn btn-primary" type="submit" name="update">更新</button>
 					<button class="btn btn-primary" type="submit" name="delete">削除</button>
 				</form>

@@ -62,7 +62,7 @@ public class UserData {
 	 * ユーザ状態
 	 * 必須入力
 	 */
-	private String user_status;
+	private int user_status;
 
 	/**
 	 * 作成時のタイムスタンプ
@@ -85,5 +85,12 @@ public class UserData {
 	 * 更新時のユーザID
 	 */
 	private String update_user_id;
+
+	/**
+	 * パスワードエラー回数
+	 * ユーザ作成時は0固定
+	 * ユーザ状態を有効にした際に0に戻す
+	 */
+	private int password_error_count;
 
 }
