@@ -70,7 +70,8 @@
 				<div class="form-group input-box"
 					th:classappend="${#fields.hasErrors('action_day')} ? 'has-error'">
 					<input type="datetime-local" class="form-control"
-						name="action_day" th:field="*{action_day}"> <span
+						name="action_day" th:field="*{action_day}" th:value="*{action_day}">
+						<span
 						class="text-danger" th:if="${#fields.hasErrors('action_day')}"
 						th:errors="*{action_day}">action_day error</span>
 				</div>

@@ -320,14 +320,16 @@ public class JobHuntingController {
 
 		JobHuntingData data = jobService.selectOne(examination_report_id);
 		log.warn(data.toString());
-		form.setAction_day(data.getAction_day());
-		form.setAction_end_day(data.getAction_end_day());
+		form.setAction_day((data.getAction_day()!= null) ? data.getAction_day().replace(" ", "T") : null);
+
+		System.out.println(data.getAction_day().replace(" ", "T"));
+		form.setAction_end_day((data.getAction_end_day()!= null) ? data.getAction_end_day().replace(" ", "T") : null);
 		form.setAction_place(data.getAction_place());
 		form.setAction_id(data.getAction_id());
 		form.setCompany_name(data.getCompany_name());
 		form.setAttendance_id(data.getAttendance_id());
-	    form.setAttendance_day(data.getAttendance_day());
-		form.setAttendance_end_day(data.getAttendance_end_day());
+		form.setAttendance_day((data.getAttendance_day()!= null) ? data.getAttendance_day().replace(" ", "T") : null);
+		form.setAttendance_end_day((data.getAttendance_end_day()!= null) ? data.getAttendance_end_day().replace(" ", "T") : null);
 		form.setSchedule(data.getSchedule());
 		form.setInformation(data.getInformation());
 		form.setContents_report(data.getContents_report());
