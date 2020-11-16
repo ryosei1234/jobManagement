@@ -142,6 +142,7 @@
 
 			<td class="text-nowrap" sec:authorize="hasRole('ROLE_TEACHER')"><a class="btn btn-success"
 				th:href="@{'/job/jobApproval/' + *{examination_report_id}}">承認確認</a></td>
+				<input type="hidden" name="examination_status_id" th:value=${examination_status_id}>
 
 			<td class="text-nowrap"><a class="btn btn-success"
 				th:href="@{'/job/jobUpdate/' + *{examination_report_id}}">変更</a></td>

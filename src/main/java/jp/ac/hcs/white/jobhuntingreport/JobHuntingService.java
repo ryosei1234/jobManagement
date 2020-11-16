@@ -97,7 +97,6 @@ public class JobHuntingService {
 	 * @throws DataAccessException
 	 */
 	public boolean updateOneS(JobHuntingData jobdata, String examination_report_id) throws DataAccessException {
-
 		int rowNumber = jobRepository.updateOneS(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
 		return result;

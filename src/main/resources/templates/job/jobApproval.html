@@ -71,7 +71,6 @@
 		<h2>受験申請・報告承認画面</h2>
 		<form method="post" th:action="@{'/job/jobApproval/' + *{examination_report_id}}"
 				th:object="${jobFormForStatus}">
-
 				<input type="hidden" name="examination_report_id" th:value=${examination_report_id}>
 
 			<label for="examination_status_id">承認状態</label>
