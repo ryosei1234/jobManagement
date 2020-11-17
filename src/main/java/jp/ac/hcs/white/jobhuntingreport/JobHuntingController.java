@@ -70,7 +70,7 @@ public class JobHuntingController {
 
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("承認", "申請完了");
-		radiostatus.put("差戻", "差戻");
+		radiostatus.put("差戻", "申請作成中");
 		radiostatus.put("取消", "取消");
 
 		return radiostatus;
@@ -80,7 +80,7 @@ public class JobHuntingController {
 	private Map<String, String> apRadioStatus() {
 
 		Map<String, String> radiostatus = new LinkedHashMap<>();
-		radiostatus.put("差戻", "差戻");
+		radiostatus.put("差戻", "申請作成中");
 		radiostatus.put("取消", "取消");
 
 		return radiostatus;
