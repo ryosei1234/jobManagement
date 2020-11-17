@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.ac.hcs.white.WebConfig;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ *
+ * 就活状況申請・報告機能
+ *
+ */
 @Slf4j
 @Controller
 public class JobHuntingController {
@@ -37,45 +42,56 @@ public class JobHuntingController {
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioAction() {
+
 		Map<String, String> radioaction = new LinkedHashMap<>();
 		radioaction.put("合同企業説明会", "合同企業説明会");
 		radioaction.put("単独企業説明会", "単独企業説明会");
 		radioaction.put("試験", "試験");
 		radioaction.put("内定式", "内定式");
 		radioaction.put("インターンシップ", "インターンシップ");
+
 		return radioaction;
 	}
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioAttendance() {
+
 		Map<String, String> radioattendance = new LinkedHashMap<>();
 		radioattendance.put("休日に実施", "休日に実施");
 		radioattendance.put("欠席", "欠席");
 		radioattendance.put("早退", "早退");
 		radioattendance.put("遅刻", "遅刻");
+
 		return radioattendance;
 	}
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioStatus() {
+
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("承認", "申請完了");
 		radiostatus.put("差戻", "差戻");
 		radiostatus.put("取消", "取消");
+
 		return radiostatus;
 	}
 
+	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> apRadioStatus() {
+
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("差戻", "差戻");
 		radiostatus.put("取消", "取消");
+
 		return radiostatus;
 	}
 
 	/** 権限のラジオボタンを初期化する処理 */
 	private Map<String, String> initRadioActionStatus() {
+
 		Map<String, String> radioactionstatus = new LinkedHashMap<>();
 		radioactionstatus.put("続行", "続行");
+
 		return radioactionstatus;
 	}
 
@@ -87,6 +103,7 @@ public class JobHuntingController {
 	 */
 	@PostMapping("/job/jobList")
 	public String getJobList(Principal principal, Model model) {
+
 		log.info("[" + principal.getName() + "]就職活動検索" + principal.getName());
 		JobHuntingEntity jobHuntingEntity;
 		jobHuntingEntity = jobService.selectAll(principal.getName());
@@ -111,6 +128,7 @@ public class JobHuntingController {
 			@RequestParam("search_company_name") String search_company_name,
 			Principal principal,
 			Model model) {
+
 		JobHuntingEntity jobHuntingEntity = jobService.search(search_job_id, search_action_day, search_user_name, search_company_name, principal.getName());
 		model.addAttribute("jobHuntingEntity", jobHuntingEntity);
 		// 検索ワードの連携
@@ -156,6 +174,7 @@ public class JobHuntingController {
 
 		// CSVファイルをサーバから読み込み
 		byte[] bytes = null;
+
 		try {
 			bytes = jobService.loadCsv(WebConfig.FILENAME_CSV);
 			log.info("[" + principal.getName() + "]CSVファイル読み込み成功:" + WebConfig.FILENAME_CSV);
@@ -181,6 +200,7 @@ public class JobHuntingController {
 	 * 	 */
 	@GetMapping("/job/jobInsertS")
 	public String getJobInsert(@ModelAttribute JobFormS form, Model model) {
+
 		// ラジオボタンの準備
 		radioaction = initRadioAction();
 		model.addAttribute("radioAction", radioaction);
@@ -210,7 +230,6 @@ public class JobHuntingController {
 		if (bindingResult.hasErrors()) {
 			return getJobInsert(form, model);
 		}
-
 		JobHuntingData data = new JobHuntingData();
 		data.setAction_day(form.getAction_day());
 		data.setAction_end_day(form.getAction_end_day());
@@ -244,8 +263,9 @@ public class JobHuntingController {
 	 * @return	就職活動申請変更画面
 	 */
 	@GetMapping("/job/jobApproval/{examination_report_id:.+}")
-	public String getStatus(@ModelAttribute JobFormForStatus form, Model model,Principal principal,@PathVariable("examination_report_id") String examination_report_id) {
+	public String getStatus(@ModelAttribute JobFormForStatus form, Model model, Principal principal, @PathVariable("examination_report_id") String examination_report_id) {
 		JobHuntingData data = jobService.selectOne(examination_report_id);
+
 		if (data.getExamination_status_id().equals("申請承認済") || data.getExamination_status_id().equals("報告承認待")) {
 			radiostatus = initRadioStatus();
 		}else {
@@ -254,7 +274,6 @@ public class JobHuntingController {
 		}
 		model.addAttribute("radiostatus", radiostatus);
 		model.addAttribute("examination_report_id", examination_report_id);
-		log.warn(examination_report_id);
 
 		return "job/jobApproval";
 	}
@@ -275,20 +294,17 @@ public class JobHuntingController {
 			@PathVariable("examination_report_id") String examination_report_id) {
 
 		// 入力チェックに引っかかった場合、登録画面に戻る
-				if (bindingResult.hasErrors()) {
-					return getStatus(form, model,principal,form.getExamination_report_id());
-				}
-
-		log.warn(form.getExamination_status_id());
-		log.warn(examination_report_id);
+		if (bindingResult.hasErrors()) {
+			return getStatus(form, model, principal,form.getExamination_report_id());
+		}
 
 		boolean result = jobService.jobstatus(examination_report_id,form.getExamination_status_id());
+
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
 		} else {
 			log.warn("[" + principal.getName() + "]承認変更失敗");
 		}
-
 		return getJobList(principal, model);
 	}
 
@@ -351,7 +367,6 @@ public class JobHuntingController {
 		if (bindingResult.hasErrors()) {
 			return getJobUpdate(form, model,principal,form.getExamination_report_id());
 		}
-
 		JobHuntingData data = new JobHuntingData();
 		data.setAction_day(form.getAction_day());
 		data.setAction_end_day(form.getAction_end_day());
@@ -365,7 +380,6 @@ public class JobHuntingController {
 		data.setInformation(form.getInformation());
 		data.setContents_report(form.getContents_report());
 
-
 		boolean result = jobService.updateOneS(data,form.getExamination_report_id());
 
 		if (result) {
@@ -373,7 +387,6 @@ public class JobHuntingController {
 		} else {
 			log.warn("[" + principal.getName() + "]受験報告登録失敗");
 		}
-
 		return getJobList(principal, model);
 
 	}
@@ -395,15 +408,12 @@ public class JobHuntingController {
 		// ラジオボタンの準備
 		radioaction = initRadioAction();
 		model.addAttribute("radioAction", radioaction);
-
 		radioattendance = initRadioAttendance();
 		model.addAttribute("radioAttendance", radioattendance);
-
 		radioactionstatus = initRadioActionStatus();
 		model.addAttribute("radioActionStatus", radioactionstatus);
 
 		JobHuntingData data = jobService.selectOne(examination_report_id);
-		log.warn(data.toString());
 		form.setAction_day(data.getAction_day());
 		form.setAction_end_day(data.getAction_end_day());
 		form.setAction_place(data.getAction_place());
@@ -439,7 +449,6 @@ public class JobHuntingController {
 		if (bindingResult.hasErrors()) {
 			return getJobInsertH(form, model,principal,form.getExamination_report_id());
 		}
-
 		JobHuntingData data = new JobHuntingData();
 		data.setAction_day(form.getAction_day());
 		data.setAction_end_day(form.getAction_end_day());
@@ -454,8 +463,6 @@ public class JobHuntingController {
 		data.setContents_report(form.getContents_report());
 		data.setAction_status_id(form.getAction_status_id());
 
-
-
 		boolean result = jobService.updateOneH(data,form.getExamination_report_id());
 
 		if (result) {
@@ -463,7 +470,6 @@ public class JobHuntingController {
 		} else {
 			log.warn("[" + principal.getName() + "]就職活動報告登録失敗");
 		}
-
 		return getJobList(principal, model);
 
 	}
@@ -476,15 +482,15 @@ public class JobHuntingController {
 	 */
 	@GetMapping("/job/jobsyonin/{examination_report_id:.+}")
 	public String getJobList(Model model,Principal principal,
-			@PathVariable("examination_report_id")  String examination_report_id
-			) {
+			@PathVariable("examination_report_id")  String examination_report_id) {
+
 		boolean result = jobService.jobstatus(examination_report_id,"申請承認済");
+
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
 		} else {
 			log.warn("[" + principal.getName() + "]承認変更失敗");
 		}
-
 		return getJobList(principal, model);
 
 	}

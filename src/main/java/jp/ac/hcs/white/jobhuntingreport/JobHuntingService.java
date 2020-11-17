@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * 就活状況申請・報告書情報を確認する
+ *
+ */
 @Transactional
 @Service
 public class JobHuntingService {
@@ -45,10 +51,11 @@ public class JobHuntingService {
 	 * @param search_company_name 検索したい企業名
 	 * @return ExamReportEntity
 	 */
-	public JobHuntingEntity search(String search_examination_report_id,String serch_action_day, String search_user_name, String search_company_name, String user_id) {
+	public JobHuntingEntity search(String search_examination_report_id, String serch_action_day, String search_user_name, String search_company_name, String user_id) {
 
 		JobHuntingEntity jobEntity = null;
 		jobEntity = jobRepository.jobSearch(search_examination_report_id, serch_action_day, search_user_name, search_company_name, user_id);
+
 		return jobEntity;
 	}
 
@@ -62,6 +69,7 @@ public class JobHuntingService {
 
 		int rowNumber = jobRepository.insertOne(jobdata);
 		boolean result = (rowNumber> 0) ? true : false;
+
 		return result;
 	}
 
@@ -76,6 +84,7 @@ public class JobHuntingService {
 
 		int rowNumber = jobRepository.updateOneS(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
+
 		return result;
 	}
 
@@ -90,6 +99,7 @@ public class JobHuntingService {
 
 		int rowNumber = jobRepository.updateOneH(jobdata, examination_report_id);
 		boolean result = (rowNumber > 0) ? true : false;
+
 		return result;
 	}
 
@@ -104,6 +114,7 @@ public class JobHuntingService {
 
 		int rowNumber = jobRepository.statusOne(examination_report_id, examination_status_id);
 		boolean result = (rowNumber > 0) ? true : false;
+
 		return result;
 	}
 
@@ -127,6 +138,7 @@ public class JobHuntingService {
 		FileSystem fs = FileSystems.getDefault();
 		Path p = fs.getPath(fileName);
 		byte[] bytes = Files.readAllBytes(p);
+
 		return bytes;
 	}
 }
