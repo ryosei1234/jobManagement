@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 public class JobHuntingRepository {
 	/** SQL 生徒用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? AND app.examination_status_id IN('申請作成中','申請承認待','申請承認済','申請完了') ORDER BY examination_report_id";
+	private static final String SQL_SELECT_STUDENT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.user_id = ? AND app.examination_status_id NOT IN('取消済') ORDER BY examination_report_id";
 	/** SQL 教員、事務用全件取得(期限日昇順)*/
-	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id AND app.examination_status_id IN('申請作成中','申請承認待','申請承認済','申請完了')  ORDER BY examination_report_id";
+	private static final String SQL_SELECT_ALL = "SELECT app.examination_report_id, app.user_id, user.user_class, user.user_student_no, user.user_name,app.examination_status_id,app.action_id,app.action_place,app.action_day,app.action_end_day,app.company_name,app.action_status_id,app.attendance_id,app.attendance_day,app.attendance_end_day,app.lodging_day_id,app.information,app.schedule,app.contents_report FROM application_and_report app, m_user user  WHERE app.user_id = user.user_id AND app.examination_status_id NOT IN('取消済')  ORDER BY examination_report_id";
 	/** SQL ユーザ情報1件取得 */
 	private static final String SQL_SELECT_USER_ONE = "SELECT * FROM m_user WHERE user_id = ?";
 	/** SQL 1件取得 */
@@ -262,7 +262,9 @@ public class JobHuntingRepository {
 		JobHuntingEntity entity = mappingSelectJobResult(resultList);
 		JobHuntingData data = entity.getJoblist().get(0);
 		String search = "報告承認待";
-		String status = "申請完了";
+		String status = "申請承認済";
+		System.out.println(data.getExamination_status_id());
+		System.out.println(examination_status_id);
 		if(data.getExamination_status_id().equals(search)) {
 			if(examination_status_id.equals(status)) {
 				examination_status_id = "報告完了";

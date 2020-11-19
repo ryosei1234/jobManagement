@@ -69,9 +69,9 @@ public class JobHuntingController {
 	private Map<String, String> initRadioStatus() {
 
 		Map<String, String> radiostatus = new LinkedHashMap<>();
-		radiostatus.put("承認", "申請完了");
+		radiostatus.put("承認", "申請承認済");
 		radiostatus.put("差戻", "申請作成中");
-		radiostatus.put("取消", "取消");
+		radiostatus.put("取消", "取消済");
 
 		return radiostatus;
 	}
@@ -81,6 +81,15 @@ public class JobHuntingController {
 
 		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("差戻", "申請作成中");
+		radiostatus.put("取消", "取消済");
+
+		return radiostatus;
+	}
+
+	/** 権限のラジオボタンを初期化する処理 */
+	private Map<String, String> rpRadioStatus() {
+
+		Map<String, String> radiostatus = new LinkedHashMap<>();
 		radiostatus.put("取消", "取消");
 
 		return radiostatus;
@@ -266,11 +275,13 @@ public class JobHuntingController {
 	public String getStatus(@ModelAttribute JobFormForStatus form, Model model, Principal principal, @PathVariable("examination_report_id") String examination_report_id) {
 		JobHuntingData data = jobService.selectOne(examination_report_id);
 
-		if (data.getExamination_status_id().equals("申請承認済") || data.getExamination_status_id().equals("報告承認待")) {
-			radiostatus = initRadioStatus();
-		}else {
 		// ラジオボタンの準備
+		if (data.getExamination_status_id().equals("申請承認済") || data.getExamination_status_id().equals("申請完了")){
 			radiostatus = apRadioStatus();
+		}else if(data.getExamination_status_id().equals("報告完了")) {
+			radiostatus = rpRadioStatus();
+		}else {
+			radiostatus = initRadioStatus();
 		}
 		model.addAttribute("radiostatus", radiostatus);
 		model.addAttribute("examination_report_id", examination_report_id);
@@ -297,8 +308,15 @@ public class JobHuntingController {
 		if (bindingResult.hasErrors()) {
 			return getStatus(form, model, principal,form.getExamination_report_id());
 		}
+		boolean result;
+		JobHuntingData data = jobService.selectOne(examination_report_id);
 
-		boolean result = jobService.jobstatus(examination_report_id,form.getExamination_status_id());
+		if (data.getExamination_status_id().equals("報告承認待") && form.getExamination_status_id().equals("申請作成中")){
+			result = jobService.jobstatus(examination_report_id,"報告作成中");
+		}else {
+			System.out.println(form.getExamination_status_id());
+			result = jobService.jobstatus(examination_report_id,form.getExamination_status_id());
+		}
 
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
@@ -484,7 +502,7 @@ public class JobHuntingController {
 	public String getJobList(Model model,Principal principal,
 			@PathVariable("examination_report_id")  String examination_report_id) {
 
-		boolean result = jobService.jobstatus(examination_report_id,"申請承認済");
+		boolean result = jobService.jobstatus(examination_report_id,"申請完了");
 
 		if (result) {
 			log.info("[" + principal.getName() + "]	承認変更成功");
