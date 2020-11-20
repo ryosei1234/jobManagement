@@ -314,7 +314,6 @@ public class JobHuntingController {
 		if (data.getExamination_status_id().equals("報告承認待") && form.getExamination_status_id().equals("申請作成中")){
 			result = jobService.jobstatus(examination_report_id,"報告作成中");
 		}else {
-			System.out.println(form.getExamination_status_id());
 			result = jobService.jobstatus(examination_report_id,form.getExamination_status_id());
 		}
 

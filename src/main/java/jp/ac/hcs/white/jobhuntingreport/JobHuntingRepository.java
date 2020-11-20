@@ -263,8 +263,6 @@ public class JobHuntingRepository {
 		JobHuntingData data = entity.getJoblist().get(0);
 		String search = "報告承認待";
 		String status = "申請承認済";
-		System.out.println(data.getExamination_status_id());
-		System.out.println(examination_status_id);
 		if(data.getExamination_status_id().equals(search)) {
 			if(examination_status_id.equals(status)) {
 				examination_status_id = "報告完了";
