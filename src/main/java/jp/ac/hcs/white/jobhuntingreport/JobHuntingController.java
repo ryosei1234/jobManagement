@@ -90,7 +90,7 @@ public class JobHuntingController {
 	private Map<String, String> rpRadioStatus() {
 
 		Map<String, String> radiostatus = new LinkedHashMap<>();
-		radiostatus.put("取消", "取消");
+		radiostatus.put("取消", "取消済");
 
 		return radiostatus;
 	}
