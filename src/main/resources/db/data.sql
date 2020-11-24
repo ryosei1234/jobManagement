@@ -3,7 +3,6 @@
 */
 
 /* ユーザマスタのテストデータ（TEACHER権限） PASS:pasword */
-INSERT INTO m_user (user_id, encrypted_password, user_name, user_role, user_class, user_student_no,user_darkmode,created_at ,created_user_id ,update_at,update_user_id)
-VALUES('t-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入先生', 'ROLE_TEACHER', 'S3A3', '',true,  '2019-05-02 12:48:35', 't-ukeire@hcs.ac.jp', '2019-05-02 12:48:35', 't-ukeire@hcs.ac.jp' );
-/* ユーザマスタのテストデータ（TEACHER権限） PASS:pasword */
-VALUES('s-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', '受入先生', 'ROLE_TEACHER', 'S3A3', '',true,  '2019-05-02 12:48:35', 't-ukeire@hcs.ac.jp', '2019-05-02 12:48:35', 't-ukeire@hcs.ac.jp' );
+INSERT INTO "PUBLIC"."M_USER" VALUES
+('t-ukeire@hcs.ac.jp', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', STRINGDECODE('\u53d7\u5165\u5148\u751f'), 'ROLE_TEACHER', 'S3A3', '', TRUE, 1, TIMESTAMP '2019-05-02 12:48:35', 't-ukeire@hcs.ac.jp', TIMESTAMP '2020-11-24 13:44:39.876', 't-ukeire@hcs.ac.jp', 0),
+('s-ukeire@hcs.ac.jp', '$2a$10$ZCHmqKLzAXq39kCc6BoBS.5M59sRkHNFWT4aSk.MM2QsRfWQFtqnK', STRINGDECODE('\u53d7\u5165\u5b66\u751f'), 'ROLE_STUDENT', 'S3A1', '01', FALSE, 1, TIMESTAMP '2020-11-24 13:44:53.327', 't-ukeire@hcs.ac.jp', TIMESTAMP '2020-11-24 13:44:53.327', 't-ukeire@hcs.ac.jp', 0);
