@@ -40,7 +40,7 @@ private String information;
 @NotNull(message = "{require_check}")
 private String action_status_id;
 
-@NotNull(message = "{require_check}")
+@NotBlank(message = "{require_check}")
 private String contents_report;
 
 @NotNull(message = "{require_check}")
