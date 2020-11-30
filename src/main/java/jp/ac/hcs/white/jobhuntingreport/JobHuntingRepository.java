@@ -29,7 +29,7 @@ public class JobHuntingRepository {
 	/** SQL 就職活動申請・報告IDをカウントアップ */
 	private static final String SQL_APPLICATION_AND_REPORT_COUNT ="SELECT COUNT(*) FROM application_and_report";
 	/** SQL 就職活動申請・報告書検索 管理者用 */
-	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME ="SELECT * FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ?";
+	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID_AND_USER_NAME_AND_COMPANY_NAME ="SELECT * FROM application_and_report app, m_user user WHERE app.user_id = user.user_id AND app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ? AND app.examination_status_id NOT IN('取消済')";
 	/** SQL 就職活動申請・報告書検索 学生用  */
 	private static final String SQL_SEARCH_BY_EXAMINATION_STATUS_ID ="SELECT * FROM application_and_report app, m_user user WHERE user.user_id = ? AND app.user_id = ? AND app.examination_status_id LIKE ? AND app.action_day LIKE ? AND user.user_name LIKE ? and app.company_name LIKE ?";
 	/** SQL 就職活動申請更新*/
@@ -39,7 +39,7 @@ public class JobHuntingRepository {
 	/** SQL 就職活動状態変更 */
 	private static final String SQL_UPDATE_ID = "UPDATE application_and_report SET examination_status_id = ? WHERE  examination_report_id = ?";
 	/** SQL CSV出力*/
-	private static final String SQL_SELECT_CSV = "SELECT * FROM application_and_report JOIN m_user ON application_and_report.user_id = m_user.user_id order by company_name_top";
+	private static final String SQL_SELECT_CSV = "SELECT * FROM application_and_report JOIN m_user ON application_and_report.user_id = m_user.user_id order by company_name";
 	@Autowired
 	private JdbcTemplate jdbc;
 	@Autowired
